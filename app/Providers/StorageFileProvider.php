@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\UploadedFile;
 use App\Models\User;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
 use Livewire\TemporaryUploadedFile;
@@ -20,10 +21,15 @@ class StorageFileProvider
 
         do {
             $storage_path = Str::random();
-        } while (Storage::exists("files/$storage_path.$extension"));
+        } while (Storage::exists($this->getStoragePath($storage_path)));
 
+        try {
+            $content = $file->get();
+        } catch (FileNotFoundException $e) {
+            abort(500, 'File not found');
+        }
 
-        $file->storeAs('files', "$storage_path.$extension");
+        Storage::put($this->getStoragePath($storage_path), base64_encode($content));
 
         return UploadedFile::create([
             'user_id' => $from?->id,
@@ -33,13 +39,18 @@ class StorageFileProvider
         ]);
     }
 
-    public function downloadFile(UploadedFile $file) {
-        return Storage::download($this->getStoragePath($file), $this->getBaseName($file));
+    public function downloadFile(UploadedFile $file): \Symfony\Component\HttpFoundation\StreamedResponse
+    {
+        $content = Storage::get($this->getStoragePath($file->storage_path));
+        $content = base64_decode($content);
+        return response()->streamDownload(function () use ($content) {
+            echo $content;
+        }, $this->getBaseName($file));
     }
 
-    public function getStoragePath(UploadedFile $file): string
+    public function getStoragePath(string $storageName): string
     {
-        return "files/$file->storage_path.$file->extension";
+        return "files/$storageName.secure";
     }
 
     public function getBaseName(UploadedFile $file): string
