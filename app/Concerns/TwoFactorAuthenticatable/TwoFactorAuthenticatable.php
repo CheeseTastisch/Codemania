@@ -18,13 +18,13 @@ trait TwoFactorAuthenticatable
     public function hasEnabledTwoFactorAuthentication(): bool
     {
         return !is_null($this->two_factor_secret)
-            && !is_null($this->two_factor_recovery_codes)
-            && !is_null($this->confirmed_two_factor_at);
+            && !is_null($this->two_factor_recovery_codes);
     }
 
     public function hasCompletedTwoFactorAuthentication(): bool
     {
-        return !is_null($this->confirmed_two_factor_at);
+        return $this->hasEnabledTwoFactorAuthentication()
+            && !is_null($this->confirmed_two_factor_at);
     }
 
     public function enableTwoFactoryAuthentication(): void
@@ -35,7 +35,8 @@ trait TwoFactorAuthenticatable
         ])->save();
     }
 
-    public function confirmTwoFactorAuthentication(string $code): bool {
+    public function confirmTwoFactorAuthentication(string $code): bool
+    {
         if ($this->validateTwoFactorAuthentication($code, false) === TwoFactorVerifyResult::InvalidCode) return false;
 
         $this->forceFill([
@@ -89,7 +90,7 @@ trait TwoFactorAuthenticatable
     {
         $svg = (new Writer(
             new ImageRenderer(
-                new RendererStyle(200, 0, null, SimpleCircleEye::instance(), Fill::uniformColor(new Rgb(255, 255, 255), new Rgb(45, 55, 72))),
+                new RendererStyle(200, 0, null, null, Fill::uniformColor(new Rgb(255, 255, 255), new Rgb(45, 55, 72))),
                 new SvgImageBackEnd
             )
         ))->writeString($this->getTwoFactorQrCodeUrl());
