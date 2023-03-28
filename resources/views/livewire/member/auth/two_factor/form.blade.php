@@ -15,7 +15,7 @@
     @if(!$errors->has('rateLimit'))
         <div>
             <div class="relative">
-                <input type="text" id="two_factor" name="two_factor" placeholder=" " wire:model="two_factor"
+                <input type="text" id="two_factor" name="two_factor" placeholder=" " wire:model.defer="two_factor"
                        class="invalid:text-red-600 block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 peer focus:border-accent-400 dark:focus:border-accent-600 @error('two_factor') !border-red-400 dark:!border-red-600 @enderror"
                        @error('two_factor') aria-describedby="two_factor-error" @enderror/>
                 <label for="two_factor"

@@ -15,7 +15,7 @@
     @if(!$errors->has('rateLimit'))
         <div>
             <div class="relative">
-                <input type="text" id="email" name="email" placeholder=" " wire:model="email"
+                <input type="text" id="email" name="email" placeholder=" " wire:model.defer="email"
                        class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 peer focus:border-accent-400 dark:focus:border-accent-600 @error('email') !border-red-400 dark:!border-red-600 @enderror"
                        @error('email') aria-describedby="email-error" @enderror/>
                 <label for="email"
@@ -32,7 +32,7 @@
 
         <div>
             <div class="relative">
-                <input type="password" id="password" name="password" placeholder=" " wire:model="password"
+                <input type="password" id="password" name="password" placeholder=" " wire:model.defer="password"
                        class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 peer focus:border-accent-400 dark:focus:border-accent-600 @error('password') !border-red-400 dark:!border-red-600 @enderror"
                        @error('password') aria-describedby="password-error" @enderror/>
                 <label for="password"
@@ -49,7 +49,7 @@
 
         <div class="flex items-start">
             <div class="flex items-center mb-4">
-                <input id="remember" type="checkbox" value="" wire:model="remember"
+                <input id="remember" type="checkbox" value="" wire:model.defer="remember"
                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-accent-400 dark:focus:ring-accent-600 dark:ring-offset-gray-800 focus:ring-2 bg-slate-200 dark:bg-slate-800 dark:border-gray-600 checked:!bg-accent-400 dark:checked:!bg-accent-600">
                 <label for="remember" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                     Daten Merken

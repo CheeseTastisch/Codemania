@@ -20,7 +20,7 @@
     @if(!$errors->has('rateLimit'))
         <div>
             <div class="relative">
-                <input type="text" id="email" name="email" placeholder=" " wire:model="email"
+                <input type="text" id="email" name="email" placeholder=" " wire:model.defer="email"
                        class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 peer focus:border-accent-400 dark:focus:border-accent-600 @error('email') !border-red-400 dark:!border-red-600 @enderror"
                        @error('email') aria-describedby="email-error" @enderror/>
                 <label for="email"
@@ -39,7 +39,7 @@
             <div class="grid md:grid-cols-2 md:gap-6">
                 <div>
                     <div class="relative z-0 w-full md:mb-2 mb-6 group">
-                        <input type="text" id="firstname" name="firstname" placeholder=" " wire:model="firstname"
+                        <input type="text" id="firstname" name="firstname" placeholder=" " wire:model.defer="firstname"
                                class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 peer focus:border-accent-400 dark:focus:border-accent-600 @error('firstname') !border-red-400 dark:!border-red-600 @enderror"
                                @error('firstname') aria-describedby="firstname-error" @enderror/>
                         <label for="firstname"
@@ -55,7 +55,7 @@
                 </div>
                 <div>
                     <div class="relative z-0 w-full mb-2 group">
-                        <input type="text" id="lastname" name="lastname" placeholder=" " wire:model="lastname"
+                        <input type="text" id="lastname" name="lastname" placeholder=" " wire:model.defer="lastname"
                                class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 peer focus:border-accent-400 dark:focus:border-accent-600 @error('lastname') !border-red-400 dark:!border-red-600 @enderror"
                                @error('lastname') aria-describedby="lastname-error" @enderror/>
                         <label for="lastname"
@@ -79,7 +79,7 @@
         <div>
             <div class="relative">
                 <input data-popover-target="popover-password" data-popover-placement="bottom"
-                       type="password" id="password" name="password" placeholder=" " wire:model="password"
+                       type="password" id="password" name="password" placeholder=" " wire:model.defer="password"
                        class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 peer focus:border-accent-400 dark:focus:border-accent-600 @error('password') !border-red-400 dark:!border-red-600 @enderror"
                        @error('password') aria-describedby="password-error" @enderror/>
                 <label for="password"
@@ -202,7 +202,7 @@
         <div>
             <div class="relative">
                 <input type="password" id="password_confirmation" name="password_confirmation" placeholder=" "
-                       wire:model="password_confirmation"
+                       wire:model.defer="password_confirmation"
                        class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 peer focus:border-accent-400 dark:focus:border-accent-600 @error('password_confirmation') !border-red-400 dark:!border-red-600 @enderror"
                        @error('password_confirmation') aria-describedby="password-error" @enderror/>
                 <label for="password_confirmation"
@@ -219,7 +219,7 @@
 
         <div class="flex">
             <div class="flex items-center @error('privacy_policy') mb-4 @enderror">
-                <input id="privacy_policy" type="checkbox" name="privacy_policy" wire:model="privacy_policy"
+                <input id="privacy_policy" type="checkbox" name="privacy_policy" wire:model.defer="privacy_policy"
                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-accent-400 dark:focus:ring-accent-600 dark:ring-offset-gray-800 focus:ring-2 bg-slate-200 dark:bg-slate-800 dark:border-gray-600 checked:!bg-accent-400 dark:checked:!bg-accent-600">
             </div>
             <div class="ml-2 text-sm">
