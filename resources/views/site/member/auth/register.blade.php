@@ -15,12 +15,12 @@
 @push('scripts')
     <script>
         const colors = [
-            ['bg-red-300', 'dark:bg-red-400'],
-            ['bg-orange-300', 'dark:bg-orange-400'],
-            ['bg-amber-300', 'dark:bg-amber-400'],
-            ['bg-yellow-300', 'dark:bg-yellow-400'],
-            ['bg-lime-300', 'dark:bg-lime-400'],
-            ['bg-green-300', 'dark:bg-green-400'],
+            ['!bg-red-300', 'dark:!bg-red-400'],
+            ['!bg-orange-300', 'dark:!bg-orange-400'],
+            ['!bg-amber-300', 'dark:!bg-amber-400'],
+            ['!bg-yellow-300', 'dark:!bg-yellow-400'],
+            ['!bg-lime-300', 'dark:!bg-lime-400'],
+            ['!bg-green-300', 'dark:!bg-green-400'],
         ]
 
         window.addEventListener('DOMContentLoaded', function () {

@@ -34,4 +34,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/verification/resend', [AuthController::class, 'resendVerificationEmail'])->name('verification.send');
         Route::get('/verification/{id}/{hash}', [AuthController::class, 'verifyEmail'])->name('verification.verify');
     });
+
+    Route::middleware(['2fa', 'verified'])->group(function () {
+        Route::view('/profile', 'site.member.profile')->name('member.profile');
+    });
 });
