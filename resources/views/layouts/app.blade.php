@@ -1,0 +1,13 @@
+@extends('layouts.components.base')
+
+@section('baseContent')
+    @include('layouts.components.user.navbar')
+
+    <div class="pt-[4.5rem] flex flex-col min-h-full">
+        <main class="flex-1/0">
+            @stack('content')
+        </main>
+
+        @include('layouts.components.user.footer')
+    </div>
+@endsection

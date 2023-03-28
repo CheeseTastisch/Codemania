@@ -1,0 +1,60 @@
+<?php
+
+namespace App\Models;
+
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Concerns\TwoFactorAuthenticatable\TwoFactorAuthenticatable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+
+class User extends Authenticatable implements MustVerifyEmail
+{
+    use HasApiTokens, Notifiable, TwoFactorAuthenticatable;
+
+    protected $fillable = [
+        'email',
+        'first_name',
+        'last_name',
+        'nickname',
+        'display_name_type',
+        'birthday',
+        'class',
+        'school',
+        'gender',
+        'slogan',
+        'profile_picture_id',
+        'password',
+    ];
+
+    protected $hidden = [
+        'two_factor_secret',
+        'two_factor_recovery_codes',
+        'confirmed_two_factor_at',
+        'password',
+        'remember_token',
+    ];
+
+    protected $casts = [
+        'birthday' => 'date',
+        'email_verified_at' => 'timestamp',
+        'confirmed_two_factor_at' => 'timestamp',
+    ];
+
+    public function getFullNameAttribute(): string
+    {
+        return "$this->first_name $this->last_name";
+    }
+
+    public function getDisplayNameAttribute(): string
+    {
+        return match ($this->display_name_type) {
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
+            'nickname' => $this->nickname,
+            default => $this->full_name,
+        };
+    }
+
+}
