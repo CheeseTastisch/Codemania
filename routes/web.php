@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\member\AuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +18,8 @@ use Illuminate\Support\Facades\Route;
 Route::view('/', 'site.public.home')->name('public.home');
 Route::view('/imprint', 'site.public.imprint')->name('public.imprint');
 Route::view('/privacy-policy', 'site.public.privacy_policy')->name('public.privacy_policy');
+
+Route::get('/file/{id}', [FileController::class, 'downloadFile'])->name('file.download');
 
 Route::middleware('guest')->group(function () {
     Route::view('/login', 'site.member.auth.login')->name('member.auth.login');

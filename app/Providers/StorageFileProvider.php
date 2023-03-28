@@ -6,19 +6,24 @@ use App\Models\UploadedFile;
 use App\Models\User;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
+use Livewire\TemporaryUploadedFile;
 use Str;
 
 class StorageFileProvider
 {
 
-    public function uploadFile(File $file, User|null $from = null): UploadedFile {
-        $name = $file->getFilename();
-        $extension = $file->guessExtension() ?? $file->getExtension();
+    public function uploadFile(TemporaryUploadedFile|\Illuminate\Http\UploadedFile $file, User|null $from = null): UploadedFile {
+        $name = $file->getClientOriginalName();
+
+        $name = pathinfo($name, PATHINFO_FILENAME);
+        $extension = $file->guessExtension() ?? $file->getClientOriginalExtension();
+
         do {
             $storage_path = Str::random();
         } while (Storage::exists("files/$storage_path.$extension"));
 
-        $file->move(storage_path("app/files"), "$storage_path.$extension");
+
+        $file->storeAs('files', "$storage_path.$extension");
 
         return UploadedFile::create([
             'user_id' => $from?->id,
