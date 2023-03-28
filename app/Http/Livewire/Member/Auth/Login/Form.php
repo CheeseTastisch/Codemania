@@ -46,7 +46,8 @@ class Form extends Component
         ]);
 
         if (auth()->attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
-            return redirect()->route('member.dashboard');
+            if (auth()->user()->hasCompletedTwoFactorAuthentication()) return redirect()->route('member.auth.2fa');
+            else return redirect()->route('member.dashboard');
         } else {
             $this->addError('email', 'Die eingegebenen Daten sind nicht korrekt.');
         }

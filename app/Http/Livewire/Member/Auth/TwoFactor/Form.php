@@ -40,7 +40,7 @@ class Form extends Component
         }
 
         $this->validate([
-            'two_factor' => 'required|numeric|digits:6'
+            'two_factor' => 'required'
         ]);
 
         switch (auth()->user()->tryTwoFactorAuthentication($this->two_factor)) {
@@ -49,7 +49,7 @@ class Form extends Component
             case TwoFactorVerifyResult::RecoveryCodeUsed:
                 return redirect()->route('member.auth.2fa.recovery');
             case TwoFactorVerifyResult::InvalidCode:
-                $this->addError('tow_factor', 'Invalid code');
+                $this->addError('two_factor', 'Der angegebene Code ist ungültig.');
                 return;
         }
     }
