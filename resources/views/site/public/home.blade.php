@@ -81,7 +81,7 @@
 
                 <div class="mt-6">
                     Angetreten wird in <span class="font-bold underline">Teams von 2 bis 4 Personen</span>.
-                    Die Teilnehmer können sich bis zum <span class="font-bold underline">23. Juni 2023</span> zu Teams
+                    Die Teilnehmer können sich bis zum <span class="font-bold underline">{{ day()->date->format('d. F Y') }}</span> zu Teams
                     zusammenschließen.
                     Teilnehmer, die bis dahin noch kein Team haben, werden in zufällige Teams eingeteilt.
                 </div>
@@ -116,7 +116,7 @@
                     <div>
                         <h2 id="faq-{{ $faq->id }}-head">
                             <button type="button"
-                                    class="flex items-center justify-between w-full px-4 py-5 font-medium text-left border-b border-black dark:border-white !text-black dark:!text-white rounded-tl-lg rounded-tr-lg"
+                                    class="flex items-center justify-between w-full px-4 py-5 font-medium text-left border-b border-black dark:border-white !text-black dark:!text-white @if($loop->first) rounded-t-lg @endif"
                                     data-accordion-target="#faq-{{ $faq->id }}-body"
                                     aria-expanded="true"
                                     aria-controls="faq-{{ $faq->id }}-body">
@@ -130,7 +130,7 @@
                             </button>
                         </h2>
                         <div id="faq-{{ $faq->id }}-body"
-                             class="hidden"
+                             class="hidden text-sm"
                              aria-labelledby="faq-{{ $faq->id }}-head">
                             <div class="py-5 font-light border-b border-black dark:border-white px-4">
                                 {!! $faq->answer !!}

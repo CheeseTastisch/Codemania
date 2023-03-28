@@ -70,7 +70,7 @@
 
     <div>
         <label for="display_name"
-               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Anzeigenamen</label>
+               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Anzeigename</label>
         <div class="relative">
             <select id="display_name" name="display_name" wire:model="display_name"
                     @error('display_name') aria-describedby="display_name-error" @enderror
@@ -129,7 +129,7 @@
                    class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 peer focus:border-accent-400 dark:focus:border-accent-600 @error('class') !border-red-400 dark:!border-red-600 @enderror"
                    @error('class') aria-describedby="class-error" @enderror/>
             @if(session('updated') === 'class')
-                <svg aria-hidden="true" class="absolute right-8 bottom-2 text-green-400 dark:text-green-600 w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <svg aria-hidden="true" class="absolute right-2.5 bottom-2.5 text-green-400 dark:text-green-600 w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"></path>
                 </svg>
             @endif
@@ -176,7 +176,7 @@
                    class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 peer focus:border-accent-400 dark:focus:border-accent-600 @error('slogan') !border-red-400 dark:!border-red-600 @enderror"
                    @error('slogan') aria-describedby="slogan-error" @enderror/>
             @if(session('updated') === 'slogan')
-                <svg aria-hidden="true" class="absolute right-8 bottom-2 text-green-400 dark:text-green-600 w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <svg aria-hidden="true" class="absolute right-2.5 bottom-2.5 text-green-400 dark:text-green-600 w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"></path>
                 </svg>
             @endif

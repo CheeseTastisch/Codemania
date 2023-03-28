@@ -126,8 +126,6 @@ class PersonalForm extends Component
     }
 
     public function uploadProfilePicture() {
-//        dd($this->profile_picture);
-
         $this->validate([
             'profile_picture' => 'required|image|max:1024'
         ]);

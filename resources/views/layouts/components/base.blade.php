@@ -1,3 +1,4 @@
+@php(setlocale(LC_ALL, 'de_DE.UTF-8'))
 @php(\Carbon\Carbon::setLocale('de'))
 
 <!doctype html>
@@ -11,7 +12,6 @@
     <script>
         if (document.cookie.includes('theme=dark')) document.documentElement.classList.add('dark')
         else if (document.cookie.includes('theme=light')) document.documentElement.classList.remove('dark')
-        else if (window.matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.classList.add('dark')
         else document.documentElement.classList.remove('dark')
     </script>
 
