@@ -39,9 +39,7 @@
                 const number = /[0-9]/u.test(value)
                 const special = /\p{Z}|\p{S}|\p{P}/u.test(value)
 
-                console.log(value.length >= 12)
                 const strength = length + uppercase + lowercase + number + special + ((value.length >= 12) ? 1 : 0)
-                console.log(strength)
 
                 for (let i = 1; i < 7; i++) {
                     const passwordStrength = $(`#password-strength-${i}`)
