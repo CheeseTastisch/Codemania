@@ -21,7 +21,7 @@ class TwoFactorAuthenticated
                 : redirect()->route('member.auth.login');
         }
 
-        if (auth()->user()->hasEnabledTwoFactorAuthentication() && !auth()->user()->isTwoFactorAuthenticationVerified()) {
+        if (auth()->user()->hasCompletedTwoFactorAuthentication() && !auth()->user()->isTwoFactorAuthenticationVerified()) {
             return $request->expectsJson()
                 ? abort(403, 'You have completed the two-factor authentication.')
                 : redirect()->route('member.auth.2fa');
