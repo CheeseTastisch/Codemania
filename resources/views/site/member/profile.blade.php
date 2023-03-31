@@ -34,3 +34,13 @@
         </div>
     </div>
 @endpush
+
+@push('scripts')
+    @include('components.password', ['field' => 'password', 'passwordStrength' => 'password-strength'])
+
+    <script>
+        $('#theme').on('change', function () {
+            setTheme($(this).val());
+        })
+    </script>
+@endpush

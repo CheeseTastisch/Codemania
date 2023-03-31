@@ -12,4 +12,6 @@ function showToast(text, duration, close, style) {
     }).showToast()
 }
 
+Livewire.on('showToast', (text, duration, close, style) => showToast(text, duration ?? 2500, close ?? false, style ?? 'success'));
+
 window.showToast = showToast

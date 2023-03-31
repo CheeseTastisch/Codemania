@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('slogan')->nullable();
             $table->foreignIdFor(UploadedFile::class, 'profile_picture_id')->nullable();
 
+            $table->string('theme')->default('light');
             $table->boolean('is_admin')->default(false);
             $table->string('two_factor_secret')->nullable();
             $table->longText('two_factor_recovery_codes')->nullable();

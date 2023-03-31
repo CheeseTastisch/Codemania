@@ -1,24 +1,22 @@
 <div class="space-y-6" action="#">
     <div>
-        <label for="gender"
-               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Geschlecht</label>
+        <label for="theme"
+               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Theme</label>
         <div class="relative">
-            <select id="gender" @error('gender') aria-describedby="gender-error" @enderror wire:model="gender"
+            <select id="theme" @error('theme') aria-describedby="theme-error" @enderror wire:model="theme"
                     class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-accent-400 focus:border-accent-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-accent-600 dark:focus:border-accent-600">
-                <option value="null">Nicht angegeben</option>
-                <option value="m">Männlich</option>
-                <option value="w">Weiblich</option>
-                <option value="o">Divers</option>
+                <option value="dark">Dunkle</option>
+                <option value="light">Hell</option>
             </select>
-            @if(session('updated') === 'gender')
+            @if(session('updated') === 'theme')
                 <svg aria-hidden="true" class="absolute right-8 bottom-2 text-green-400 dark:text-green-600 w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"></path>
                 </svg>
             @endif
         </div>
 
-        @error('gender')
-        <p id="gender-error" class="mt-2 text-xs text-red-400 dark:text-red-600">
+        @error('theme')
+        <p id="theme-error" class="mt-2 text-xs text-red-400 dark:text-red-600">
             {{ $message }}
         </p>
         @enderror
@@ -248,7 +246,7 @@
             <div>
                 <div class="relative">
                     <input type="text" id="2fa_code" name="2fa_code" placeholder=" "
-                           wire:model.defer="2fa_code"
+                           wire:model.defer="two_fa_code"
                            class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 peer focus:border-accent-400 dark:focus:border-accent-600 @error('2fa_code') !border-red-400 dark:!border-red-600 @enderror"
                            @error('2fa_code') aria-describedby="2fa_code-error" @enderror/>
                     <label for="2fa_code"
@@ -299,17 +297,17 @@
         <div class="space-y-2">
             <div>
                 <div class="relative">
-                    <input type="password" id="current_password" name="current_password" placeholder=" "
-                           wire:model.lazy="current_password"
-                           class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 peer focus:border-accent-400 dark:focus:border-accent-600 @error('current_password') !border-red-400 dark:!border-red-600 @enderror"
-                           @error('current_password') aria-describedby="current_password-error" @enderror/>
-                    <label for="current_password"
-                           class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-slate-200 dark:bg-slate-800 px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1 peer-focus:text-accent-400 peer-focus:dark:text-accent-600 @error('current_password') !text-red-400 dark:!text-red-600 @enderror">
+                    <input type="password" id="current_password_tow_factor" name="current_password_tow_factor" placeholder=" "
+                           wire:model.lazy="current_password_tow_factor"
+                           class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 peer focus:border-accent-400 dark:focus:border-accent-600 @error('current_password_tow_factor') !border-red-400 dark:!border-red-600 @enderror"
+                           @error('current_password_tow_factor') aria-describedby="current_password_tow_factor-error" @enderror/>
+                    <label for="current_password_tow_factor"
+                           class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-slate-200 dark:bg-slate-800 px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1 peer-focus:text-accent-400 peer-focus:dark:text-accent-600 @error('current_password_tow_factor') !text-red-400 dark:!text-red-600 @enderror">
                         Derzeitiges Passwort
                     </label>
                 </div>
-                @error('current_password')
-                <p id="current_password-error" class="mt-2 text-xs text-red-400 dark:text-red-600">
+                @error('current_password_tow_factor')
+                <p id="current_password_tow_factor-error" class="mt-2 text-xs text-red-400 dark:text-red-600">
                     {{ $message }}
                 </p>
                 @enderror
@@ -317,28 +315,28 @@
 
             <div>
                 <div class="relative">
-                    <input type="text" id="2fa_code" name="2fa_code" placeholder=" "
-                           wire:model.defer="2fa_code"
+                    <input type="text" id="two_fa_code" name="two_fa_code" placeholder=" "
+                           wire:model.defer="two_fa_code"
                            class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 peer focus:border-accent-400 dark:focus:border-accent-600 @error('2fa_code') !border-red-400 dark:!border-red-600 @enderror"
-                           @error('2fa_code') aria-describedby="2fa_code-error" @enderror/>
-                    <label for="2fa_code"
+                           @error('two_fa_code') aria-describedby="2fa_code-error" @enderror/>
+                    <label for="two_fa_code"
                            class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-slate-200 dark:bg-slate-800 px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1 peer-focus:text-accent-400 peer-focus:dark:text-accent-600 @error('2fa_code') !text-red-400 dark:!text-red-600 @enderror">
                         2FA Code
                     </label>
                 </div>
-                @error('2fa_code')
-                <p id="2fa_code-error" class="mt-2 text-xs text-red-400 dark:text-red-600">
+                @error('two_fa_code')
+                <p id="two_fa_code-error" class="mt-2 text-xs text-red-400 dark:text-red-600">
                     {{ $message }}
                 </p>
                 @enderror
             </div>
 
-            <button wire:click.prevent="disableTwoFactor" wire:loading.attr="disabled" wire:target="confirmTwoFactor"
+            <button wire:click.prevent="disableTwoFactor" wire:loading.attr="disabled" wire:target="disableTwoFactor"
                     class="w-full px-5 py-3 text-base font-medium text-center bg-accent-400 rounded-lg hover:bg-accent-600 focus:ring-4 focus:ring-accent-300 dark:bg-accent-700 dark:hover:bg-accent-800 dark:focus:ring-accent-800 disabled:cursor-not-allowed disabled:hover:bg-accent-400 disabled:dark:hover:bg-accent-600">
-                    <span wire:loading.remove wire:target="confirmTwoFactor">
+                    <span wire:loading.remove wire:target="disableTwoFactor">
                         2FA deaktivieren
                     </span>
-                <span wire:loading wire:target="confirmTwoFactor">
+                <span wire:loading wire:target="disableTwoFactor">
                 <svg aria-hidden="true" role="status"
                      class="inline w-4 h-4 mr-3 text-gray-200 animate-spin dark:text-gray-600 fill-accent-600 dark:fill-accent-400"
                      viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -354,21 +352,20 @@
             </button>
         </div>
     @else
-
         <div class="space-y-2">
             <div>
                 <div class="relative">
-                    <input type="password" id="current_password" name="current_password" placeholder=" "
-                           wire:model.lazy="current_password"
-                           class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 peer focus:border-accent-400 dark:focus:border-accent-600 @error('current_password') !border-red-400 dark:!border-red-600 @enderror"
-                           @error('current_password') aria-describedby="current_password-error" @enderror/>
-                    <label for="current_password"
-                           class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-slate-200 dark:bg-slate-800 px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1 peer-focus:text-accent-400 peer-focus:dark:text-accent-600 @error('current_password') !text-red-400 dark:!text-red-600 @enderror">
+                    <input type="password" id="current_password_tow_factor" name="current_password_tow_factor" placeholder=" "
+                           wire:model.lazy="current_password_tow_factor"
+                           class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 peer focus:border-accent-400 dark:focus:border-accent-600 @error('current_password_tow_factor') !border-red-400 dark:!border-red-600 @enderror"
+                           @error('current_password_tow_factor') aria-describedby="current_password_tow_factor-error" @enderror/>
+                    <label for="current_password_tow_factor"
+                           class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-slate-200 dark:bg-slate-800 px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1 peer-focus:text-accent-400 peer-focus:dark:text-accent-600 @error('current_password_tow_factor') !text-red-400 dark:!text-red-600 @enderror">
                         Derzeitiges Passwort
                     </label>
                 </div>
-                @error('current_password')
-                <p id="current_password-error" class="mt-2 text-xs text-red-400 dark:text-red-600">
+                @error('current_password_tow_factor')
+                <p id="current_password_tow_factor-error" class="mt-2 text-xs text-red-400 dark:text-red-600">
                     {{ $message }}
                 </p>
                 @enderror
