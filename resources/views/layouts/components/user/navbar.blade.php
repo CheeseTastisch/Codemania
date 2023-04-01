@@ -8,18 +8,23 @@
         <div class="flex md:order-2">
             @auth
                 <button type="button"
-                        class="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+                        class="flex mr-3 text-sm border border-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
                         id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown"
                         data-dropdown-placement="bottom">
                     <span class="sr-only">Benutzermenü öffnen</span>
-                    <div class="relative w-8 h-8 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
-                        <svg class="absolute w-10 h-10 text-gray-400 -left-1" fill="currentColor" viewBox="0 0 20 20"
-                             xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                                  clip-rule="evenodd"></path>
-                        </svg>
-                    </div>
-                    <!--                <img class="w-8 h-8 rounded-full" src="./img/user-pic.webp" alt="user photo">-->
+                    @if(($profilePicture = auth()->user()->profilePicture) != null)
+                        <img class="w-8 h-8 rounded-full" src="{{ route('file.download', $profilePicture->id) }}" alt="Profilbild">
+                    @else
+                        <div class="w-8 h-8 rounded-full relative overflow-hidden">
+                            <div class="bg-gray-100 dark:bg-gray-600 w-full h-full">
+                                <svg class="absolute w-10 h-10 text-gray-400 -left-1" fill="currentColor" viewBox="0 0 20 20"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                                          clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    @endif
                 </button>
 
                 <div
