@@ -25,7 +25,7 @@ if (!function_exists('day')) {
     function day(): ContestDay|null
     {
         if (Cache::driver('array')->has('global.day')) return Cache::driver('array')->get('global.day');
-        return Cache::driver('array')->remember('global.day', Carbon::tomorrow(), fn () => ContestDay::whereCurrent(true)->first());
+        return Cache::driver('file')->remember('global.day', Carbon::tomorrow(), fn () => ContestDay::whereCurrent(true)->first());
     }
 }
 
@@ -34,7 +34,7 @@ if (!function_exists('theme')) {
     function theme(): ContestDayTheme|null
     {
         if (Cache::driver('array')->has('global.theme')) return Cache::driver('array')->get('global.theme');
-        return Cache::driver('array')->remember('global.theme', Carbon::tomorrow(), fn () => day()->theme);
+        return Cache::driver('file')->remember('global.theme', Carbon::tomorrow(), fn () => day()?->theme);
     }
 }
 
