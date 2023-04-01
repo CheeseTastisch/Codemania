@@ -15,17 +15,17 @@ class LevelFile extends Model
         'solution_file_id'
     ];
 
-    function level(): BelongsTo
+    public function level(): BelongsTo
     {
         return $this->belongsTo(Level::class);
     }
 
-    function solutionFile(): BelongsTo
+    public function solutionFile(): BelongsTo
     {
         return $this->belongsTo(UploadedFile::class, 'solution_file_id');
     }
 
-    function levelFileSubmissions(): HasMany
+    public function levelFileSubmissions(): HasMany
     {
         return $this->hasMany(LevelFileSubmission::class);
     }

@@ -20,7 +20,7 @@ class Task extends Model
         return $this->belongsTo(Contest::class);
     }
 
-    function levels(): HasMany
+    public function levels(): HasMany
     {
         return $this->hasMany(Level::class);
     }

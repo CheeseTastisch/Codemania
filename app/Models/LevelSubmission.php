@@ -23,43 +23,47 @@ class LevelSubmission extends Model
         'status_changed_at' => 'datetime'
     ];
 
-    function team(): BelongsTo
+    public function team(): BelongsTo
     {
         return $this->belongsTo(Team::class);
     }
 
-    function level(): BelongsTo
+    public function level(): BelongsTo
     {
         return $this->belongsTo(Level::class);
     }
 
-    function sourceFile(): BelongsTo
+    public function sourceFile(): BelongsTo
     {
         return $this->belongsTo(UploadedFile::class, 'source_file_id');
     }
 
-    function imageFile(): BelongsTo
+    public function imageFile(): BelongsTo
     {
         return $this->belongsTo(UploadedFile::class, 'image_file_id');
     }
 
-    function levelFileSubmissions(): HasMany
+    public function levelFileSubmissions(): HasMany
     {
         return $this->hasMany(LevelFileSubmission::class);
     }
 
-    function isShouldBeRatedAttribute(): bool
+    public function isShouldBeRatedAttribute(): bool
     {
         if ($this->status === 'pending' || $this->status === 'checking') return false;
 
         $level = $this->level;
         $contest = $level->task->contest;
+        $contestDay = $contest->contestDay;
+
+        if ($contestDay->allow_training_from !== null && $this->status_changed_at->isAfter($contestDay->allow_training_from))
+            return false;
 
         if ($contest->freeze_leaderboard_at !== null
             && $contest->leaderboard_unfrozen === false
             && $this->status_changed_at->isAfter($contest->freeze_leaderboard_at)) return false;
 
-         return $level->instantly_rated === true || $contest->end_time->isPast();
+        return $level->instantly_rated === true || $contest->end_time->isPast();
     }
 
 }

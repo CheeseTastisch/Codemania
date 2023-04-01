@@ -24,22 +24,22 @@ class Contest extends Model
         'freeze_leaderboard_at' => 'timestamp',
     ];
 
-    function contestDay(): BelongsTo
+    public function contestDay(): BelongsTo
     {
         return $this->belongsTo(ContestDay::class);
     }
 
-    function tasks(): HasMany
+    public function tasks(): HasMany
     {
         return $this->hasMany(Task::class);
     }
 
-    function teams(): BelongsToMany
+    public function teams(): BelongsToMany
     {
         return $this->belongsToMany(Team::class);
     }
 
-    function isLeaderboardFrozenAttribute(): bool
+    public function isLeaderboardFrozenAttribute(): bool
     {
         if ($this->freeze_leaderboard_at === null) return false;
         if ($this->freeze_leaderboard_at->isFuture()) return true;

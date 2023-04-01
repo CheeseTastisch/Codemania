@@ -18,22 +18,22 @@ class Level extends Model
         'description_file_id'
     ];
 
-    function task(): BelongsTo
+    public function task(): BelongsTo
     {
         return $this->belongsTo(Task::class);
     }
 
-    function descriptionFile(): BelongsTo
+    public function descriptionFile(): BelongsTo
     {
         return $this->belongsTo(UploadedFile::class, 'description_file_id');
     }
 
-    function levelFiles(): HasMany
+    public function levelFiles(): HasMany
     {
         return $this->hasMany(LevelFile::class);
     }
 
-    function levelSubmissions(): HasMany
+    public function levelSubmissions(): HasMany
     {
         return $this->hasMany(LevelSubmission::class);
     }

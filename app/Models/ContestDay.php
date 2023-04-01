@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ContestDay extends Model
@@ -11,24 +12,23 @@ class ContestDay extends Model
 
     protected $fillable = [
         'date',
-        'fifty',
-        'hundred',
-        'two_hundred',
-        'three_hundred',
-        'four_hundred',
-        'five_hundred',
-        'six_hundred',
-        'seven_hundred',
-        'eight_hundred',
-        'nine_hundred',
-        'images'
+        'name',
+        'allow_training_from',
+        'current',
+        'contest_day_theme_id'
     ];
 
     protected $casts = [
-        'date' => 'date'
+        'date' => 'date',
+        'allow_training_from' => 'timestamp',
     ];
 
-    function contests(): HasMany
+    public function theme(): BelongsTo
+    {
+        return $this->belongsTo(ContestDayTheme::class);
+    }
+
+    public function contests(): HasMany
     {
         return $this->hasMany(Contest::class);
     }

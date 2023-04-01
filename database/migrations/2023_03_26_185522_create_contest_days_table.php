@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\ContestDayTheme;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,17 +15,10 @@ return new class extends Migration
         Schema::create('contest_days', function (Blueprint $table) {
             $table->id();
             $table->date('date');
-            $table->string('fifty');
-            $table->string('hundred');
-            $table->string('two_hundred');
-            $table->string('three_hundred');
-            $table->string('four_hundred');
-            $table->string('five_hundred');
-            $table->string('six_hundred');
-            $table->string('seven_hundred');
-            $table->string('eight_hundred');
-            $table->string('nine_hundred');
-            $table->string('images');
+            $table->string('name');
+            $table->timestamp('allow_training_from')->nullable();
+            $table->boolean('current')->default(false);
+            $table->foreignIdFor(ContestDayTheme::class);
             $table->timestamps();
         });
     }

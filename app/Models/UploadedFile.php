@@ -18,7 +18,7 @@ class UploadedFile extends Model
         'storage_path',
     ];
 
-    function user(): BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }

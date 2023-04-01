@@ -16,17 +16,17 @@ class LevelFileSubmission extends Model
         'uploaded_file_id'
     ];
 
-    function levelSubmission(): BelongsTo
+    public function levelSubmission(): BelongsTo
     {
         return $this->belongsTo(LevelSubmission::class);
     }
 
-    function levelFile(): BelongsTo
+    public function levelFile(): BelongsTo
     {
         return $this->belongsTo(LevelFile::class);
     }
 
-    function uploadedFile(): BelongsTo
+    public function uploadedFile(): BelongsTo
     {
         return $this->belongsTo(UploadedFile::class, 'uploaded_file_id');
     }

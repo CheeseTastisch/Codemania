@@ -25,7 +25,7 @@ return new class extends Migration
             $table->enum('gender', ['m', 'f', 'o'])->nullable();
             $table->string('class')->nullable();
             $table->string('school')->nullable();
-            $table->string('slogan')->nullable();
+            $table->longText('about')->nullable();
             $table->foreignIdFor(UploadedFile::class, 'profile_picture_id')->nullable();
 
             $table->string('theme')->default('light');
