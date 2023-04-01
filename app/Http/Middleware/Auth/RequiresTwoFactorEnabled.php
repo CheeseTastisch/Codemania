@@ -21,10 +21,9 @@ class RequiresTwoFactorEnabled
                 : redirect()->route('member.auth.login');
         }
 
-        if (!auth()->user()->hasCompletedTwoFactorAuthentication()) {
+        if (!auth()->user()->hasCompleted2Fa()) {
             if ($request->expectsJson()) abort(403, 'You have not enabled two-factor authentication.');
 
-            session()->flash('2fa', 'enable');
             session()->flash('toast', [
                 'text' => 'Du hast die Zwei-Faktor-Authentifizierung noch nicht aktiviert.',
                 'type' => 'warning'

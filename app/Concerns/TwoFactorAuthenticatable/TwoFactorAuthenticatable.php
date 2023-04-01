@@ -15,19 +15,19 @@ use TwoFactor;
 trait TwoFactorAuthenticatable
 {
 
-    public function hasEnabledTwoFactorAuthentication(): bool
+    public function hasEnabled2Fa(): bool
     {
         return !is_null($this->two_factor_secret)
             && !is_null($this->two_factor_recovery_codes);
     }
 
-    public function hasCompletedTwoFactorAuthentication(): bool
+    public function hasCompleted2Fa(): bool
     {
-        return $this->hasEnabledTwoFactorAuthentication()
+        return $this->hasEnabled2Fa()
             && !is_null($this->confirmed_two_factor_at);
     }
 
-    public function enableTwoFactoryAuthentication(): void
+    public function enable2Fa(): void
     {
         $this->forceFill([
             'two_factor_secret' => encrypt(TwoFactor::generateSecretKey()),
@@ -35,79 +35,88 @@ trait TwoFactorAuthenticatable
         ])->save();
     }
 
-    public function confirmTwoFactorAuthentication(string $code): bool
+    public function confirm2Fa(string $code): bool
     {
-        if ($this->validateTwoFactorAuthentication($code, false) === TwoFactorVerifyResult::InvalidCode) return false;
+        if ($this->validate2FaCode($code, false)->wasInvalidCode()) return false;
 
         $this->forceFill([
             'confirmed_two_factor_at' => now(),
         ])->save();
+        session()->put('2fa.verified', true);
 
         return true;
     }
 
-    public function disableTwoFactorAuthentication(): void
+    public function disable2Fa(string $code): TwoFactorVerifyResult
     {
+        if (($result = $this->validate2FaCode($code))->wasInvalidCode()) return $result;
+
         $this->forceFill([
             'two_factor_secret' => null,
             'two_factor_recovery_codes' => null,
             'confirmed_two_factor_at' => null,
         ])->save();
+
+        return $result;
     }
 
-    public function getRecoveryCodes(): array
+    public function get2FaRecoveryCodes(): array
     {
         return json_decode(decrypt($this->two_factor_recovery_codes), true);
     }
 
-    public function replaceRecoveryCode(string $oldCode): void
+    private function replace2FaRecoveryCode(string $oldCode): string
     {
+        $newCode = Str::random();
+
         $this->forceFill([
             'two_factor_recovery_codes' => encrypt(json_encode(
-                array_map(fn($code) => $code === $oldCode ? Str::random() : $code, $this->getRecoveryCodes())
+                array_map(fn($code) => $code === $oldCode ? $newCode : $code, $this->get2FaRecoveryCodes())
             ))
         ])->save();
+
+        return $newCode;
     }
 
-    public function validateTwoFactorAuthentication(string $code, bool $allowRecoveryCodes = true): TwoFactorVerifyResult
+    private function validate2FaCode(string $code, bool $allowRecoveryCodes = true): TwoFactorVerifyResult
     {
-        if (TwoFactor::verify(decrypt($this->two_factor_secret), $code)) return TwoFactorVerifyResult::Success;
+        if (TwoFactor::verify(decrypt($this->two_factor_secret), $code)) return TwoFactorVerifyResult::Success();
 
-        if ($allowRecoveryCodes && in_array($code, $this->getRecoveryCodes())) {
-            $this->replaceRecoveryCode($code);
-            return TwoFactorVerifyResult::RecoveryCodeUsed;
+        if ($allowRecoveryCodes && in_array($code, $this->get2FaRecoveryCodes())) {
+            $newCode = $this->replace2FaRecoveryCode($code);
+            return TwoFactorVerifyResult::RecoveryCodeUsed($code, $newCode);
         }
 
-        return TwoFactorVerifyResult::InvalidCode;
+        return TwoFactorVerifyResult::InvalidCode();
     }
 
-    public function getTwoFactorQrCodeUrl(): string
+    public function get2FaQrCodeUrl(): string
     {
         return TwoFactor::qrCodeUrl(config('app.name'), $this->display_name, decrypt($this->two_factor_secret));
     }
 
-    public function getTwoFactorQrCode(): string
+    public function get2FaQrCode(): string
     {
         $svg = (new Writer(
             new ImageRenderer(
                 new RendererStyle(200, 0, null, null, Fill::uniformColor(new Rgb(255, 255, 255), new Rgb(45, 55, 72))),
                 new SvgImageBackEnd
             )
-        ))->writeString($this->getTwoFactorQrCodeUrl());
+        ))->writeString($this->get2FaQrCodeUrl());
 
         return trim(substr($svg, strpos($svg, "\n") + 1));
     }
 
-    public function tryTwoFactorAuthentication(string $code): TwoFactorVerifyResult
+    public function try2Fa(string $code): TwoFactorVerifyResult
     {
-        if (($code = $this->validateTwoFactorAuthentication($code)) !== TwoFactorVerifyResult::InvalidCode) session()->put('2fa.verified', true);
+        if (($code = $this->validate2FaCode($code))->wasSuccessful()) session()->put('2fa.verified', true);
 
         return $code;
     }
 
-    public function isTwoFactorAuthenticationVerified(): bool
+    public function is2FaVerified(): bool
     {
-        return $this->hasEnabledTwoFactorAuthentication() && session()->has('2fa.verified');
+        return $this->hasEnabled2Fa() && session()->has('2fa.verified');
     }
 
 }

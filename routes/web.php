@@ -31,6 +31,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('member.auth.logout');
 
     Route::view('/2fa', 'site.member.auth.two_factor')->middleware('2fa_enabled', 'not_2fa')->name('member.auth.2fa');
+    Route::view('/2fa/recovery', 'site.member.auth.two_factor_recovery')->middleware('2fa_enabled')->name('member.auth.2fa.recovery');
 
     Route::middleware('not_verified')->group(function () {
         Route::view('/verification/notice', 'site.member.verification.notice')->name('verification.notice');

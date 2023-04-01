@@ -43,14 +43,15 @@ class Form extends Component
             'two_factor' => 'required'
         ]);
 
-        switch (auth()->user()->tryTwoFactorAuthentication($this->two_factor)) {
-            case TwoFactorVerifyResult::Success:
-                return redirect()->route('member.dashboard');
-            case TwoFactorVerifyResult::RecoveryCodeUsed:
-                return redirect()->route('member.auth.2fa.recovery');
-            case TwoFactorVerifyResult::InvalidCode:
-                $this->addError('two_factor', 'Der angegebene Code ist ungültig.');
-                return;
+        $result = auth()->user()->try2Fa($this->two_factor);
+
+        if ($result->wasSuccessful()) return redirect()->route('member.dashboard');
+        if ($result->wasInvalidCode()) $this->addError('two_factor', 'Der angegebene Code ist ungültig.');
+        if ($result->wasRecoveryCodeUsed()) {
+            session()->flash('2fa.old', $result->oldRecoveryCode);
+            session()->flash('2fa.new', $result->newRecoveryCode);
+
+            return redirect()->route('member.auth.2fa.recovery');
         }
     }
 
