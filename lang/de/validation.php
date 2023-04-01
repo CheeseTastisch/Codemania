@@ -194,6 +194,12 @@ return [
         'gender' => 'Geschlecht',
         'slogan' => 'Slogan',
         'profile_picture' => 'Profilbild',
+        'theme' => 'Theme',
+        'current_password' => 'Derzeitiges Passwort',
+        'disable_2fa_password' => 'Derzeitiges Passwort',
+        'disable_2fa_code' => 'Zwei-Faktor-Authentifizierungscode',
+        'confirm_2fa_code' => 'Zwei-Faktor-Authentifizierungscode',
+        'enable_2fa_password' => 'Derzeitiges Passwort',
     ],
 
 ];

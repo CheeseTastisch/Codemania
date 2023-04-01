@@ -87,11 +87,17 @@
                     Passwort
                 </label>
             </div>
-            @error('password')
-            <p id="password-error" class="mt-2 text-xs text-red-400 dark:text-red-600">
-                {{ $message }}
-            </p>
-            @enderror
+            @if(count($errors->get('password')) > 1)
+                <ul id="password-error" class="mt-2 text-xs text-red-400 dark:text-red-600 list-disc ml-4">
+                    @foreach($errors->get('password') as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            @elseif($errors->has('password'))
+                <p id="password-error" class="mt-2 text-xs text-red-400 dark:text-red-600">
+                    {{ $errors->first('password') }}
+                </p>
+            @endif
 
             <div data-popover id="popover-password" role="tooltip"
                  class="absolute z-20 invisible inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 w-72 dark:bg-gray-900 dark:border-gray-600 dark:text-gray-400"

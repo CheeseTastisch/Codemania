@@ -89,11 +89,17 @@
                     Neues Passwort
                 </label>
             </div>
-            @error('password')
-            <p id="password-error" class="mt-2 text-xs text-red-400 dark:text-red-600">
-                {{ $message }}
-            </p>
-            @enderror
+            @if(count($errors->get('password')) > 1)
+                <ul id="password-error" class="mt-2 text-xs text-red-400 dark:text-red-600 list-disc ml-4">
+                    @foreach($errors->get('password') as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            @elseif($errors->has('password'))
+                <p id="password-error" class="mt-2 text-xs text-red-400 dark:text-red-600">
+                    {{ $errors->first('password') }}
+                </p>
+            @endif
 
             <div data-popover id="popover-password" role="tooltip"
                  class="absolute z-20 invisible inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 w-72 dark:bg-gray-900 dark:border-gray-600 dark:text-gray-400"
@@ -219,7 +225,7 @@
             @enderror
         </div>
 
-        <button wire:click.prevent="changePassword" wire:loading.attr="disabled" wire:target="changePassword"
+        <button wire:click.prevent="changePassword" wire:loading.attr="disabled" wire:target="changePassword" type="submit"
                 class="w-full px-5 py-3 text-base font-medium text-center bg-accent-400 rounded-lg hover:bg-accent-600 focus:ring-4 focus:ring-accent-300 dark:bg-accent-700 dark:hover:bg-accent-800 dark:focus:ring-accent-800 disabled:cursor-not-allowed disabled:hover:bg-accent-400 disabled:dark:hover:bg-accent-600">
             <span wire:loading.remove wire:target="changePassword">
                 Passwort ändern
@@ -241,7 +247,7 @@
     </form>
 
     @if(auth()->user()->hasCompleted2Fa())
-        <div class="space-y-2">
+        <form action="#" class="space-y-2">
             <div>
                 <div class="relative">
                     <input type="password" id="disable_2fa_password" name="disable_2fa_password"
@@ -278,7 +284,7 @@
                 @enderror
             </div>
 
-            <button wire:click.prevent="disable2Fa" wire:loading.attr="disabled" wire:target="disable2Fa"
+            <button wire:click.prevent="disable2Fa" wire:loading.attr="disabled" wire:target="disable2Fa" type="submit"
                     class="w-full px-5 py-3 text-base font-medium text-center bg-accent-400 rounded-lg hover:bg-accent-600 focus:ring-4 focus:ring-accent-300 dark:bg-accent-700 dark:hover:bg-accent-800 dark:focus:ring-accent-800 disabled:cursor-not-allowed disabled:hover:bg-accent-400 disabled:dark:hover:bg-accent-600">
                 <span wire:loading.remove wire:target="disable2Fa">
                     Zwei-Faktor-Authentifizierung deaktivieren
@@ -297,9 +303,9 @@
                     Lädt...
                 </span>
             </button>
-        </div>
+        </form>
     @elseif(auth()->user()->hasEnabled2Fa())
-        <div class="space-y-2">
+        <form action="#" class="space-y-2">
             <div class="flex justify-center">
                 {!! auth()->user()->get2FaQrCode() !!}
             </div>
@@ -333,7 +339,7 @@
                 @endforeach
             </div>
 
-            <button wire:click.prevent="confirm2Fa" wire:loading.attr="disabled" wire:target="confirm2Fa"
+            <button wire:click.prevent="confirm2Fa" wire:loading.attr="disabled" wire:target="confirm2Fa" type="submit"
                     class="w-full px-5 py-3 text-base font-medium text-center bg-accent-400 rounded-lg hover:bg-accent-600 focus:ring-4 focus:ring-accent-300 dark:bg-accent-700 dark:hover:bg-accent-800 dark:focus:ring-accent-800 disabled:cursor-not-allowed disabled:hover:bg-accent-400 disabled:dark:hover:bg-accent-600">
                 <span wire:loading.remove wire:target="confirm2Fa">
                     Zwei-Faktor-Authentifizierung abschließen
@@ -352,9 +358,9 @@
                     Lädt...
                 </span>
             </button>
-        </div>
+        </form>
     @else
-        <div class="space-y-2">
+        <form action="#" class="space-y-2">
             <div>
                 <div class="relative">
                     <input type="password" id="enable_2fa_password" name="enable_2fa_password"
@@ -373,7 +379,7 @@
                 @enderror
             </div>
 
-            <button wire:click.prevent="enable2Fa" wire:loading.attr="disabled" wire:target="enable2Fa"
+            <button wire:click.prevent="enable2Fa" wire:loading.attr="disabled" wire:target="enable2Fa" type="submit"
                     class="w-full px-5 py-3 text-base font-medium text-center bg-accent-400 rounded-lg hover:bg-accent-600 focus:ring-4 focus:ring-accent-300 dark:bg-accent-700 dark:hover:bg-accent-800 dark:focus:ring-accent-800 disabled:cursor-not-allowed disabled:hover:bg-accent-400 disabled:dark:hover:bg-accent-600">
                 <span wire:loading.remove wire:target="enable2Fa">
                     Zwei-Faktor-Authentifizierung aktivieren
@@ -392,6 +398,6 @@
                     Lädt...
                 </span>
             </button>
-        </div>
+        </form>
     @endif
 </div>
