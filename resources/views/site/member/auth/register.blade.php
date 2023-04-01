@@ -13,5 +13,5 @@
 @endpush
 
 @push('scripts')
-    @include('components.password', ['field' => 'password', 'passwordStrength' => 'password-strength'])
+    <x-form.input.password.indicator-script for="password" />
 @endpush

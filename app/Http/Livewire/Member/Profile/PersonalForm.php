@@ -132,7 +132,8 @@ class PersonalForm extends Component
         $uploadedFile = StorageFile::uploadFile($this->profile_picture, auth()->user());
         auth()->user()->update(['profile_picture_id' => $uploadedFile->id]);
 
-        session()->flash('updated', 'profile_picture');
+        $this->profile_picture = null;
+        $this->emit('showToast', 'Dein Profilbild wurde erfolgreich aktualisiert!');
 
         $this->profile_picture = null;
     }

@@ -9,13 +9,13 @@
     ]
 
     window.addEventListener('DOMContentLoaded', function () {
-        const passwordLength = $('#{{ $field }}-length')
-        const passwordUppercase = $('#{{ $field }}-uppercase')
-        const passwordLowercase = $('#{{ $field }}-lowercase')
-        const passwordNumber = $('#{{ $field }}-number')
-        const passwordSpecial = $('#{{ $field }}-special')
+        const passwordLength = $('#{{ $for }}-length')
+        const passwordUppercase = $('#{{ $for }}-uppercase')
+        const passwordLowercase = $('#{{ $for }}-lowercase')
+        const passwordNumber = $('#{{ $for }}-number')
+        const passwordSpecial = $('#{{ $for }}-special')
 
-        $('#{{ $field }}').on('input', function () {
+        $('#{{ $for }}').on('input', function () {
             const value = $(this).val()
 
             const length = value.length >= 8
@@ -27,7 +27,7 @@
             const strength = length + uppercase + lowercase + number + special + ((value.length >= 12) ? 1 : 0)
 
             for (let i = 1; i < 7; i++) {
-                const passwordStrength = $(`#{{ $passwordStrength }}-${i}`)
+                const passwordStrength = $(`#{{ $for }}-strength-${i}`)
                 for (const color of colors) passwordStrength.removeClass(color)
 
                 if (i <= strength) passwordStrength.addClass(colors[strength - 1])
