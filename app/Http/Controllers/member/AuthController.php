@@ -34,6 +34,10 @@ class AuthController extends Controller
     function logout()
     {
         auth()->logout();
+
+        session()->invalidate();
+        session()->regenerateToken();
+
         return redirect()->route('public.home');
     }
 
