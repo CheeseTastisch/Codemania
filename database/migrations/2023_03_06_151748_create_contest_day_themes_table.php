@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('seven_hundred');
             $table->string('eight_hundred');
             $table->string('nine_hundred');
+            $table->string('nine_hundred_fifty');
             $table->string('images');
             $table->timestamps();
         });

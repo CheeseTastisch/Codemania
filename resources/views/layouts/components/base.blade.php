@@ -30,6 +30,7 @@
             --color-accent-700: {{ theme()?->seven_hundred ?? "var(--color-default-700)" }};
             --color-accent-800: {{ theme()?->eight_hundred ?? "var(--color-default-800)"}};
             --color-accent-900: {{ theme()?->nine_hundred ?? "var(--color-default-900)" }};
+            --color-accent-950: {{ theme()?->nine_hundred_fifty ?? "var(--color-default-950)" }};
         }
     </style>
 

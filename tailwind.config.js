@@ -30,7 +30,8 @@ module.exports = {
                     '600': 'rgb(var(--color-accent-600) / <alpha-value>)',
                     '700': 'rgb(var(--color-accent-700) / <alpha-value>)',
                     '800': 'rgb(var(--color-accent-800) / <alpha-value>)',
-                    '900': 'rgb(var(--color-accent-900) / <alpha-value>)'
+                    '900': 'rgb(var(--color-accent-900) / <alpha-value>)',
+                    '950': 'rgb(var(--color-accent-950) / <alpha-value>)',
                 }
             },
         },
@@ -50,6 +51,7 @@ module.exports = {
                     "--color-default-700": toRGB(colors.gray[700]),
                     "--color-default-800": toRGB(colors.gray[800]),
                     "--color-default-900": toRGB(colors.gray[900]),
+                    "--color-default-950": toRGB(colors.gray[950]),
                 }
             })
         })
