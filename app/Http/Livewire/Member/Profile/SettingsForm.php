@@ -2,27 +2,34 @@
 
 namespace App\Http\Livewire\Member\Profile;
 
+use App\Concerns\Livewire\ValidatesMultipleInputs;
 use App\Concerns\TwoFactorAuthenticatable\TwoFactorVerifyResult;
 use Hash;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
 use Livewire\Component;
 
 class SettingsForm extends Component
 {
 
+    use ValidatesMultipleInputs;
+
     public $theme,
         $email,
         $current_password,
         $password,
         $password_confirmation,
-        $two_fa_code,
-        $current_password_two_factor;
+        $enable_2fa_password,
+        $confirm_2fa_code,
+        $disable_2fa_password,
+        $disable_2fa_code;
 
-    public function mount() {
+    public function mount()
+    {
         $this->theme = auth()->user()->theme;
-        $this->email -> auth()->user()->email;
+        $this->email = auth()->user()->email;
     }
 
     public function render(): View|\Illuminate\Foundation\Application|Factory|\Illuminate\Contracts\Foundation\Application
@@ -30,60 +37,88 @@ class SettingsForm extends Component
         return view('livewire.member.profile.settings-form');
     }
 
-    public function updatedTheme() {
-        $this->validate();
+    public function updatedTheme()
+    {
+        $this->validateOnly('theme');
 
-        auth()->user()->update([
-            'theme' => $this->theme
-        ]);
-
-        session()->flash('updated', 'them');
-    }
-
-    public function updatedEmail() {
-        $this->validate();
-
-        auth()->user()->update([
-            'email' => $this->email
-        ]);
-
-        session()->flash('updated', 'email');
-    }
-
-    public function changePassword() {
-        $this->validate();
-
-        if (!Hash::check($this->current_password, auth()->user()->password)) {
-            $this->addError('current_password', 'Das eingegebene Passwort ist falsch.');
-            return;
+        if (auth()->user()->theme != $this->theme) {
+            auth()->user()->update(['theme' => $this->theme]);
+            session()->flash('updated', 'theme');
         }
-
-        auth()->user()->update([
-            'password' => $this->password
-        ]);
-
-        $this->emit('showToast', 'Dein Passwort wurde erfolgreich geändert.');
     }
 
-    public function confirmTwoFactor() {
-        $this->validate();
+    public function updatedEmail()
+    {
+        $this->validateOnly('email');
 
-        if (auth()->user()->confirmTwoFactorAuthentication($this->two_fa_code)) {
+        if (auth()->user()->email != $this->email) {
+            auth()->user()->update(['email' => $this->email]);
+            session()->flash('updated', 'email');
+        }
+    }
+
+    public function changePassword()
+    {
+        $this->validateMultiple(['current_password', 'password', 'password_confirmation']);
+
+        if (Hash::check($this->current_password, auth()->user()->password)) {
+            auth()->user()->update(['password' => Hash::make($this->password)]);
+
+            $this->current_password = '';
+            $this->password = '';
+            $this->password_confirmation = '';
+
+            $this->emit('showToast', 'Du hast dein Passwort erfolgreich geändert.');
+        } else {
+            $this->addError('current_password', 'Das aktuelle Passwort ist falsch.');
+        }
+    }
+
+    public function enable2Fa()
+    {
+        $this->validateOnly('enable_2fa_password');
+
+        if (Hash::check($this->enable_2fa_password, auth()->user()->password)) {
+            auth()->user()->enable2Fa();
+            $this->emit('showToast', 'Zwei-Faktor-Authentifizierung wurde aktiviert, bitte scanne den QR-Code mit deiner Authentifizierungs-App und gib den Zwei-Faktor-Code ein um die Aktivierung abzuschließen.');
+        } else {
+            $this->addError('enable_2fa_password', 'Das Passwort ist falsch.');
+        }
+    }
+
+    public function confirm2Fa()
+    {
+        $this->validateOnly('confirm_2fa_code');
+
+        if (auth()->user()->confirm2Fa($this->confirm_2fa_code)) {
             $this->emit('showToast', 'Zwei-Faktor-Authentifizierung wurde erfolgreich aktiviert.');
         } else {
-            $this->addError('two_fa_code', 'Der eingegebene Code ist ungültig.');
+            $this->addError('confirm_2fa_code', 'Der Zwei-Faktor-Code ist falsch.');
         }
     }
 
+    public function disable2Fa() {
+        $this->validateMultiple(['disable_2fa_password', 'disable_2fa_code']);
+
+        if (Hash::check($this->disable_2fa_password, auth()->user()->password)) {
+            if (auth()->user()->disable2Fa($this->disable_2fa_code)->wasInvalidCode()) {
+                $this->addError('disable_2fa_code', 'Der Zwei-Faktor-Code ist falsch, du kannst auch einen Wiederherstellungscode verwenden.');
+            } else {
+                $this->emit('showToast', 'Zwei-Faktor-Authentifizierung wurde erfolgreich deaktiviert.');
+            }
+        } else {
+            $this->addError('disable_2fa_password', 'Das Passwort ist falsch.');
+        }
+    }
 
     protected function getRules(): array
     {
         return [
             'theme' => 'required|in:light,dark',
             'email' => 'required|email',
-            'current_password' => 'nullable',
+            'current_password' => 'required',
             'password' => [
-                'nullable',
+                'required',
                 Password::min(8)
                     ->letters()
                     ->mixedCase()
@@ -91,9 +126,12 @@ class SettingsForm extends Component
                     ->symbols()
                     ->uncompromised(),
             ],
-            'password_confirmation' => 'nullable|same:password',
-            'two_fa_code' => 'nullable',
-            'current_password_two_factor' => 'nullable'
+            'password_confirmation' => 'required|same:password',
+            'enable_2fa_password' => 'required',
+            'confirm_2fa_code' => 'required',
+            'disable_2fa_password' => 'required',
+            'disable_2fa_code' => 'required',
         ];
     }
+
 }

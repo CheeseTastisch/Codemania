@@ -39,8 +39,10 @@
     @include('components.password', ['field' => 'password', 'passwordStrength' => 'password-strength'])
 
     <script>
-        $('#theme').on('change', function () {
-            setTheme($(this).val());
-        })
+        window.addEventListener('DOMContentLoaded', function () {
+            $('#theme').on('change', function () {
+                setTheme($(this).val());
+            })
+        });
     </script>
 @endpush

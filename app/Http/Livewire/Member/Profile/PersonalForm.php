@@ -33,7 +33,8 @@ class PersonalForm extends Component
         'birthday' => 'nullable|date',
         'class' => 'nullable|string',
         'gender' => 'nullable|string|in:null,m,f,o',
-        'slogan' => 'nullable|string'
+        'slogan' => 'nullable|string',
+        'profile_picture' => 'required|image|max:1024'
     ];
 
     public function mount()
@@ -54,7 +55,7 @@ class PersonalForm extends Component
     }
 
     public function updatedFirstname() {
-        $this->validate();
+        $this->validateOnly('firstname');
 
         if (auth()->user()->first_name != $this->firstname) {
             auth()->user()->update(['first_name' => $this->firstname]);
@@ -63,7 +64,7 @@ class PersonalForm extends Component
     }
 
     public function updatedLastname() {
-        $this->validate();
+        $this->validateOnly('lastname');
 
         if (auth()->user()->last_name != $this->lastname) {
             auth()->user()->update(['last_name' => $this->lastname]);
@@ -72,7 +73,7 @@ class PersonalForm extends Component
     }
 
     public function updatedNickname() {
-        $this->validate();
+        $this->validateOnly('nickname');
 
         if (auth()->user()->nickname != $this->nickname) {
             auth()->user()->update(['nickname' => $this->nickname == '' ? null : $this->nickname]);
@@ -81,7 +82,7 @@ class PersonalForm extends Component
     }
 
     public function updatedDisplayName() {
-        $this->validate();
+        $this->validateOnly('display_name');
 
         if (auth()->user()->display_name_type != $this->display_name) {
             auth()->user()->update(['display_name_type' => ($this->display_name == 'Nickname' ? 'nickname' : $this->display_name)]);
@@ -90,7 +91,7 @@ class PersonalForm extends Component
     }
 
     public function updatedBirthday() {
-        $this->validate();
+        $this->validateOnly('birthday');
 
         if (auth()->user()->birthday != $this->birthday) {
             auth()->user()->update(['birthday' => $this->birthday == '' ? null : $this->birthday]);
@@ -99,7 +100,7 @@ class PersonalForm extends Component
     }
 
     public function updatedClass() {
-        $this->validate();
+        $this->validateOnly('class');
 
         if (auth()->user()->class != $this->class) {
             auth()->user()->update(['class' => $this->class == '' ? null : $this->class]);
@@ -108,7 +109,7 @@ class PersonalForm extends Component
     }
 
     public function updatedGender() {
-        $this->validate();
+        $this->validateOnly('gender');
 
         if (auth()->user()->gender != $this->gender) {
             auth()->user()->update(['gender' => $this->gender == 'null' ? null : $this->gender]);
@@ -117,7 +118,7 @@ class PersonalForm extends Component
     }
 
     public function updatedSlogan() {
-        $this->validate();
+        $this->validateOnly('slogan');
 
         if (auth()->user()->slogan != $this->slogan) {
             auth()->user()->update(['slogan' => $this->slogan == '' ? null : $this->slogan]);
@@ -126,9 +127,7 @@ class PersonalForm extends Component
     }
 
     public function uploadProfilePicture() {
-        $this->validate([
-            'profile_picture' => 'required|image|max:1024'
-        ]);
+        $this->validateOnly('profile_picture');
 
         $uploadedFile = StorageFile::uploadFile($this->profile_picture, auth()->user());
         auth()->user()->update(['profile_picture_id' => $uploadedFile->id]);

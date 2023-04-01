@@ -5,12 +5,15 @@
         <div class="relative">
             <select id="theme" @error('theme') aria-describedby="theme-error" @enderror wire:model="theme"
                     class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-accent-400 focus:border-accent-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-accent-600 dark:focus:border-accent-600">
-                <option value="dark">Dunkle</option>
                 <option value="light">Hell</option>
+                <option value="dark">Dunkle</option>
             </select>
             @if(session('updated') === 'theme')
-                <svg aria-hidden="true" class="absolute right-8 bottom-2 text-green-400 dark:text-green-600 w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"></path>
+                <svg aria-hidden="true" class="absolute right-8 bottom-2 text-green-400 dark:text-green-600 w-7 h-7"
+                     fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round"
+                          stroke-linejoin="round"></path>
                 </svg>
             @endif
         </div>
@@ -218,9 +221,9 @@
 
         <button wire:click.prevent="changePassword" wire:loading.attr="disabled" wire:target="changePassword"
                 class="w-full px-5 py-3 text-base font-medium text-center bg-accent-400 rounded-lg hover:bg-accent-600 focus:ring-4 focus:ring-accent-300 dark:bg-accent-700 dark:hover:bg-accent-800 dark:focus:ring-accent-800 disabled:cursor-not-allowed disabled:hover:bg-accent-400 disabled:dark:hover:bg-accent-600">
-        <span wire:loading.remove wire:target="changePassword">
-            Passwort ändern
-        </span>
+            <span wire:loading.remove wire:target="changePassword">
+                Passwort ändern
+            </span>
             <span wire:loading wire:target="changePassword">
                 <svg aria-hidden="true" role="status"
                      class="inline w-4 h-4 mr-3 text-gray-200 animate-spin dark:text-gray-600 fill-accent-600 dark:fill-accent-400"
@@ -237,158 +240,157 @@
         </button>
     </form>
 
-    @if(auth()->user()->hasEnabledTwoFactorAuthentication())
+    @if(auth()->user()->hasCompleted2Fa())
         <div class="space-y-2">
-            <div class="flex justify-center">
-                {!! auth()->user()->getTwoFactorQrCode() !!}
+            <div>
+                <div class="relative">
+                    <input type="password" id="disable_2fa_password" name="disable_2fa_password"
+                           placeholder=" " wire:model.lazy="disable_2fa_password"
+                           class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 peer focus:border-accent-400 dark:focus:border-accent-600 @error('disable_2fa_password') !border-red-400 dark:!border-red-600 @enderror"
+                           @error('disable_2fa_password') aria-describedby="disable_2fa_password-error" @enderror/>
+                    <label for="disable_2fa_password"
+                           class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-slate-200 dark:bg-slate-800 px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1 peer-focus:text-accent-400 peer-focus:dark:text-accent-600 @error('disable_2fa_password') !text-red-400 dark:!text-red-600 @enderror">
+                        Derzeitiges Passwort
+                    </label>
+                </div>
+                @error('disable_2fa_password')
+                <p id="disable_2fa_password-error" class="mt-2 text-xs text-red-400 dark:text-red-600">
+                    {{ $message }}
+                </p>
+                @enderror
             </div>
 
             <div>
                 <div class="relative">
-                    <input type="text" id="2fa_code" name="2fa_code" placeholder=" "
-                           wire:model.defer="two_fa_code"
-                           class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 peer focus:border-accent-400 dark:focus:border-accent-600 @error('2fa_code') !border-red-400 dark:!border-red-600 @enderror"
-                           @error('2fa_code') aria-describedby="2fa_code-error" @enderror/>
-                    <label for="2fa_code"
-                           class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-slate-200 dark:bg-slate-800 px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1 peer-focus:text-accent-400 peer-focus:dark:text-accent-600 @error('2fa_code') !text-red-400 dark:!text-red-600 @enderror">
-                        2FA Code
+                    <input type="text" id="disable_2fa_code" name="disable_2fa_code"
+                           placeholder=" " wire:model.lazy="disable_2fa_code"
+                           class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 peer focus:border-accent-400 dark:focus:border-accent-600 @error('disable_2fa_code') !border-red-400 dark:!border-red-600 @enderror"
+                           @error('disable_2fa_code') aria-describedby="disable_2fa_code-error" @enderror/>
+                    <label for="disable_2fa_code"
+                           class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-slate-200 dark:bg-slate-800 px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1 peer-focus:text-accent-400 peer-focus:dark:text-accent-600 @error('disable_2fa_code') !text-red-400 dark:!text-red-600 @enderror">
+                        Zwei-Faktor-Authentifizierungscode
                     </label>
                 </div>
-                @error('2fa_code')
-                <p id="2fa_code-error" class="mt-2 text-xs text-red-400 dark:text-red-600">
+                @error('disable_2fa_code')
+                <p id="disable_2fa_code-error" class="mt-2 text-xs text-red-400 dark:text-red-600">
+                    {{ $message }}
+                </p>
+                @enderror
+            </div>
+
+            <button wire:click.prevent="disable2Fa" wire:loading.attr="disabled" wire:target="disable2Fa"
+                    class="w-full px-5 py-3 text-base font-medium text-center bg-accent-400 rounded-lg hover:bg-accent-600 focus:ring-4 focus:ring-accent-300 dark:bg-accent-700 dark:hover:bg-accent-800 dark:focus:ring-accent-800 disabled:cursor-not-allowed disabled:hover:bg-accent-400 disabled:dark:hover:bg-accent-600">
+                <span wire:loading.remove wire:target="disable2Fa">
+                    Zwei-Faktor-Authentifizierung deaktivieren
+                </span>
+                <span wire:loading wire:target="disable2Fa">
+                    <svg aria-hidden="true" role="status"
+                         class="inline w-4 h-4 mr-3 text-gray-200 animate-spin dark:text-gray-600 fill-accent-600 dark:fill-accent-400"
+                         viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                            fill="currentColor"/>
+                        <path
+                            d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                            fill="fillColor"/>
+                    </svg>
+                    Lädt...
+                </span>
+            </button>
+        </div>
+    @elseif(auth()->user()->hasEnabled2Fa())
+        <div class="space-y-2">
+            <div class="flex justify-center">
+                {!! auth()->user()->get2FaQrCode() !!}
+            </div>
+
+            <div>
+                <div class="relative">
+                    <input type="text" id="confirm_2fa_code" name="confirm_2fa_code"
+                           placeholder=" " wire:model.lazy="confirm_2fa_code"
+                           class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 peer focus:border-accent-400 dark:focus:border-accent-600 @error('confirm_2fa_code') !border-red-400 dark:!border-red-600 @enderror"
+                           @error('confirm_2fa_code') aria-describedby="confirm_2fa_code-error" @enderror/>
+                    <label for="confirm_2fa_code"
+                           class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-slate-200 dark:bg-slate-800 px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1 peer-focus:text-accent-400 peer-focus:dark:text-accent-600 @error('confirm_2fa_code') !text-red-400 dark:!text-red-600 @enderror">
+                        Zwei-Faktor-Authentifizierungscode
+                    </label>
+                </div>
+                @error('confirm_2fa_code')
+                <p id="confirm_2fa_code-error" class="mt-2 text-xs text-red-400 dark:text-red-600">
                     {{ $message }}
                 </p>
                 @enderror
             </div>
 
             <p class="text-xl">Sicherheitscodes</p>
-            <p class="text-sm">
+            <p class="text-sm sm:max-w-1/2">
+                Diese Codes können verwendet werden, wenn du keinen Zugriff auf deine Authentifizierungs-App hast.
                 Sichere dir diese Codes und bewahre sie an einem sicheren Ort auf.
-                Du kannst sie verwenden, um dich anzumelden, wenn du keinen Zugriff auf deine Authentifizierungs-App
-                hast.
             </p>
             <div class="grid grid-rows-4 grid-cols-2">
-                @foreach(auth()->user()->getRecoveryCodes() as $code)
+                @foreach(auth()->user()->get2FaRecoveryCodes() as $code)
                     <span>{{ $code }}</span>
                 @endforeach
             </div>
 
-            <button wire:click.prevent="confirmTwoFactor" wire:loading.attr="disabled" wire:target="confirmTwoFactor"
+            <button wire:click.prevent="confirm2Fa" wire:loading.attr="disabled" wire:target="confirm2Fa"
                     class="w-full px-5 py-3 text-base font-medium text-center bg-accent-400 rounded-lg hover:bg-accent-600 focus:ring-4 focus:ring-accent-300 dark:bg-accent-700 dark:hover:bg-accent-800 dark:focus:ring-accent-800 disabled:cursor-not-allowed disabled:hover:bg-accent-400 disabled:dark:hover:bg-accent-600">
-                    <span wire:loading.remove wire:target="confirmTwoFactor">
-                        2FA Aktivierung abschließen
-                    </span>
-                <span wire:loading wire:target="confirmTwoFactor">
-                <svg aria-hidden="true" role="status"
-                     class="inline w-4 h-4 mr-3 text-gray-200 animate-spin dark:text-gray-600 fill-accent-600 dark:fill-accent-400"
-                     viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                        fill="currentColor"/>
-                    <path
-                        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                        fill="fillColor"/>
-                </svg>
-                Lädt...
-            </span>
-            </button>
-        </div>
-    @elseif(auth()->user()->hasCompletedTwoFactorAuthentication())
-        <div class="space-y-2">
-            <div>
-                <div class="relative">
-                    <input type="password" id="current_password_tow_factor" name="current_password_tow_factor" placeholder=" "
-                           wire:model.lazy="current_password_tow_factor"
-                           class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 peer focus:border-accent-400 dark:focus:border-accent-600 @error('current_password_tow_factor') !border-red-400 dark:!border-red-600 @enderror"
-                           @error('current_password_tow_factor') aria-describedby="current_password_tow_factor-error" @enderror/>
-                    <label for="current_password_tow_factor"
-                           class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-slate-200 dark:bg-slate-800 px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1 peer-focus:text-accent-400 peer-focus:dark:text-accent-600 @error('current_password_tow_factor') !text-red-400 dark:!text-red-600 @enderror">
-                        Derzeitiges Passwort
-                    </label>
-                </div>
-                @error('current_password_tow_factor')
-                <p id="current_password_tow_factor-error" class="mt-2 text-xs text-red-400 dark:text-red-600">
-                    {{ $message }}
-                </p>
-                @enderror
-            </div>
-
-            <div>
-                <div class="relative">
-                    <input type="text" id="two_fa_code" name="two_fa_code" placeholder=" "
-                           wire:model.defer="two_fa_code"
-                           class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 peer focus:border-accent-400 dark:focus:border-accent-600 @error('2fa_code') !border-red-400 dark:!border-red-600 @enderror"
-                           @error('two_fa_code') aria-describedby="2fa_code-error" @enderror/>
-                    <label for="two_fa_code"
-                           class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-slate-200 dark:bg-slate-800 px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1 peer-focus:text-accent-400 peer-focus:dark:text-accent-600 @error('2fa_code') !text-red-400 dark:!text-red-600 @enderror">
-                        2FA Code
-                    </label>
-                </div>
-                @error('two_fa_code')
-                <p id="two_fa_code-error" class="mt-2 text-xs text-red-400 dark:text-red-600">
-                    {{ $message }}
-                </p>
-                @enderror
-            </div>
-
-            <button wire:click.prevent="disableTwoFactor" wire:loading.attr="disabled" wire:target="disableTwoFactor"
-                    class="w-full px-5 py-3 text-base font-medium text-center bg-accent-400 rounded-lg hover:bg-accent-600 focus:ring-4 focus:ring-accent-300 dark:bg-accent-700 dark:hover:bg-accent-800 dark:focus:ring-accent-800 disabled:cursor-not-allowed disabled:hover:bg-accent-400 disabled:dark:hover:bg-accent-600">
-                    <span wire:loading.remove wire:target="disableTwoFactor">
-                        2FA deaktivieren
-                    </span>
-                <span wire:loading wire:target="disableTwoFactor">
-                <svg aria-hidden="true" role="status"
-                     class="inline w-4 h-4 mr-3 text-gray-200 animate-spin dark:text-gray-600 fill-accent-600 dark:fill-accent-400"
-                     viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                        fill="currentColor"/>
-                    <path
-                        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                        fill="fillColor"/>
-                </svg>
-                Lädt...
-            </span>
+                <span wire:loading.remove wire:target="confirm2Fa">
+                    Zwei-Faktor-Authentifizierung abschließen
+                </span>
+                <span wire:loading wire:target="confirm2Fa">
+                    <svg aria-hidden="true" role="status"
+                         class="inline w-4 h-4 mr-3 text-gray-200 animate-spin dark:text-gray-600 fill-accent-600 dark:fill-accent-400"
+                         viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                            fill="currentColor"/>
+                        <path
+                            d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                            fill="fillColor"/>
+                    </svg>
+                    Lädt...
+                </span>
             </button>
         </div>
     @else
         <div class="space-y-2">
             <div>
                 <div class="relative">
-                    <input type="password" id="current_password_tow_factor" name="current_password_tow_factor" placeholder=" "
-                           wire:model.lazy="current_password_tow_factor"
-                           class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 peer focus:border-accent-400 dark:focus:border-accent-600 @error('current_password_tow_factor') !border-red-400 dark:!border-red-600 @enderror"
-                           @error('current_password_tow_factor') aria-describedby="current_password_tow_factor-error" @enderror/>
-                    <label for="current_password_tow_factor"
-                           class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-slate-200 dark:bg-slate-800 px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1 peer-focus:text-accent-400 peer-focus:dark:text-accent-600 @error('current_password_tow_factor') !text-red-400 dark:!text-red-600 @enderror">
+                    <input type="password" id="enable_2fa_password" name="enable_2fa_password"
+                           placeholder=" " wire:model.lazy="enable_2fa_password"
+                           class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 peer focus:border-accent-400 dark:focus:border-accent-600 @error('enable_2fa_password') !border-red-400 dark:!border-red-600 @enderror"
+                           @error('enable_2fa_password') aria-describedby="enable_2fa_password-error" @enderror/>
+                    <label for="enable_2fa_password"
+                           class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-slate-200 dark:bg-slate-800 px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1 peer-focus:text-accent-400 peer-focus:dark:text-accent-600 @error('enable_2fa_password') !text-red-400 dark:!text-red-600 @enderror">
                         Derzeitiges Passwort
                     </label>
                 </div>
-                @error('current_password_tow_factor')
-                <p id="current_password_tow_factor-error" class="mt-2 text-xs text-red-400 dark:text-red-600">
+                @error('enable_2fa_password')
+                <p id="enable_2fa_password-error" class="mt-2 text-xs text-red-400 dark:text-red-600">
                     {{ $message }}
                 </p>
                 @enderror
             </div>
 
-            <button wire:click.prevent="enableTwoFactor" wire:loading.attr="disabled" wire:target="enableTwoFactor"
+            <button wire:click.prevent="enable2Fa" wire:loading.attr="disabled" wire:target="enable2Fa"
                     class="w-full px-5 py-3 text-base font-medium text-center bg-accent-400 rounded-lg hover:bg-accent-600 focus:ring-4 focus:ring-accent-300 dark:bg-accent-700 dark:hover:bg-accent-800 dark:focus:ring-accent-800 disabled:cursor-not-allowed disabled:hover:bg-accent-400 disabled:dark:hover:bg-accent-600">
-                    <span wire:loading.remove wire:target="enableTwoFactor">
-                        2FA aktivieren
-                    </span>
-                <span wire:loading wire:target="enableTwoFactor">
-                <svg aria-hidden="true" role="status"
-                     class="inline w-4 h-4 mr-3 text-gray-200 animate-spin dark:text-gray-600 fill-accent-600 dark:fill-accent-400"
-                     viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                        fill="currentColor"/>
-                    <path
-                        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                        fill="fillColor"/>
-                </svg>
-                Lädt...
-            </span>
+                <span wire:loading.remove wire:target="enable2Fa">
+                    Zwei-Faktor-Authentifizierung aktivieren
+                </span>
+                <span wire:loading wire:target="enable2Fa">
+                    <svg aria-hidden="true" role="status"
+                         class="inline w-4 h-4 mr-3 text-gray-200 animate-spin dark:text-gray-600 fill-accent-600 dark:fill-accent-400"
+                         viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                            fill="currentColor"/>
+                        <path
+                            d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                            fill="fillColor"/>
+                    </svg>
+                    Lädt...
+                </span>
             </button>
         </div>
     @endif
