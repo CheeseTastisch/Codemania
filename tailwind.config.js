@@ -1,3 +1,10 @@
+const plugin = require("tailwindcss/plugin");
+const colors = require("tailwindcss/colors");
+const { parseColor } = require("tailwindcss/lib/util/color");
+
+/* Converts HEX color to RGB */
+const toRGB = (value) => parseColor(value).color.join(" ");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
     content: [
@@ -14,78 +21,38 @@ module.exports = {
             },
             colors: {
                 'accent': {
-                    '50': 'rgb(var(--color-accent-50))',
-                    '100': 'rgb(var(--color-accent-100))',
-                    '200': 'rgb(var(--color-accent-200))',
-                    '300': 'rgb(var(--color-accent-300))',
-                    '400': 'rgb(var(--color-accent-400))',
-                    '500': 'rgb(var(--color-accent-500))',
-                    '600': 'rgb(var(--color-accent-600))',
-                    '700': 'rgb(var(--color-accent-700))',
-                    '800': 'rgb(var(--color-accent-800))',
-                    '900': 'rgb(var(--color-accent-900))'
+                    '50': 'rgb(var(--color-accent-50) / <alpha-value>)',
+                    '100': 'rgb(var(--color-accent-100) / <alpha-value>)',
+                    '200': 'rgb(var(--color-accent-200) / <alpha-value>)',
+                    '300': 'rgb(var(--color-accent-300) / <alpha-value>)',
+                    '400': 'rgb(var(--color-accent-400) / <alpha-value>)',
+                    '500': 'rgb(var(--color-accent-500) / <alpha-value>)',
+                    '600': 'rgb(var(--color-accent-600) / <alpha-value>)',
+                    '700': 'rgb(var(--color-accent-700) / <alpha-value>)',
+                    '800': 'rgb(var(--color-accent-800) / <alpha-value>)',
+                    '900': 'rgb(var(--color-accent-900) / <alpha-value>)'
                 }
             },
-            backgroundColor: {
-                'accent': {
-                    '50': 'rgb(var(--color-accent-50) / var(--tw-bg-opacity, 1))',
-                    '100': 'rgb(var(--color-accent-100) / var(--tw-bg-opacity, 1))',
-                    '200': 'rgb(var(--color-accent-200) / var(--tw-bg-opacity, 1))',
-                    '300': 'rgb(var(--color-accent-300) / var(--tw-bg-opacity, 1))',
-                    '400': 'rgb(var(--color-accent-400) / var(--tw-bg-opacity, 1))',
-                    '500': 'rgb(var(--color-accent-500) / var(--tw-bg-opacity, 1))',
-                    '600': 'rgb(var(--color-accent-600) / var(--tw-bg-opacity, 1))',
-                    '700': 'rgb(var(--color-accent-700) / var(--tw-bg-opacity, 1))',
-                    '800': 'rgb(var(--color-accent-800) / var(--tw-bg-opacity, 1))',
-                    '900': 'rgb(var(--color-accent-900) / var(--tw-bg-opacity, 1))'
-                }
-            },
-            borderColor: {
-                'accent': {
-                    '50': 'rgb(var(--color-accent-50) / var(--tw-border-opacity, 1))',
-                    '100': 'rgb(var(--color-accent-100) / var(--tw-border-opacity, 1))',
-                    '200': 'rgb(var(--color-accent-200) / var(--tw-border-opacity, 1))',
-                    '300': 'rgb(var(--color-accent-300) / var(--tw-border-opacity, 1))',
-                    '400': 'rgb(var(--color-accent-400) / var(--tw-border-opacity, 1))',
-                    '500': 'rgb(var(--color-accent-500) / var(--tw-border-opacity, 1))',
-                    '600': 'rgb(var(--color-accent-600) / var(--tw-border-opacity, 1))',
-                    '700': 'rgb(var(--color-accent-700) / var(--tw-border-opacity, 1))',
-                    '800': 'rgb(var(--color-accent-800) / var(--tw-border-opacity, 1))',
-                    '900': 'rgb(var(--color-accent-900) / var(--tw-border-opacity, 1))'
-                }
-            },
-            textColor: {
-                'accent': {
-                    '50': 'rgb(var(--color-accent-50) / var(--tw-text-opacity, 1))',
-                    '100': 'rgb(var(--color-accent-100) / var(--tw-text-opacity, 1))',
-                    '200': 'rgb(var(--color-accent-200) / var(--tw-text-opacity, 1))',
-                    '300': 'rgb(var(--color-accent-300) / var(--tw-text-opacity, 1))',
-                    '400': 'rgb(var(--color-accent-400) / var(--tw-text-opacity, 1))',
-                    '500': 'rgb(var(--color-accent-500) / var(--tw-text-opacity, 1))',
-                    '600': 'rgb(var(--color-accent-600) / var(--tw-text-opacity, 1))',
-                    '700': 'rgb(var(--color-accent-700) / var(--tw-text-opacity, 1))',
-                    '800': 'rgb(var(--color-accent-800) / var(--tw-text-opacity, 1))',
-                    '900': 'rgb(var(--color-accent-900) / var(--tw-text-opacity, 1))'
-                }
-            },
-            ringColor: {
-                'accent': {
-                    '50': 'rgb(var(--color-accent-50) / var(--tw-ring-opacity, 1))',
-                    '100': 'rgb(var(--color-accent-100) / var(--tw-ring-opacity, 1))',
-                    '200': 'rgb(var(--color-accent-200) / var(--tw-ring-opacity, 1))',
-                    '300': 'rgb(var(--color-accent-300) / var(--tw-ring-opacity, 1))',
-                    '400': 'rgb(var(--color-accent-400) / var(--tw-ring-opacity, 1))',
-                    '500': 'rgb(var(--color-accent-500) / var(--tw-ring-opacity, 1))',
-                    '600': 'rgb(var(--color-accent-600) / var(--tw-ring-opacity, 1))',
-                    '700': 'rgb(var(--color-accent-700) / var(--tw-ring-opacity, 1))',
-                    '800': 'rgb(var(--color-accent-800) / var(--tw-ring-opacity, 1))',
-                    '900': 'rgb(var(--color-accent-900) / var(--tw-ring-opacity, 1))'
-                }
-            }
         },
   },
     plugins: [
-        require('flowbite/plugin')
+        require('flowbite/plugin'),
+        plugin(function ({ addBase }) {
+            addBase({
+                ":root": {
+                    "--color-default-50": toRGB(colors.gray[50]),
+                    "--color-default-100": toRGB(colors.gray[100]),
+                    "--color-default-200": toRGB(colors.gray[200]),
+                    "--color-default-300": toRGB(colors.gray[300]),
+                    "--color-default-400": toRGB(colors.gray[400]),
+                    "--color-default-500": toRGB(colors.gray[500]),
+                    "--color-default-600": toRGB(colors.gray[600]),
+                    "--color-default-700": toRGB(colors.gray[700]),
+                    "--color-default-800": toRGB(colors.gray[800]),
+                    "--color-default-900": toRGB(colors.gray[900]),
+                }
+            })
+        })
     ],
     darkMode: 'class'
 }

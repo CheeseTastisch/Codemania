@@ -15,6 +15,7 @@ return new class extends Migration
         Schema::create('contest_days', function (Blueprint $table) {
             $table->id();
             $table->date('date');
+            $table->date('registration_deadline')->nullable();
             $table->string('name');
             $table->timestamp('allow_training_from')->nullable();
             $table->boolean('current')->default(false);

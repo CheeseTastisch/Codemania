@@ -19,7 +19,7 @@
                     <span class="text-accent-400 dark:text-accent-600">Codemania</span> Contest
                 </div>
                 <div class="md:text-3xl text-xl mt-6 md:max-w-2xl font-bold">
-                    {{ day()->date->translatedFormat('d. F Y') }}
+                    {{ day()?->date?->translatedFormat('d. F Y') ?? 'Noch nicht bekannt' }}
                 </div>
                 <a type="button" href="#"
                    class="inline-block md:text-2xl mt-6 bg-accent-400 dark:bg-accent-600 hover:bg-accent-600 dark:hover:bg-accent-400 focus:ring-4 focus:ring-accent-300 dark:focus:ring-accent-700 font-medium rounded-lg text px-5 py-2.5 mr-2 mb-2 focus:outline-none">
@@ -81,7 +81,7 @@
 
                 <div class="mt-6">
                     Angetreten wird in <span class="font-bold underline">Teams von 2 bis 4 Personen</span>.
-                    Die Teilnehmer können sich bis zum <span class="font-bold underline">{{ day()->date->format('d. F Y') }}</span> zu Teams
+                    Die Teilnehmer können sich bis zum <span class="font-bold underline">{{ day()?->getRegistrationDeadline()?->format('d. F Y')  }}</span> zu Teams
                     zusammenschließen.
                     Teilnehmer, die bis dahin noch kein Team haben, werden in zufällige Teams eingeteilt.
                 </div>

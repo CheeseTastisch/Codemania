@@ -12,6 +12,7 @@ class ContestDay extends Model
 
     protected $fillable = [
         'date',
+        'registration_deadline',
         'name',
         'allow_training_from',
         'current',
@@ -20,17 +21,24 @@ class ContestDay extends Model
 
     protected $casts = [
         'date' => 'date',
+        'registration_deadline' => 'date',
         'allow_training_from' => 'timestamp',
     ];
 
     public function theme(): BelongsTo
     {
-        return $this->belongsTo(ContestDayTheme::class);
+        return $this->belongsTo(ContestDayTheme::class, 'id');
     }
 
     public function contests(): HasMany
     {
         return $this->hasMany(Contest::class);
+    }
+
+    public function getRegistrationDeadline()
+    {
+        if ($this->registration_deadline) return $this->registration_deadline;
+        return $this->date;
     }
 
 }
