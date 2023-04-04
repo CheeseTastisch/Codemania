@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Registrieren')
+@section('title', 'Password zurücksetzen')
 
 @push('content')
     <div class="flex flex-col items-center justify-center px-6 pt-8 mx-auto pt:mt-0">

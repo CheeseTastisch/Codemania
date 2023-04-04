@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Member\Auth\Password\Reset;
 
 use App\Models\User;
 use DB;
+use Hash;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -47,7 +48,7 @@ class Form extends Component
             ],
             function (User $user, string $password) {
                 $user->forceFill([
-                    'password' => $password,
+                    'password' => Hash::make($password),
                     'remember_token' => null
                 ])->save();
 
