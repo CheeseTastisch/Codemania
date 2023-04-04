@@ -72,10 +72,10 @@ class Kernel extends HttpKernel
             SubstituteBindings::class,
         ],
 
-        '2faAdmin' => [
+        'admin.full' => [
             '2fa',
             '2fa_enabled',
-            'admin',
+            'admin.db',
         ],
     ];
 
@@ -101,7 +101,7 @@ class Kernel extends HttpKernel
         '2fa' => TwoFactorAuthenticated::class,
         'not_2fa' => NotTwoFactorAuthenticated::class,
         '2fa_enabled' => RequiresTwoFactorEnabled::class,
-        'admin' => IsAdmin::class,
+        'admin.db' => IsAdmin::class,
     );
 
 }
