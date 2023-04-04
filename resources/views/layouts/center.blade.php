@@ -8,6 +8,6 @@
             @stack('content')
         </main>
 
-        @include('layouts.components.user.footer')
+        @include('layouts.components.base.footer')
     </div>
 @endsection
