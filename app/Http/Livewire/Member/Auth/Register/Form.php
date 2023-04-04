@@ -74,6 +74,7 @@ class Form extends Component
             'last_name' => $this->lastname,
             'password' => Hash::make($this->password),
         ]);
+
         event(new Registered($user));
 
         auth()->login($user);

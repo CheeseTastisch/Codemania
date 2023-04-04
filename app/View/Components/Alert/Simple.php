@@ -14,6 +14,7 @@ class Simple extends Component
     public function __construct(
         public string $type = 'info',
         public string $srInfo = 'Information',
+        public bool   $wire = false,
     )
     {
         //

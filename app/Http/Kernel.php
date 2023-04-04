@@ -19,6 +19,7 @@ use Illuminate\Auth\Middleware\AuthenticateWithBasicAuth;
 use Illuminate\Auth\Middleware\Authorize;
 use Illuminate\Auth\Middleware\EnsureEmailIsVerified;
 use Illuminate\Auth\Middleware\RequirePassword;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull;
@@ -102,4 +103,13 @@ class Kernel extends HttpKernel
         '2fa_enabled' => RequiresTwoFactorEnabled::class,
         'admin' => IsAdmin::class,
     );
+
+    /**
+     * Define the application's command schedule.
+     */
+    protected function schedule(Schedule $schedule): void
+    {
+        $schedule->command('auth:clear-resets')->everyFifteenMinutes();
+    }
+
 }

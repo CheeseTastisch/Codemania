@@ -11,7 +11,7 @@
                 Daten merken
             </x-form.input.checkbox>
 
-            <a href="#"
+            <a href="{{ route('member.auth.password.request') }}"
                class="ml-auto text-sm hover:underline text-accent-400 dark:text-accent-600 hover:text-accent-600 dark:hover:text-accent-400">
                 Passwort vergessen?
             </a>
