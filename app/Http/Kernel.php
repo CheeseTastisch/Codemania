@@ -104,12 +104,4 @@ class Kernel extends HttpKernel
         'admin' => IsAdmin::class,
     );
 
-    /**
-     * Define the application's command schedule.
-     */
-    protected function schedule(Schedule $schedule): void
-    {
-        $schedule->command('auth:clear-resets')->everyFifteenMinutes();
-    }
-
 }
