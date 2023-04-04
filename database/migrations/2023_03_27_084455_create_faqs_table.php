@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Faq;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('question');
             $table->string('answer');
-            $table->integer('order');
+            $table->foreignIdFor(Faq::class, 'previous_id')->nullable();
             $table->timestamps();
         });
     }

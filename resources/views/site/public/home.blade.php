@@ -112,7 +112,7 @@
                  data-accordion="collapse"
                  data-active-classes="bg-accent-300 dark:bg-accent-700"
                  class="mt-6">
-                @foreach(\App\Models\Faq::all()->sortBy('order') as $faq)
+                @foreach(\App\Models\Faq::sorted() as $faq)
                     <div>
                         <h2 id="faq-{{ $faq->id }}-head">
                             <button type="button"
