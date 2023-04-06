@@ -115,7 +115,7 @@
                 </div>
             </div>
 
-            <div class="mt-1 faq-container">
+            <div class="mt-1 accordion-container">
                 @foreach(\App\Models\Faq::sorted() as $faq)
                     <div class="rounded-lg border border-gray-800 dark:border-gray-200 overflow-hidden mt-2">
                         <button data-target="#faq-{{ $faq->id }}"
@@ -222,5 +222,5 @@
 @endpush
 
 @push('scripts')
-    <x-script.faq />
+    <x-script.accordion />
 @endpush
