@@ -15,8 +15,8 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->foreignIdFor(ContestDay::class);
-            $table->timestamp('start_time')->nullable();
-            $table->timestamp('end_time')->nullable();
+            $table->timestamp('start_time')->useCurrent();
+            $table->timestamp('end_time')->useCurrent();
             $table->integer('wrong_solution_penalty');
             $table->timestamp('freeze_leaderboard_at')->nullable();
             $table->boolean('leaderboard_unfrozen')->default(false);

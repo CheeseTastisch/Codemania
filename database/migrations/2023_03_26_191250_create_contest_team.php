@@ -14,10 +14,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('contest_team', function (Blueprint $table) {
-            $table->id();
             $table->foreignIdFor(Contest::class);
             $table->foreignIdFor(Team::class);
-            $table->timestamps();
         });
     }
 

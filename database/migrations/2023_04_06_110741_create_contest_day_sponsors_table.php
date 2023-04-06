@@ -1,6 +1,7 @@
 <?php
 
-use App\Models\ContestDayTheme;
+use App\Models\ContestDay;
+use App\Models\UploadedFile;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,14 +13,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('contest_days', function (Blueprint $table) {
+        Schema::create('contest_day_sponsors', function (Blueprint $table) {
             $table->id();
-            $table->date('date')->unique();
-            $table->date('registration_deadline')->nullable();
+            $table->foreignIdFor(ContestDay::class);
             $table->string('name');
-            $table->timestamp('allow_training_from')->nullable();
-            $table->boolean('current')->default(false);
-            $table->foreignIdFor(ContestDayTheme::class);
+            $table->string('url');
+            $table->foreignIdFor(UploadedFile::class, 'logo_id');
+            $table->enum('background', ['light', 'dark'])->default('light');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('contest_days');
+        Schema::dropIfExists('contest_day_sponsors');
     }
 };
