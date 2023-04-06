@@ -47,17 +47,18 @@
                     <div class="flex flex-wrap items-center">
                         <div class="w-1/5 mx-auto p-1">
                             <div class="relative w-full h-full">
-                                <div
-                                    class="inset-0 z-0 p-3 rounded-lg bg-slate-200 dark:bg-slate-800 flex items-center justify-center">
-                                    <img src="{{ asset('storage/img/sponsors/htl_traun.png') }}" alt="HTL-Traun"
-                                         class="dark:hidden">
-                                    <img src="{{ asset('storage/img/sponsors/htl_traun-dark.png') }}" alt="HTL-Traun"
-                                         class="hidden dark:block">
-                                </div>
-                                <a class="opacity-0 hover:opacity-100 focus:opacity-100 duration-300 absolute inset-0 z-10 flex justify-center items-center text-center bg-accent-400 dark:bg-accent-600 !bg-opacity-70 text-xl font-bold px-5 box"
-                                   tabindex="0" href="https://htltraun.at" target="_blank">
-                                    HTL Traun
-                                </a>
+                                @foreach(day()?->sponsors as $sponsor)
+                                    <div
+                                        class="inset-0 z-0 p-3 rounded-lg flex items-center justify-center
+                                        @if($sponsor->background == 'light') bg-slate-200 @elseif($sponsor->background == 'dark') bg-slate-800 @endif">
+                                        <img src="{{ route('file.download', $sponsor->logo_id) }}" alt="{{ $sponsor->name }}"
+                                             class="dark:hidden">
+                                    </div>
+                                    <a class="opacity-0 hover:opacity-100 focus:opacity-100 duration-300 absolute inset-0 z-10 flex justify-center items-center text-center bg-accent-400 dark:bg-accent-600 !bg-opacity-70 text-xl font-bold px-5 box"
+                                       tabindex="0" href="{{ $sponsor->url }}" target="_blank">
+                                        {{ $sponsor->name }}
+                                    </a>
+                                @endforeach
                             </div>
                         </div>
                     </div>
