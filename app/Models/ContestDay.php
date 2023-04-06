@@ -30,6 +30,11 @@ class ContestDay extends Model
         return $this->belongsTo(ContestDayTheme::class, 'id');
     }
 
+    public function sponsors(): HasMany
+    {
+        return $this->hasMany(ContestDaySponsor::class);
+    }
+
     public function contests(): HasMany
     {
         return $this->hasMany(Contest::class);

@@ -14,11 +14,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('team_user', function (Blueprint $table) {
-            $table->id();
             $table->foreignIdFor(Team::class);
             $table->foreignIdFor(User::class);
             $table->enum('role', ['admin', 'member']);
-            $table->timestamps();
         });
     }
 
