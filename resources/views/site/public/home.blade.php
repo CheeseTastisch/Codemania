@@ -16,7 +16,7 @@
         <div class="container mx-auto sm:px-4 px-2 pt-10">
             <div>
                 <div class="md:text-5xl text-3xl font-bold mt-8">
-                    <span class="text-accent-400 dark:text-accent-600">Codemania</span> Contest
+                    <span class="text-accent-400 dark:text-accent-600">Codemania</span>
                 </div>
                 <div class="md:text-3xl text-xl mt-6 md:max-w-2xl font-bold">
                     {{ day()?->date?->translatedFormat('d. F Y') ?? 'Noch nicht bekannt' }}
@@ -74,7 +74,7 @@
 
             <div class="md:text-xl mt-6 md:max-w-3xl mx-auto text-center">
                 <div>
-                    Der <span class="font-bold underline text-accent-400 dark:text-accent-600">Codemania Contest</span>
+                    Die <span class="font-bold underline text-accent-400 dark:text-accent-600">Codemania</span>
                     ist ein Programmierwettbewerb für die Schülerinnen und Schüler der HTL Traun. Die Teilnahme ist
                     kostenlos.
                 </div>
@@ -108,38 +108,28 @@
                 FAQ
             </div>
 
-            <div id="accordion-flush"
-                 data-accordion="collapse"
-                 data-active-classes="bg-accent-300 dark:bg-accent-700"
-                 class="mt-6">
+            <div class="md:text-xl mt-6 md:max-w-3xl mx-auto text-center">
+                <div>
+                    Hier findest du die häufigsten Fragen zum Contest.
+                </div>
+            </div>
+
+            <div class="mt-1 faq-container">
                 @foreach(\App\Models\Faq::sorted() as $faq)
-                    <div>
-                        <h2 id="faq-{{ $faq->id }}-head">
-                            <button type="button"
-                                    class="flex items-center justify-between w-full px-4 py-5 font-medium text-left border-b border-black dark:border-white !text-black dark:!text-white @if($loop->first) rounded-t-lg @endif"
-                                    data-accordion-target="#faq-{{ $faq->id }}-body"
-                                    aria-expanded="true"
-                                    aria-controls="faq-{{ $faq->id }}-body">
-                                <span>{{ $faq->question }}</span>
-                                <svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0" fill="currentColor"
-                                     viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd"
-                                          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                          clip-rule="evenodd"></path>
-                                </svg>
-                            </button>
-                        </h2>
-                        <div id="faq-{{ $faq->id }}-body"
-                             class="hidden text-sm"
-                             aria-labelledby="faq-{{ $faq->id }}-head">
-                            <div class="py-5 font-light border-b border-black dark:border-white px-4">
+                    <div class="rounded-lg border border-gray-800 dark:border-gray-200 overflow-hidden mt-2">
+                        <button data-target="#faq-{{ $faq->id }}"
+                                class="flex items-center justify-between w-full px-4 py-4 font-medium text-lg text-left bg-accent-300 dark:bg-accent-700">
+                            <span>{{ $faq->question }}</span>
+                            <svg class="w-6 h-6 shrink-0 transition-transform duration-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                        </button>
+                        <div class="px-4" id="faq-{{ $faq->id }}">
+                            <div class="text-sm py-4 font-light">
                                 {!! $faq->answer !!}
                             </div>
                         </div>
                     </div>
                 @endforeach
             </div>
-
         </div>
     </section>
 
@@ -151,15 +141,16 @@
 
             <div class="md:text-xl mt-6 md:max-w-3xl mx-auto text-center">
                 <div>
-                    Der <span class="font-bold underline">HTL Traun Coding Contest</span> wird von 3 Schülern der HTL
-                    Traun organisiert.
+                    Die <span class="font-bold underline text-accent-400 dark:text-accent-600">Codemania</span>
+                    wird von 3 Schülern der HTL Traun organisiert.
                 </div>
 
                 <div class="mt-6">
                     Die Idee dazu kam uns, als wir selbst bei mehreren Programmierwettbewerben teilnahmen.
                     Zuerst witzelten wir das wir selbst einmal einen Coding Contest veranstalten könnten.
-                    Nach einiger Zeit fanden wir den Witz aber sehr spannend und entschieden uns dazu, den
-                    <span class="font-bold underline">HTL Traun Coding Contest</span> tatsächlich zu organisieren.
+                    Nach einiger Zeit fanden wir den Witz aber sehr spannend und entschieden uns dazu, die
+                    <span class="font-bold underline text-accent-400 dark:text-accent-600">Codemania</span>
+                    tatsächlich zu organisieren.
                 </div>
 
                 <div class="mt-6">
@@ -227,4 +218,8 @@
             </div>
         </div>
     </section>
+@endpush
+
+@push('scripts')
+    <x-script.faq />
 @endpush
