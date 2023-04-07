@@ -46,26 +46,7 @@
 
             <div class="mt-6 px-20">
                 <div class="flex flex-wrap items-center">
-                    <div class="swiper" id="sponsors-swiper">
-                        <div class="swiper-wrapper">
-                            @foreach((day()?->sponsors ?? []) as $sponsor)
-                                <div class="swiper-slide">
-                                    <div class="relative flex justify-center">
-                                        <div
-                                            class="inset-0 z-0 p-3 rounded-lg flex items-center justify-center w-[200px] h-[200px]
-                                            @if($sponsor->background == 'light') bg-slate-200 @elseif($sponsor->background == 'dark') bg-slate-800 @endif">
-                                            <img src="{{ route('file.download', $sponsor->logo_id) }}"
-                                                 alt="{{ $sponsor->name }}">
-                                        </div>
-                                        <a class="opacity-0 hover:opacity-100 focus:opacity-100 duration-300 absolute inset-0 z-10 flex justify-center items-center text-center bg-accent-400 dark:bg-accent-600 !bg-opacity-70 text-xl font-bold px-5 box"
-                                           tabindex="0" href="{{ $sponsor->url }}" target="_blank">
-                                            {{ $sponsor->name }}
-                                        </a>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
+                    @livewire('public.home.sponsors')
                 </div>
             </div>
         </div>
@@ -208,27 +189,7 @@
                 </div>
             </div>
 
-            <div class="mt-1 accordion-container">
-                @foreach(\App\Models\Faq::sorted() as $faq)
-                    <div class="rounded-lg border border-gray-800 dark:border-gray-200 overflow-hidden mt-2">
-                        <button data-target="#faq-{{ $faq->id }}"
-                                class="flex items-center justify-between w-full px-4 py-4 font-medium text-lg text-left bg-accent-300 dark:bg-accent-700">
-                            <span>{{ $faq->question }}</span>
-                            <svg class="w-6 h-6 shrink-0 transition-transform duration-500" fill="currentColor"
-                                 viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd"
-                                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                      clip-rule="evenodd"></path>
-                            </svg>
-                        </button>
-                        <div class="px-4" id="faq-{{ $faq->id }}">
-                            <div class="text-sm py-4 font-light">
-                                {!! $faq->answer !!}
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
+            @livewire('public.home.faq')
         </div>
     </section>
 
@@ -251,86 +212,9 @@
 
             <div class="mt-6 px-20">
                 <div class="flex flex-wrap items-center">
-                    <div class="swiper" id="contests-swiper">
-                        <div class="swiper-wrapper">
-                            @php($contests = \App\Models\ContestDay::where('allow_training_from', '<', now())
-                                    ->orderBy('date')
-                                    ->with('contests')
-                                    ->get()
-                                    ->flatMap(fn ($contestDay) => $contestDay->contests->tap(fn ($contests) => $contests->each(fn ($contest) => $contest->setRelation('contestDay', $contestDay)))))
-                            @foreach($contests as $contest)
-                                <a class="swiper-slide box rounded-lg bg-gradient-to-tl from-accent-400 dark:from-accent-600 p-4" style="{{ $contest->theme_variables }}" href="#">
-                                    <p class="font-bold text-2xl">
-                                        {{ $contest->contestDay->name }}
-                                    </p>
-                                    <p class="font-bold text-xl">
-                                        {{ $contest->name }}
-                                    </p>
-                                    <p class="mt-1">{{ $contest->contestDay->date->format('d. m. Y') }}</p>
-                                    <div class="flex justify-between mt-1">
-                                        <p>{{ $contest->tasks->count() }} Aufgaben</p>
-                                        <p>{{ $contest->tasks->flatMap(fn ($task) => $task->levels)->map(fn ($level) => $level->points)->sum() }} mögliche Punkte</p>
-                                    </div>
-                                </a>
-                            @endforeach
-                        </div>
-                    </div>
+                    @livewire('public.home.contests')
                 </div>
             </div>
         </div>
     </section>
-@endpush
-
-@push('scripts')
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            new swiper.Swiper('#sponsors-swiper', {
-                modules: [swiper.Autoplay],
-                direction: 'horizontal',
-                loop: true,
-                grabCursor: true,
-                spaceBetween: 30,
-                breakpoints: {
-                    640: {
-                        slidesPerView: {{ min(count(day()?->sponsors ?? []), 1) }},
-                    },
-                    768: {
-                        slidesPerView: {{ min(count(day()?->sponsors ?? []), 2) }},
-                    },
-                    1024: {
-                        slidesPerView: {{ min(count(day()?->sponsors ?? []), 4) }},
-                    },
-                    1280: {
-                        slidesPerView: {{ min(count(day()?->sponsors ?? []), 5) }},
-                    },
-                    1536: {
-                        slidesPerView: {{ min(count(day()?->sponsors ?? []), 6) }},
-                    },
-                },
-                autoplay: {
-                    delay: 5000,
-                    disableOnInteraction: false,
-                },
-            });
-
-            new swiper.Swiper('#contests-swiper', {
-                direction: 'horizontal',
-                spaceBetween: 30,
-                breakpoints: {
-                    640: {
-                        slidesPerView: {{ min($contests->count(), 1) }},
-                    },
-                    1024: {
-                        slidesPerView: {{ min($contests->count(), 2) }},
-                    },
-                    1280: {
-                        slidesPerView: {{ min($contests->count(), 3) }},
-                    },
-                    1536: {
-                        slidesPerView: {{ min($contests->count(), 4) }},
-                    },
-                },
-            });
-        });
-    </script>
 @endpush

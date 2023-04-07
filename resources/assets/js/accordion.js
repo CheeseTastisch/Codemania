@@ -311,6 +311,11 @@ function getAccordionById(id) {
 }
 
 Livewire.on('accordion', (action, ...data) => {
+    if (action === 'create') {
+        window.accordions.push(new Accordion($('#' + data[0])))
+        return
+    }
+
     const accordion = getAccordionById(data[0])
 
     switch (action) {
