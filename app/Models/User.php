@@ -65,6 +65,20 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         return $trainingTeam;
     }
 
+    public function getTeamForContest(Contest $contest, bool|null $training = false): ?Team
+    {
+        if (array_key_exists("team_for_contest_$contest->id", $this->relations)) return $this->getRelation("team_for_contest_$contest->id");
+
+        $teams = $this->teams
+            ->filter(fn ($team) => $team->contestDay->training_only === $training || $training === null)
+            ->filter(fn ($team) => $team->contests->contains($contest));
+
+        $team = $teams->count() >= 1 ? $teams->filter(fn ($team) => !$team->contest_day->training_only)->first() : $teams->first();
+        $this->setRelation("team_for_contest_$contest->id", $team);
+
+        return $team;
+    }
+
     public function getFullNameAttribute(): string
     {
         return "$this->first_name $this->last_name";
