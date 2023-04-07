@@ -91,8 +91,9 @@ class Accordion {
 
     /**
      * @param {jQuery} container
+     * @param {boolean} open
      */
-    add(container) {
+    add(container, open) {
         const control = container.find('*[data-target]')
         const target = $(`${control.data('target')}`)
         const height = target.height() + parseFloat(target.css('padding-top')) + parseFloat(target.css('padding-bottom'))
@@ -110,6 +111,8 @@ class Accordion {
         )
 
         this.elements.push(item)
+
+        if (open) this.open(item)
     }
 
     /**
@@ -244,6 +247,28 @@ class AccordionItem {
         this.target.css('padding-bottom', this.current.paddingBottom)
     }
 
+    updateSize() {
+        this.target.css('height', '')
+        this.target.css('padding-top', '')
+        this.target.css('padding-bottom', '')
+
+        this.extended.height = this.target.height() + parseFloat(this.target.css('padding-top')) + parseFloat(this.target.css('padding-bottom'))
+        this.extended.paddingTop = parseFloat(this.target.css('padding-top'))
+        this.extended.paddingBottom = parseFloat(this.target.css('padding-bottom'))
+
+        this.steps.height = this.extended.height / 100
+        this.steps.paddingTop = this.extended.paddingTop / 100
+        this.steps.paddingBottom = this.extended.paddingBottom / 100
+
+        if (this.open) {
+            this.current.height = this.extended.height
+            this.current.paddingTop = this.extended.paddingTop
+            this.current.paddingBottom = this.extended.paddingBottom
+        }
+
+        this._update()
+    }
+
 }
 
 class AccordionValues {
@@ -276,18 +301,10 @@ class AccordionValues {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    if ($('.html-editor').length > 0) return;
-
     window.accordions = $('.accordion-container').map(function () {
         return new Accordion($(this))
     }).toArray()
 });
-
-onHtmlEditorLoaded(() => {
-    window.accordions = $('.accordion-container').map(function () {
-        new Accordion($(this))
-    }).toArray()
-})
 
 function getAccordionById(id) {
     return window.accordions.filter((e) => e.container.attr('id') === id)[0]
@@ -304,10 +321,13 @@ Livewire.on('accordion', (action, ...data) => {
             accordion.close(accordion.elements.filter((e) => e.control.data('target') === data[1])[0])
             break
         case 'add':
-            accordion.add($(data[1]))
+            accordion.add($(data[1]), data[2])
             break
         case 'remove':
             accordion.remove(accordion.elements.filter((e) => e.control.data('target') === data[1])[0])
+            break
+        case 'updateSize':
+            accordion.elements.filter((e) => e.control.data('target') === data[1]).forEach((e) => e.updateSize())
             break
     }
 })

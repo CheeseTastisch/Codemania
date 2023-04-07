@@ -3,7 +3,7 @@
             @if($wireType) wire:click.{{ $wireType }}="{{ $wire }}" @endif
         @if($wireLoading) wire:loading.attr="disabled" wire:target="{{ $wire }}" @endif
         @endif
-        class="w-full px-5 py-3 text-base font-medium text-center bg-accent-400 rounded-lg hover:bg-accent-600 focus:ring-4 focus:ring-accent-300 dark:bg-accent-700 dark:hover:bg-accent-800 dark:focus:ring-accent-800 disabled:cursor-not-allowed disabled:hover:bg-accent-400 disabled:dark:hover:bg-accent-600">
+        class="@if($fullWidth) w-full @endif px-5 py-3 text-base font-medium text-center bg-accent-400 rounded-lg hover:bg-accent-600 focus:ring-4 focus:ring-accent-300 dark:bg-accent-700 dark:hover:bg-accent-800 dark:focus:ring-accent-800 disabled:cursor-not-allowed disabled:hover:bg-accent-400 disabled:dark:hover:bg-accent-600">
     <span @if($wire && $wireLoading) wire:loading.remove wire:target="{{ $wire }}" @endif>{{ $name }}</span>
     @if($wire && $wireLoading)
         <span wire:loading wire:target="{{ $wire }}">

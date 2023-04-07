@@ -50,17 +50,6 @@ class Faq extends Model
         }
     }
 
-//    public function moveAfter(Faq|null $faq): void
-//    {
-//        $this->next?->update(['previous_id' => $this->previous?->id]);
-//
-//        if ($faq != null) $faq->next?->update(['previous_id' => $this->id]);
-//        else Faq::wherePreviousId(null)->update(['previous_id' => $this->id]);
-//
-//        $this->update(['previous_id' => $faq?->id]);
-//    }
-
-
     /**
      * @return Faq[]
      */
