@@ -4,3 +4,5 @@ import './jquery';
 import './theme';
 import './toast';
 import './datepicker';
+import './frolia';
+import './accordion';

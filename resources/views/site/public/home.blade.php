@@ -220,7 +220,3 @@
         </div>
     </section>
 @endpush
-
-@push('scripts')
-    <x-script.accordion />
-@endpush

@@ -1,17 +1,20 @@
 <?php
 
-namespace App\View\Components\Script;
+namespace App\View\Components\Form\Input;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class Accordion extends Component
+class Wysiwyg extends Component
 {
     /**
      * Create a new component instance.
      */
     public function __construct(
+        public string $name,
+        public string $label,
+        public string $id = '',
         public bool $wire = false,
     )
     {
@@ -23,6 +26,6 @@ class Accordion extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.script.accordion');
+        return view('components.form.input.wysiwyg');
     }
 }
