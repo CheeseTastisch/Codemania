@@ -34,7 +34,7 @@ class Team extends Model
 
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class)->withPivotValue('role');
+        return $this->belongsToMany(User::class)->withPivot('role');
     }
 
     public function getPoints(Contest $contest, bool $ignoreFreeze = false): int|null

@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\ContestDay;
 use App\Models\ContestDayTheme;
+use App\Models\Team;
 use App\Models\User;
 use Carbon\Carbon;
 use Hash;
@@ -17,6 +18,31 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $training = ContestDayTheme::create([
+            'fifty' => '255 241 242',
+            'hundred' => '255 223 224',
+            'two_hundred' => '255 197 199',
+            'three_hundred' => '255 157 161',
+            'four_hundred' => '255 100 106',
+            'five_hundred' => '255 36 44',
+            'six_hundred' => '237 21 29',
+            'seven_hundred' => '200 13 20',
+            'eight_hundred' => '165 15 20',
+            'nine_hundred' => '136 20 24',
+            'nine_hundred_fifty' => '75 4 7',
+            'images' => 'training',
+        ]);
+
+        $trainingDay = ContestDay::create([
+            'date' => Carbon::create(2000, 1, 1),
+            'registration_deadline' => Carbon::create(2000, 1, 1),
+            'name' => 'Training',
+            'allow_training_from' => Carbon::create(2000, 1, 1),
+            'training_only' => true,
+            'current' => false,
+            'contest_day_theme_id' => $training->id,
+        ]);
+
         $summer2023 = ContestDayTheme::create([
             'fifty' => '245 251 234',
             'hundred' => '232 245 210',
@@ -65,7 +91,7 @@ class DatabaseSeeder extends Seeder
             'contest_day_theme_id' => $winter2023->id,
         ]);
 
-        User::forceCreate([
+        $user = User::forceCreate([
             'email' => 'lian.hoerschlaeger@gmail.com',
             'first_name' => 'Lian',
             'last_name' => 'Hörschläger',
@@ -76,5 +102,12 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('un5OKtSZseM5yID$GiksND6AWLsyM6P!3lC2D7GG'),
             'email_verified_at' => Carbon::now(),
         ]);
+
+        $team = Team::create([
+            'name' => "training-$user->id",
+            'contest_day_id' => $trainingDay->id
+        ]);
+
+        $user->teams()->attach($user->id, ['role' => 'admin']);
     }
 }

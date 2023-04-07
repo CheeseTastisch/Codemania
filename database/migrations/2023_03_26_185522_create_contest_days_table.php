@@ -18,6 +18,7 @@ return new class extends Migration
             $table->date('registration_deadline')->nullable();
             $table->string('name');
             $table->timestamp('allow_training_from')->nullable();
+            $table->boolean('training_only')->default(false);
             $table->boolean('current')->default(false);
             $table->foreignIdFor(ContestDayTheme::class);
             $table->timestamps();

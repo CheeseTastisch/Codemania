@@ -55,6 +55,16 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         return $this->belongsToMany(Team::class)->withPivot('role');
     }
 
+    public function getTrainingTeamAttribute(): Team
+    {
+        if (array_key_exists('training_team', $this->relations)) return $this->getRelation('training_team');
+
+        $trainingTeam =  $this->teams->where('contest_day_id', ContestDay::where('training_only', true)->firstOrFail()->id)->firstOrFail();
+        $this->setRelation('training_team', $trainingTeam);
+
+        return $trainingTeam;
+    }
+
     public function getFullNameAttribute(): string
     {
         return "$this->first_name $this->last_name";
