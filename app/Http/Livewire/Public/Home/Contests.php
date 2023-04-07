@@ -24,7 +24,7 @@ class Contests extends Component
     protected function dataLoaded(): void
     {
         $this->contests = ContestDay::where('allow_training_from', '<', now())
-            ->orderBy('date')
+            ->orderByDesc('date')
             ->with('contests')
             ->get()
             ->flatMap(fn ($contestDay) => $contestDay->contests);
