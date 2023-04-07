@@ -257,7 +257,7 @@
                                     ->orderBy('date')
                                     ->with('contests')
                                     ->get()
-                                    ->flatMap(fn ($contestDay) => $contestDay->contests))
+                                    ->flatMap(fn ($contestDay) => $contestDay->contests->tap(fn ($contests) => $contests->each(fn ($contest) => $contest->setRelation('contestDay', $contestDay)))))
                             @foreach($contests as $contest)
                                 <a class="swiper-slide box rounded-lg bg-gradient-to-tl from-accent-400 dark:from-accent-600 p-4" style="{{ $contest->theme_variables }}" href="#">
                                     <p class="font-bold text-2xl">
