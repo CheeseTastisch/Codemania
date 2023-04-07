@@ -45,9 +45,9 @@ class Form extends Component
 
         $result = auth()->user()->try2Fa($this->two_factor);
 
-        if ($result->wasSuccessful()) return redirect()->route('member.dashboard');
-        if ($result->wasInvalidCode()) $this->addError('two_factor', 'Der angegebene Code ist ungültig.');
-        if ($result->wasRecoveryCodeUsed()) {
+        if ($result->wasSuccessful()) return redirect()->intended(route('member.dashboard'));
+        else if ($result->wasInvalidCode()) $this->addError('two_factor', 'Der angegebene Code ist ungültig.');
+        else if ($result->wasRecoveryCodeUsed()) {
             session()->flash('2fa.old', $result->oldRecoveryCode);
             session()->flash('2fa.new', $result->newRecoveryCode);
 

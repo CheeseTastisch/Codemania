@@ -49,7 +49,7 @@ class Form extends Component
             $this->emit('setTheme', auth()->user()->theme);
 
             if (auth()->user()->hasCompleted2Fa()) return redirect()->route('member.auth.2fa');
-            else return redirect()->route('member.dashboard');
+            else return redirect()->intended(route('member.dashboard'));
         } else {
             $this->addError('email', 'Die eingegebenen Daten sind nicht korrekt.');
         }

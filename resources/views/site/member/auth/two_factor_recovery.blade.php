@@ -26,7 +26,7 @@
         </div>
         <p class="mt-2">Bitte bewahre diese Codes sicher auf. Du kannst sie jederzeit erneut anfordern.</p>
         <x-slot name="actions">
-            <x-alert.action.link :href="route('member.dashboard')" type="info">
+            <x-alert.action.link :href="session()->has('url.intended') ? session()->pull('url.intended') : route('member.dashboard')" type="info">
                 Ich habe die Codes gespeichert
             </x-alert.action.link>
         </x-slot>
