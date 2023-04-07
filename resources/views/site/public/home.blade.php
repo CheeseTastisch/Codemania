@@ -47,7 +47,7 @@
                     <div class="flex flex-wrap items-center">
                         <div class="w-1/5 mx-auto p-1">
                             <div class="relative w-full h-full">
-                                @foreach(day()?->sponsors as $sponsor)
+                                @foreach(day()?->sponsors ?? [] as $sponsor)
                                     <div
                                         class="inset-0 z-0 p-3 rounded-lg flex items-center justify-center
                                         @if($sponsor->background == 'light') bg-slate-200 @elseif($sponsor->background == 'dark') bg-slate-800 @endif">
