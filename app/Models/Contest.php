@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Cache;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -45,6 +47,11 @@ class Contest extends Model
         if ($this->freeze_leaderboard_at->isFuture()) return true;
 
         return $this->leaderboard_unfrozen;
+    }
+
+    public function getThemeVariablesAttribute(): string
+    {
+        return $this->contestDay->theme->variables;
     }
 
 }

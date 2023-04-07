@@ -7,6 +7,7 @@ use App\Concerns\TwoFactorAuthenticatable\TwoFactorAuthenticatable;
 use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -47,6 +48,11 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     public function profilePicture(): BelongsTo
     {
         return $this->belongsTo(UploadedFile::class, 'profile_picture_id');
+    }
+
+    public function teams(): BelongsToMany
+    {
+        return $this->belongsToMany(Team::class)->withPivot('role');
     }
 
     public function getFullNameAttribute(): string

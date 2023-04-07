@@ -3,6 +3,7 @@ import './bootstrap';
 import './jquery';
 import './theme';
 import './toast';
+import './swiper';
 import './datepicker';
 import './frolia';
 import './accordion';

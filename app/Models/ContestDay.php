@@ -22,7 +22,7 @@ class ContestDay extends Model
     protected $casts = [
         'date' => 'date',
         'registration_deadline' => 'date',
-        'allow_training_from' => 'timestamp',
+        'allow_training_from' => 'datetime',
     ];
 
     public function theme(): BelongsTo

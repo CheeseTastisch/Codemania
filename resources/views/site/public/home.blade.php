@@ -42,24 +42,28 @@
                 <div>
                     Großer Dank an unsere Sponsoren die uns bei der Finanzierung des Contests unterstützen.
                 </div>
+            </div>
 
-                <div class="mt-6">
-                    <div class="flex flex-wrap items-center">
-                        <div class="w-1/5 mx-auto p-1">
-                            <div class="relative w-full h-full">
-                                @foreach(day()?->sponsors ?? [] as $sponsor)
-                                    <div
-                                        class="inset-0 z-0 p-3 rounded-lg flex items-center justify-center
-                                        @if($sponsor->background == 'light') bg-slate-200 @elseif($sponsor->background == 'dark') bg-slate-800 @endif">
-                                        <img src="{{ route('file.download', $sponsor->logo_id) }}" alt="{{ $sponsor->name }}"
-                                             class="dark:hidden">
+            <div class="mt-6 px-20">
+                <div class="flex flex-wrap items-center">
+                    <div class="swiper" id="sponsors-swiper">
+                        <div class="swiper-wrapper">
+                            @foreach((day()?->sponsors ?? []) as $sponsor)
+                                <div class="swiper-slide">
+                                    <div class="relative flex justify-center">
+                                        <div
+                                            class="inset-0 z-0 p-3 rounded-lg flex items-center justify-center w-[200px] h-[200px]
+                                            @if($sponsor->background == 'light') bg-slate-200 @elseif($sponsor->background == 'dark') bg-slate-800 @endif">
+                                            <img src="{{ route('file.download', $sponsor->logo_id) }}"
+                                                 alt="{{ $sponsor->name }}">
+                                        </div>
+                                        <a class="opacity-0 hover:opacity-100 focus:opacity-100 duration-300 absolute inset-0 z-10 flex justify-center items-center text-center bg-accent-400 dark:bg-accent-600 !bg-opacity-70 text-xl font-bold px-5 box"
+                                           tabindex="0" href="{{ $sponsor->url }}" target="_blank">
+                                            {{ $sponsor->name }}
+                                        </a>
                                     </div>
-                                    <a class="opacity-0 hover:opacity-100 focus:opacity-100 duration-300 absolute inset-0 z-10 flex justify-center items-center text-center bg-accent-400 dark:bg-accent-600 !bg-opacity-70 text-xl font-bold px-5 box"
-                                       tabindex="0" href="{{ $sponsor->url }}" target="_blank">
-                                        {{ $sponsor->name }}
-                                    </a>
-                                @endforeach
-                            </div>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -82,7 +86,9 @@
 
                 <div class="mt-6">
                     Angetreten wird in <span class="font-bold underline">Teams von 2 bis 4 Personen</span>.
-                    Die Teilnehmer können sich bis zum <span class="font-bold underline">{{ day()?->getRegistrationDeadline()?->format('d. F Y')  }}</span> zu Teams
+                    Die Teilnehmer können sich bis zum <span
+                        class="font-bold underline">{{ day()?->getRegistrationDeadline()?->format('d. F Y')  }}</span>
+                    zu Teams
                     zusammenschließen.
                     Teilnehmer, die bis dahin noch kein Team haben, werden in zufällige Teams eingeteilt.
                 </div>
@@ -138,8 +144,9 @@
                                 Lisa Buchendorfer
                             </div>
                         </div>
-                        <div class="opacity-0 hover:opacity-100 focus:opacity-100 duration-300 absolute inset-0 z-10 flex justify-center items-center text-center bg-accent-400 dark:bg-accent-600 !bg-opacity-70 text-xl font-bold px-5"
-                             tabindex="0">
+                        <div
+                            class="opacity-0 hover:opacity-100 focus:opacity-100 duration-300 absolute inset-0 z-10 flex justify-center items-center text-center bg-accent-400 dark:bg-accent-600 !bg-opacity-70 text-xl font-bold px-5"
+                            tabindex="0">
                             Als kreativer Kopf bin ich dafür zuständig, Aufgaben zu planen, zu strukturieren und zu
                             definieren, um sicherzustellen, dass sie effektiv und effizient erledigt werden können.
                         </div>
@@ -155,8 +162,9 @@
                                 Lian Hörschläger
                             </div>
                         </div>
-                        <div class="opacity-0 hover:opacity-100 focus:opacity-100 duration-300 absolute inset-0 z-10 flex justify-center items-center text-center bg-accent-400 dark:bg-accent-600 !bg-opacity-70 text-xl font-bold px-5"
-                             tabindex="0">
+                        <div
+                            class="opacity-0 hover:opacity-100 focus:opacity-100 duration-300 absolute inset-0 z-10 flex justify-center items-center text-center bg-accent-400 dark:bg-accent-600 !bg-opacity-70 text-xl font-bold px-5"
+                            tabindex="0">
                             Als Designer und Entwickler bin ich dafür zuständig, die Website und die Online-Plattform zu
                             gestalten und mit Funktionen auszustatten.
                         </div>
@@ -172,8 +180,9 @@
                                 Elmedin Zukic
                             </div>
                         </div>
-                        <div class="opacity-0 hover:opacity-100 focus:opacity-100 duration-300 absolute inset-0 z-10 flex justify-center items-center text-center bg-accent-400 dark:bg-accent-600 !bg-opacity-70 text-xl font-bold px-5"
-                             tabindex="0">
+                        <div
+                            class="opacity-0 hover:opacity-100 focus:opacity-100 duration-300 absolute inset-0 z-10 flex justify-center items-center text-center bg-accent-400 dark:bg-accent-600 !bg-opacity-70 text-xl font-bold px-5"
+                            tabindex="0">
                             Als Business Man übernehme ich die Verantwortung für das Sponsoring und Marketing. Meine
                             Expertise und Erfahrung im Bereich des Marketings ermöglicht es mir, effektive und
                             zielgerichtete Kampagnen zu entwerfen
@@ -205,7 +214,12 @@
                         <button data-target="#faq-{{ $faq->id }}"
                                 class="flex items-center justify-between w-full px-4 py-4 font-medium text-lg text-left bg-accent-300 dark:bg-accent-700">
                             <span>{{ $faq->question }}</span>
-                            <svg class="w-6 h-6 shrink-0 transition-transform duration-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                            <svg class="w-6 h-6 shrink-0 transition-transform duration-500" fill="currentColor"
+                                 viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                      clip-rule="evenodd"></path>
+                            </svg>
                         </button>
                         <div class="px-4" id="faq-{{ $faq->id }}">
                             <div class="text-sm py-4 font-light">
@@ -226,11 +240,97 @@
 
             <div class="md:text-xl mt-6 md:max-w-3xl mx-auto text-center">
                 <div>
-                    Du kannst dich auf Contests vorbereiten, indem du an unseren Trainings teilnimmst.
-                    Bei diesem kannst du Aufgaben von vorherigen Contests lösen und dich so auf die
-                    kommenden Contests vorbereiten.
+                    Hier findest du alle Contests, welche bereits stattgefunden haben.
+                    Du kannst dir die Ergebnisse und Gewinner anschauen.
+                </div>
+                <div class="mt-1">
+                    Du kannst dich auf komente Contests vorbereiten, indem du die Aufgaben der vorherigen Contests
+                    löst.
+                </div>
+            </div>
+
+            <div class="mt-6 px-20">
+                <div class="flex flex-wrap items-center">
+                    <div class="swiper" id="contests-swiper">
+                        <div class="swiper-wrapper">
+                            @php($contests = \App\Models\ContestDay::where('allow_training_from', '<', now())
+                                    ->orderBy('date')
+                                    ->with('contests')
+                                    ->get()
+                                    ->flatMap(fn ($contestDay) => $contestDay->contests))
+                            @foreach($contests as $contest)
+                                <a class="swiper-slide box rounded-lg bg-gradient-to-tl from-accent-400 dark:from-accent-600 p-4" style="{{ $contest->theme_variables }}" href="#">
+                                    <p class="font-bold text-2xl">
+                                        {{ $contest->contestDay->name }}
+                                    </p>
+                                    <p class="font-bold text-xl">
+                                        {{ $contest->name }}
+                                    </p>
+                                    <p class="mt-1">{{ $contest->contestDay->date->format('d. m. Y') }}</p>
+                                    <div class="flex justify-between mt-1">
+                                        <p>{{ $contest->tasks->count() }} Aufgaben</p>
+                                        <p>{{ $contest->tasks->flatMap(fn ($task) => $task->levels)->map(fn ($level) => $level->points)->sum() }} mögliche Punkte</p>
+                                    </div>
+                                </a>
+                            @endforeach
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
+@endpush
+
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            new swiper.Swiper('#sponsors-swiper', {
+                modules: [swiper.Autoplay],
+                direction: 'horizontal',
+                loop: true,
+                grabCursor: true,
+                spaceBetween: 30,
+                breakpoints: {
+                    640: {
+                        slidesPerView: {{ min(count(day()?->sponsors ?? []), 1) }},
+                    },
+                    768: {
+                        slidesPerView: {{ min(count(day()?->sponsors ?? []), 2) }},
+                    },
+                    1024: {
+                        slidesPerView: {{ min(count(day()?->sponsors ?? []), 4) }},
+                    },
+                    1280: {
+                        slidesPerView: {{ min(count(day()?->sponsors ?? []), 5) }},
+                    },
+                    1536: {
+                        slidesPerView: {{ min(count(day()?->sponsors ?? []), 6) }},
+                    },
+                },
+                autoplay: {
+                    delay: 5000,
+                    disableOnInteraction: false,
+                },
+            });
+
+            new swiper.Swiper('#contests-swiper', {
+                direction: 'horizontal',
+                spaceBetween: 30,
+                breakpoints: {
+                    640: {
+                        slidesPerView: {{ min($contests->count(), 1) }},
+                    },
+                    1024: {
+                        slidesPerView: {{ min($contests->count(), 2) }},
+                    },
+                    1280: {
+                        slidesPerView: {{ min($contests->count(), 3) }},
+                    },
+                    1536: {
+                        slidesPerView: {{ min($contests->count(), 4) }},
+                    },
+                },
+            });
+        });
+    </script>
 @endpush

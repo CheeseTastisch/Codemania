@@ -27,7 +27,7 @@ class Team extends Model
         return $this->belongsTo(UploadedFile::class);
     }
 
-    public function contest(): BelongsToMany
+    public function contests(): BelongsToMany
     {
         return $this->belongsToMany(Contest::class);
     }

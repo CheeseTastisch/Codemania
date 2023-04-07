@@ -17,6 +17,7 @@
         "flowbite-datepicker": "^1.2.2",
         "froala-editor": "^4.0.18",
         "jquery": "^3.6.4",
+        "swiper": "^9.2.0",
         "toastify-js": "^1.12.0"
     }
 }
