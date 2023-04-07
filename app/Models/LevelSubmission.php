@@ -48,7 +48,7 @@ class LevelSubmission extends Model
         return $this->hasMany(LevelFileSubmission::class);
     }
 
-    public function isShouldBeRatedAttribute(): bool
+    public function shouldBeRated(bool $ignoreFreeze = false): bool
     {
         if ($this->status === 'pending' || $this->status === 'checking') return false;
 
@@ -56,10 +56,11 @@ class LevelSubmission extends Model
         $contest = $level->task->contest;
         $contestDay = $contest->contestDay;
 
-        if ($contestDay->allow_training_from !== null && $this->status_changed_at->isAfter($contestDay->allow_training_from))
+        if ($contestDay->allow_training_from !== null && $this->status_changed_at->isAfter($contest->end_time))
             return false;
 
-        if ($contest->freeze_leaderboard_at !== null
+        if (!$ignoreFreeze
+            && $contest->freeze_leaderboard_at !== null
             && $contest->leaderboard_unfrozen === false
             && $this->status_changed_at->isAfter($contest->freeze_leaderboard_at)) return false;
 

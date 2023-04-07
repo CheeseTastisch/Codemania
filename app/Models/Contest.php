@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
 
 class Contest extends Model
 {
@@ -52,6 +53,21 @@ class Contest extends Model
     public function getThemeVariablesAttribute(): string
     {
         return $this->contestDay->theme->variables;
+    }
+
+    public function getLeaderboard(bool $ignoreFreeze = false): Collection
+    {
+        $teams = $this->teams->map(function ($team) use ($ignoreFreeze) {
+            $team->points = $team->getPoints($this, $ignoreFreeze);
+            $team->total_resolution_time = $team->getTotalResolutionTime($this, $ignoreFreeze);
+            return $team;
+        })->filter(fn($team) => $team->points !== null && $team->total_resolution_time !== null);
+
+        $teams = $teams->sortBy('total_resolution_time')->sortByDesc('points');
+
+        $teams->map(fn($team, $index) => [$team->id => $index + 1]);
+
+        return $teams;
     }
 
 }
