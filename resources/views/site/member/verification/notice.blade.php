@@ -3,9 +3,9 @@
 @push('content')
     <x-alert.complex title="Deine E-Mail-Adresse wurde noch nicht bestätigt." sr-info="E-Mail nicht bestätigt" type="danger">
         <x-slot name="actions">
-            <x-alert.action.button outlined click="history.back()" type="danger">
+            <x-alert.action.link outlined :href="session()->previousUrl()" type="danger">
                 Zurück
-            </x-alert.action.button>
+            </x-alert.action.link>
         </x-slot>
 
         <p>Deine Aktion wurde blockiert, da deine E-Mail-Adresse noch nicht bestätigt wurde.</p>
