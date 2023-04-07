@@ -44,7 +44,7 @@
                     <a href="{{ route('public.home') }}#faq" class="nav-link">FAQ</a>
                 </li>
                 <li>
-                    <a href="{{ route('public.home') }}#about" class="nav-link">Über Uns</a>
+                    <a href="{{ route('public.home') }}#training" class="nav-link">Training</a>
                 </li>
             </ul>
         </div>

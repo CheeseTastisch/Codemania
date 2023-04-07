@@ -98,44 +98,8 @@
                 </div>
             </div>
         </div>
-    </section>
 
-    <div class="bg-no-repeat pb-40 bg-bottom wave-3">
-    </div>
-
-    <section id="faq" class="bg-accent-400 dark:bg-accent-600 pb-10">
-        <div class="container mx-auto sm:px-4 px-2 pt-10">
-            <div class="text-center text-4xl font-bold">
-                FAQ
-            </div>
-
-            <div class="md:text-xl mt-6 md:max-w-3xl mx-auto text-center">
-                <div>
-                    Hier findest du die häufigsten Fragen zum Contest.
-                </div>
-            </div>
-
-            <div class="mt-1 accordion-container">
-                @foreach(\App\Models\Faq::sorted() as $faq)
-                    <div class="rounded-lg border border-gray-800 dark:border-gray-200 overflow-hidden mt-2">
-                        <button data-target="#faq-{{ $faq->id }}"
-                                class="flex items-center justify-between w-full px-4 py-4 font-medium text-lg text-left bg-accent-300 dark:bg-accent-700">
-                            <span>{{ $faq->question }}</span>
-                            <svg class="w-6 h-6 shrink-0 transition-transform duration-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                        </button>
-                        <div class="px-4" id="faq-{{ $faq->id }}">
-                            <div class="text-sm py-4 font-light">
-                                {!! $faq->answer !!}
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </section>
-
-    <section id="about" class="pt-20 bg-no-repeat wave-4">
-        <div class="container mx-auto sm:px-4 px-2 pt-10">
+        <div class="container mx-auto sm:px-4 px-2 pt-12">
             <div class="text-center text-4xl font-bold">
                 Über Uns
             </div>
@@ -215,6 +179,56 @@
                             zielgerichtete Kampagnen zu entwerfen
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="bg-no-repeat pb-40 bg-bottom wave-3">
+    </div>
+
+    <section id="faq" class="bg-accent-400 dark:bg-accent-600 pb-10">
+        <div class="container mx-auto sm:px-4 px-2 pt-10">
+            <div class="text-center text-4xl font-bold">
+                FAQ
+            </div>
+
+            <div class="md:text-xl mt-6 md:max-w-3xl mx-auto text-center">
+                <div>
+                    Hier findest du die häufigsten Fragen zum Contest.
+                </div>
+            </div>
+
+            <div class="mt-1 accordion-container">
+                @foreach(\App\Models\Faq::sorted() as $faq)
+                    <div class="rounded-lg border border-gray-800 dark:border-gray-200 overflow-hidden mt-2">
+                        <button data-target="#faq-{{ $faq->id }}"
+                                class="flex items-center justify-between w-full px-4 py-4 font-medium text-lg text-left bg-accent-300 dark:bg-accent-700">
+                            <span>{{ $faq->question }}</span>
+                            <svg class="w-6 h-6 shrink-0 transition-transform duration-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                        </button>
+                        <div class="px-4" id="faq-{{ $faq->id }}">
+                            <div class="text-sm py-4 font-light">
+                                {!! $faq->answer !!}
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
+    <section id="training" class="pt-20 bg-no-repeat wave-4">
+        <div class="container mx-auto sm:px-4 px-2 pt-10">
+            <div class="text-center text-4xl font-bold">
+                Training
+            </div>
+
+            <div class="md:text-xl mt-6 md:max-w-3xl mx-auto text-center">
+                <div>
+                    Du kannst dich auf Contests vorbereiten, indem du an unseren Trainings teilnimmst.
+                    Bei diesem kannst du Aufgaben von vorherigen Contests lösen und dich so auf die
+                    kommenden Contests vorbereiten.
                 </div>
             </div>
         </div>
