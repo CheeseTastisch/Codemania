@@ -87,7 +87,7 @@
         </div>
 
         <div class="container mx-auto sm:px-4 px-2 pt-12">
-            <div class="text-center text-4xl font-bold">
+            <div class="text-center text-2xl font-bold">
                 Über Uns
             </div>
 
@@ -110,7 +110,7 @@
                 </div>
             </div>
 
-            <div class="text-center text-3xl font-bold mt-8 mb-6">
+            <div class="text-center text-xl font-bold mt-8 mb-6">
                 Das Team
             </div>
 
@@ -210,7 +210,7 @@
                 </div>
             </div>
 
-            <div class="mt-6 px-20">
+            <div class="mt-6 px-2">
                 <div class="flex flex-wrap items-center">
                     @livewire('public.home.contests')
                 </div>
