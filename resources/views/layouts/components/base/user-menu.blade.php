@@ -5,7 +5,7 @@
     <span class="sr-only">Benutzermenü öffnen</span>
     @if(($profilePicture = auth()->user()->profilePicture) != null)
         <div class="rounded-lg bg-gray-100 dark:bg-gray-600 overflow-hidden h-full w-full flex justify-center items-center">
-            <img class="w-7 h-7 rounded-lg" src="{{ route('file.download', $profilePicture->id) }}" alt="Profilbild">
+            <img class="w-7 h-7 rounded-lg" src="{{ route('public.file', $profilePicture->id) }}" alt="Profilbild">
         </div>
     @else
         <div class="relative rounded-lg overflow-hidden w-full h-full">

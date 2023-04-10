@@ -1,4 +1,4 @@
 <?php
 
-Route::view('/admin', 'site.admin.dashboard')->name('admin.dashboard');
-Route::view('/admin/faq', 'site.admin.faq')->name('admin.faq');
+Route::view('/', 'site.admin.dashboard')->name('dashboard');
+Route::view('/faq', 'site.admin.faq')->name('faq');

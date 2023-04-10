@@ -13,8 +13,12 @@ use App\Http\Controllers\member\AuthController;
 |
 */
 
-require_once __DIR__ . '/web/general.php';
+Route::name('public.')->group(fn() => require_once __DIR__ . '/web/public.php');
 
 Route::middleware('guest')->group(fn() => require_once __DIR__ . '/web/guest.php');
 Route::middleware('auth')->group(fn() => require_once __DIR__ . '/web/auth.php');
-Route::middleware(['auth', 'admin.full'])->group(fn() => require_once __DIR__ . '/web/admin.php');
+
+Route::middleware(['auth', 'admin.full'])
+    ->prefix('admin/')
+    ->name('admin.')
+    ->group(fn() => require_once __DIR__ . '/web/admin.php');
