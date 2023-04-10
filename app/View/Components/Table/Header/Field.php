@@ -13,6 +13,7 @@ class Field extends Component
      */
     public function __construct(
         public string $name,
+        public string|null $label = null,
         public bool $srOnly = false,
         public bool $sortable = false,
         public string|bool $sortField = false,

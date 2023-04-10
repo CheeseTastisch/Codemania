@@ -1,9 +1,9 @@
 <th scope="col" class="px-6 py-3">
     @if($srOnly)
-        <span class="sr-only">{{ $name }}</span>
+        <span class="sr-only">{{ $label ?? $name }}</span>
     @elseif($sortable)
         <div class="flex items-center">
-            {{ $name }}
+            {{ $label ?? $name }}
             <svg class="w-3 h-3 ml-1 cursor-pointer" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
                  @if($wireMethod) wire:click="{{ $wireMethod }}('{{ $name }}')" @else onclick="{{ $slot }}" @endif>
                 @if($sortField === $name && $sortDirection === 'asc')

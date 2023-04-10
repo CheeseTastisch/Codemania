@@ -20,8 +20,7 @@
 
             <ul class="inline-flex items-center -space-x-px">
                 @if($paginator->onFirstPage())
-                    <button disabled
-                            class="block px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white disabled:!bg-gray-400 dark:disabled:!bg-gray-600">
+                    <span class="block px-3 py-2 ml-0 leading-tight text-gray-500 border border-gray-300 rounded-l-lg dark:border-gray-700 dark:text-gray-400 bg-gray-300 dark:bg-gray-700">
                         <span class="sr-only">Zurück</span>
                         <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
                              xmlns="http://www.w3.org/2000/svg">
@@ -29,10 +28,9 @@
                                   d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
                                   clip-rule="evenodd"></path>
                         </svg>
-                    </button>
+                    </span>
                 @else
-                    <button wire:click="previousPage" wire:loading.attr="disabled"
-                            class="block px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white disabled:!bg-gray-400 dark:disabled:!bg-gray-600">
+                    <button wire:click="previousPage" class="block px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
                         <span class="sr-only">Zurück</span>
                         <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
                              xmlns="http://www.w3.org/2000/svg">
@@ -46,7 +44,7 @@
                 @foreach($elements as $element)
                     @if(is_string($element))
                         <li>
-                            <span class="block px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                            <span class="block px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white cursor-default">
                                 {{ $element }}
                             </span>
                         </li>
@@ -56,14 +54,14 @@
                         @foreach($element as $page => $url)
                             @if($page == $paginator->currentPage())
                                 <li>
-                                    <span class="block px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                                    <span class="block px-3 py-2 leading-tight text-gray-500m border border-gray-300 dark:border-gray-700 dark:text-gray-400 bg-accent-300 dark:bg-accent-700 cursor-default">
                                         {{ $page }}
                                     </span>
                                 </li>
                             @else
                                 <li>
                                     <button wire:click="gotoPage({{ $page }})" wire:loading.attr="disabled"
-                                            class="block px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                                            class="block px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
                                         {{ $page }}
                                     </button>
                                 </li>
@@ -73,8 +71,7 @@
                 @endforeach
 
                 @if($paginator->hasMorePages())
-                    <button wire:click="nextPage" wire:loading.attr="disabled"
-                            class="block px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white disabled:!bg-gray-400 dark:disabled:!bg-gray-600">
+                    <button wire:click="nextPage" class="block px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
                         <span class="sr-only">Weiter</span>
                         <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
                              xmlns="http://www.w3.org/2000/svg">
@@ -84,8 +81,7 @@
                         </svg>
                     </button>
                 @else
-                    <button disabled
-                            class="block px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white disabled:!bg-gray-400 dark:disabled:!bg-gray-600">
+                    <span class="block px-3 py-2 ml-0 leading-tight text-gray-500 border border-gray-300 rounded-r-lg dark:border-gray-700 dark:text-gray-400 bg-gray-300 dark:bg-gray-700">
                         <span class="sr-only">Weiter</span>
                         <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
                              xmlns="http://www.w3.org/2000/svg">
@@ -93,7 +89,7 @@
                                   d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
                                   clip-rule="evenodd"></path>
                         </svg>
-                    </button>
+                    </span>
                 @endif
             </ul>
         </nav>
