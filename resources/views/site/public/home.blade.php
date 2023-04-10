@@ -114,43 +114,19 @@
                 Das Team
             </div>
 
-            <div class="md:flex md:flex-wrap">
-                <div class="md:w-1/3 pr-4 pl-4 md:mt-0 mt-6">
-                    <div class="relative w-full h-full">
-                        <div class="inset-0 z-0 bg-accent-300 dark:bg-accent-700 p-2">
-                            <div>
-                                <img class="mx-auto" src="https://placehold.co/450x450" alt="Lisa Buchendorfer">
-                            </div>
-                            <div class="text-center mt-2">
-                                Lisa Buchendorfer
-                            </div>
-                        </div>
-                        <div
-                            class="opacity-0 hover:opacity-100 focus:opacity-100 duration-300 absolute inset-0 z-10 flex justify-center items-center text-center bg-accent-400 dark:bg-accent-600 !bg-opacity-70 text-xl font-bold px-5"
-                            tabindex="0">
-                            Als kreativer Kopf bin ich dafür zuständig, Aufgaben zu planen, zu strukturieren und zu
-                            definieren, um sicherzustellen, dass sie effektiv und effizient erledigt werden können.
-                        </div>
-                    </div>
-                </div>
-                <div class="md:w-1/3 pr-4 pl-4 md:mt-0 mt-6">
-                    <div class="relative w-full h-full">
-                        <div class="inset-0 z-0 bg-accent-300 dark:bg-accent-700 p-2">
-                            <div>
-                                <img class="mx-auto" src="https://placehold.co/450x450" alt="Lian Hörschläger">
-                            </div>
-                            <div class="text-center mt-2">
-                                Lian Hörschläger
-                            </div>
-                        </div>
-                        <div
-                            class="opacity-0 hover:opacity-100 focus:opacity-100 duration-300 absolute inset-0 z-10 flex justify-center items-center text-center bg-accent-400 dark:bg-accent-600 !bg-opacity-70 text-xl font-bold px-5"
-                            tabindex="0">
-                            Als Designer und Entwickler bin ich dafür zuständig, die Website und die Online-Plattform zu
-                            gestalten und mit Funktionen auszustatten.
-                        </div>
-                    </div>
-                </div>
+            <div class="flex flex-wrap justify-center">
+                <x-public.home.team
+                    name="Lisa Buchendorfer"
+                    image="https://placehold.co/500x500"
+                    description="Als kreativer Kopf bin ich dafür zuständig, Aufgaben zu planen, zu strukturieren und zu definieren, um sicherzustellen, dass sie effektiv und effizient erledigt werden können." />
+                <x-public.home.team
+                    name="Lian Hörschläger"
+                    image="{{ asset('storage/img/team/lian.svg') }}"
+                    description="Als Designer und Entwickler bin ich dafür zuständig, die Website und die Online-Plattform zu gestalten und mit Funktionen auszustatten." />
+                <x-public.home.team
+                    name="Elmedin Zukic"
+                    image="https://placehold.co/500x500"
+                    description="Als Business Man übernehme ich die Verantwortung für das Sponsoring und Marketing. Meine Expertise und Erfahrung im Bereich des Marketings ermöglicht es mir, effektive und zielgerichtete Kampagnen zu entwerfen" />
             </div>
         </div>
     </section>
