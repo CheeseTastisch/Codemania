@@ -1,18 +1,16 @@
 <button type="button"
-        class="flex mr-3 text-sm border border-gray-400 dark:border-gray-600 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
-        id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown"
-        data-dropdown-placement="bottom">
+        class="flex mr-3 text-sm rounded-lg md:mr-0 focus:ring-4 focus:ring-accent-100 dark:focus:ring-accent-900 w-8 h-8"
+        id="user-menu-button"
+        aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
     <span class="sr-only">Benutzermenü öffnen</span>
     @if(($profilePicture = auth()->user()->profilePicture) != null)
-        <img class="w-8 h-8 rounded-full" src="{{ route('file.download', $profilePicture->id) }}" alt="Profilbild">
+        <div class="rounded-lg bg-gray-100 dark:bg-gray-600 overflow-hidden h-full w-full flex justify-center items-center">
+            <img class="w-7 h-7 rounded-lg" src="{{ route('file.download', $profilePicture->id) }}" alt="Profilbild">
+        </div>
     @else
-        <div class="w-8 h-8 rounded-full relative overflow-hidden">
+        <div class="relative rounded-lg overflow-hidden w-full h-full">
             <div class="bg-gray-100 dark:bg-gray-600 w-full h-full">
-                <svg class="absolute w-10 h-10 text-gray-400 -left-1" fill="currentColor" viewBox="0 0 20 20"
-                     xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                          clip-rule="evenodd"></path>
-                </svg>
+                <svg class="absolute w-8 h-8 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
             </div>
         </div>
     @endif
