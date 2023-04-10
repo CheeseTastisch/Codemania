@@ -16,7 +16,7 @@ class NotTwoFactorAuthenticated
     public function handle(Request $request, Closure $next): Response
     {
         if (!auth()->check()) {
-            if (!session()->has('url.intended')) session()->put('url.intended', $request->url());
+            session()->put('url.intended', $request->url());
 
             return $request->expectsJson()
                 ? abort(403, 'You are not logged in.')
@@ -24,7 +24,7 @@ class NotTwoFactorAuthenticated
         }
 
         if (auth()->user()->hasEnabled2Fa() && auth()->user()->is2FaVerified()) {
-            if (!session()->has('url.intended')) session()->put('url.intended', $request->url());
+            session()->put('url.intended', $request->url());
 
             return $request->expectsJson()
                 ? abort(403, 'You have completed the two-factor authentication.')

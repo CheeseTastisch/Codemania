@@ -151,25 +151,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="md:w-1/3 pr-4 pl-4 md:mt-0 mt-6">
-                    <div class="relative w-full h-full">
-                        <div class="inset-0 z-0 bg-accent-300 dark:bg-accent-700 p-2">
-                            <div>
-                                <img class="mx-auto" src="https://placehold.co/450x450" alt="Elmedin Zukic">
-                            </div>
-                            <div class="text-center mt-2">
-                                Elmedin Zukic
-                            </div>
-                        </div>
-                        <div
-                            class="opacity-0 hover:opacity-100 focus:opacity-100 duration-300 absolute inset-0 z-10 flex justify-center items-center text-center bg-accent-400 dark:bg-accent-600 !bg-opacity-70 text-xl font-bold px-5"
-                            tabindex="0">
-                            Als Business Man übernehme ich die Verantwortung für das Sponsoring und Marketing. Meine
-                            Expertise und Erfahrung im Bereich des Marketings ermöglicht es mir, effektive und
-                            zielgerichtete Kampagnen zu entwerfen
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </section>

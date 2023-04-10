@@ -1,5 +1,5 @@
 <button type="button"
-        class="flex mr-3 text-sm rounded-lg md:mr-0 focus:ring-4 focus:ring-accent-100 dark:focus:ring-accent-900 w-8 h-8"
+        class="flex mr-3 text-sm rounded-lg md:mr-0 focus:ring-4 focus:ring-accent-100 dark:focus:ring-accent-900 w-8 h-8 self-center"
         id="user-menu-button"
         aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
     <span class="sr-only">Benutzermenü öffnen</span>
