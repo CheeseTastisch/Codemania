@@ -26,7 +26,8 @@ class Container extends Component
             'answer' => 'Keine Antwort',
         ]);
 
-        Faq::whereNextId(null)->where('id', '!=', $faq->id)->update(['next_id' => $faq->id]);
+        if (Faq::count() == 1) $faq->update(['first' => true]);
+        else Faq::whereNextId(null)->where('id', '!=', $faq->id)->update(['next_id' => $faq->id]);
 
         $this->emit('accordion', 'add', 'faq-accordion', "#faq-container-$faq->id", true);
         $this->emit('addHtmlEditor', "answer-$faq->id");

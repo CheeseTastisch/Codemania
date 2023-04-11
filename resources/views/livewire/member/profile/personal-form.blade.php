@@ -32,5 +32,7 @@
         <x-form.input.file name="profile_picture" label="Profilbild" wire wire-type="defer" />
 
         <x-form.button wire="uploadProfilePicture" name="Profilbild hochladen" />
+
+        <x-form.button type="button" wire="removeProfilePicture" name="Profilbild entfernen" />
     </x-form.form>
 </x-form.form>

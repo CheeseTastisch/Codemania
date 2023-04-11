@@ -138,6 +138,11 @@ class PersonalForm extends Component
         $this->profile_picture = null;
     }
 
+    public function removeProfilePicture() {
+        auth()->user()->update(['profile_picture_id' => null]);
+        $this->emit('showToast', 'Dein Profilbild wurde erfolgreich entfernt!');
+    }
+
     protected function getRules(): array
     {
         return $this->rules;
