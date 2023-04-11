@@ -4,10 +4,7 @@
 
 @push('styles')
     <style>
-        {{ waveClass(1) }}
-        {{ waveClass(2) }}
-        {{ waveClass(3) }}
-        {{ waveClass(4) }}
+        {{ themeWaves() }}
     </style>
 @endpush
 

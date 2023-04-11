@@ -17,7 +17,7 @@ if (!function_exists('day')) {
     function day(): ContestDay|null
     {
         $day = Cache::driver('array')->rememberForever('global.day', fn () => ContestDay::whereCurrent(true)->first());
-        if ($day === null) Cache::driver('array')::set('global.day', false, Carbon::tomorrow());
+        if ($day === null) Cache::driver('array')->set('global.day', false, Carbon::tomorrow());
 
         return $day === false ? null : $day;
     }
@@ -31,17 +31,26 @@ if (!function_exists('theme')) {
     }
 }
 
-if (!function_exists('waveClass')) {
-    function waveClass(int $nummer): string
+if (!function_exists('waves')) {
+    function waves(array $number): string
     {
-        return "
-        .wave-$nummer {
-            background-image: url(" . asset("storage/img/" . (theme()?->images ?? 'backup').  "/wave/light/wave$nummer.svg") . ");
-        }
+        return collect($number)
+            ->map(fn ($number) => wave($number))
+            ->implode('');
+    }
+}
 
-        .dark .wave-$nummer {
-            background-image: url(" . asset("storage/img/" . (theme()?->images ?? 'backup') .  "/wave/dark/wave$nummer.svg") . ");
-        }
-        ";
+
+if (!function_exists('wave')) {
+    function wave(int $number): string
+    {
+        return ".wave-$number {background-image: url(" . asset("storage/backup/wave/light/wave$number.svg") . ");}.dark .wave-$number {background-image: url(" . asset("storage/backup/wave/dark/wave$number.svg") . ");}";
+    }
+}
+
+if (!function_exists('themeWaves')) {
+    function themeWaves(): string
+    {
+        return theme()?->waves([1, 2, 3, 4]) ?? waves([1, 2, 3, 4]);
     }
 }

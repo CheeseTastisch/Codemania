@@ -13,6 +13,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        $this->app->singleton(ColorProvider::class, fn ($app) => new ColorProvider);
         $this->app->singleton(StorageFileProvider::class, fn ($app) => new StorageFileProvider);
         $this->app->singleton(TwoFactorAuthenticationProvider::class, fn ($app) => new TwoFactorAuthenticationProvider);
     }
