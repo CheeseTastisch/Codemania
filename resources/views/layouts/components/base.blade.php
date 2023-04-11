@@ -34,6 +34,8 @@
         }
     </style>
 
+    <link rel="icon" href="{{ theme()?->imagePath('logo/dark-text.svg') ?? asset('storage/backup/logo/dark-text.svg') }}">
+
     @stack('styles')
 
     <title>Codemania @hasSection('title')
