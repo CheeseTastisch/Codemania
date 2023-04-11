@@ -26,7 +26,7 @@
 
     <x-form.input.date name="birthday" label="Geburtsdatum" wire updatable />
 
-    <x-form.input.simple name="slogan" label="Slogan" wire wire-type="lazy" updatable />
+    <x-form.input.textarea name="about" label="Über dich" wire wire-type="lazy" updatable />
 
     <x-form.form space="space-y-2" margin="">
         <x-form.input.file name="profile_picture" label="Profilbild" wire wire-type="defer" />

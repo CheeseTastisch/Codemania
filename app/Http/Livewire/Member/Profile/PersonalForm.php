@@ -21,7 +21,7 @@ class PersonalForm extends Component
         $birthday,
         $class,
         $gender,
-        $slogan;
+        $about;
 
     public $profile_picture;
 
@@ -33,7 +33,7 @@ class PersonalForm extends Component
         'birthday' => 'nullable|date',
         'class' => 'nullable|string',
         'gender' => 'nullable|string|in:null,m,f,o',
-        'slogan' => 'nullable|string',
+        'about' => 'nullable|string',
         'profile_picture' => 'required|image|max:1024'
     ];
 
@@ -46,7 +46,7 @@ class PersonalForm extends Component
         $this->birthday = optional(auth()->user()->birthday)->format('d.m.Y') ?? '';
         $this->class = auth()->user()->class ?? '';
         $this->gender = auth()->user()->gender ?? 'null';
-        $this->slogan = auth()->user()->slogan ?? '';
+        $this->about = auth()->user()->about ?? '';
     }
 
     public function render(): View|\Illuminate\Foundation\Application|Factory|\Illuminate\Contracts\Foundation\Application
@@ -117,12 +117,12 @@ class PersonalForm extends Component
         }
     }
 
-    public function updatedSlogan() {
-        $this->validateOnly('slogan');
+    public function updatedAbout() {
+        $this->validateOnly('about');
 
-        if (auth()->user()->slogan != $this->slogan) {
-            auth()->user()->update(['slogan' => $this->slogan == '' ? null : $this->slogan]);
-            session()->flash('updated', 'slogan');
+        if (auth()->user()->slogan != $this->about) {
+            auth()->user()->update(['about' => $this->about == '' ? null : $this->about]);
+            session()->flash('updated', 'about');
         }
     }
 
