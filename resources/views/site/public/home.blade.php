@@ -117,7 +117,7 @@
             <div class="flex flex-wrap justify-center">
                 <x-public.home.team
                     name="Lisa Buchendorfer"
-                    image="https://placehold.co/500x500"
+                    image="{{ asset('storage/img/team/lisa.png') }}"
                     description="Als kreativer Kopf bin ich dafür zuständig, Aufgaben zu planen, zu strukturieren und zu definieren, um sicherzustellen, dass sie effektiv und effizient erledigt werden können." />
                 <x-public.home.team
                     name="Lian Hörschläger"
