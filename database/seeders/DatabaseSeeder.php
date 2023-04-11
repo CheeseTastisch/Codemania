@@ -30,8 +30,8 @@ class DatabaseSeeder extends Seeder
             'eight_hundred' => '165 15 20',
             'nine_hundred' => '136 20 24',
             'nine_hundred_fifty' => '75 4 7',
-            'images' => 'training',
         ]);
+        $training->generateImages();
 
         $trainingDay = ContestDay::create([
             'date' => Carbon::create(2000, 1, 1),
@@ -55,15 +55,15 @@ class DatabaseSeeder extends Seeder
             'eight_hundred' => '59 87 29',
             'nine_hundred' => '50 74 29',
             'nine_hundred_fifty' => '24 40 11',
-            'images' => 'summer2023',
         ]);
+        $summer2023->generateImages();
 
         ContestDay::create([
             'date' => Carbon::create(2023, 6, 21),
             'registration_deadline' => Carbon::create(2023, 6, 19),
             'name' => 'Sommer 2023',
-            'allow_training_from' => Carbon::create(2023, 6, 26),
-            'current' => true,
+            'allow_training_from' => Carbon::create(2023, 3, 26),
+            'current' => false,
             'contest_day_theme_id' => $summer2023->id,
         ]);
 
@@ -79,15 +79,15 @@ class DatabaseSeeder extends Seeder
             'eight_hundred' => '25 88 180',
             'nine_hundred' => '26 76 142',
             'nine_hundred_fifty' => '8 50 73',
-            'images' => 'winter2023',
         ]);
+        $winter2023->generateImages();
 
         ContestDay::create([
             'date' => Carbon::create(2023, 12, 20),
             'registration_deadline' => Carbon::create(2023, 12, 18),
             'name' => 'Winter 2023',
             'allow_training_from' => Carbon::create(2023, 12, 25),
-            'current' => false,
+            'current' => true,
             'contest_day_theme_id' => $winter2023->id,
         ]);
 

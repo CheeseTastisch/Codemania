@@ -35,8 +35,7 @@ class ContestDayTheme extends Model
         'seven_hundred',
         'eight_hundred',
         'nine_hundred',
-        'nine_hundred_fifty',
-        'images'
+        'nine_hundred_fifty'
     ];
 
     public function contestDay(): HasOne
