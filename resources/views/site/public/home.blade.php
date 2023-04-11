@@ -121,7 +121,7 @@
                     description="Als kreativer Kopf bin ich dafür zuständig, Aufgaben zu planen, zu strukturieren und zu definieren, um sicherzustellen, dass sie effektiv und effizient erledigt werden können." />
                 <x-public.home.team
                     name="Lian Hörschläger"
-                    image="{{ asset('storage/img/team/lian.svg') }}"
+                    image="{{ asset('storage/img/team/lian.png') }}"
                     description="Als Designer und Entwickler bin ich dafür zuständig, die Website und die Online-Plattform zu gestalten und mit Funktionen auszustatten." />
                 <x-public.home.team
                     name="Elmedin Zukic"
