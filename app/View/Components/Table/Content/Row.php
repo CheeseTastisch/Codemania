@@ -14,6 +14,7 @@ class Row extends Component
     public function __construct(
         public bool $withHover = true,
         public bool $withStripe = false,
+        public bool $withBorder = true,
     )
     {
         //
