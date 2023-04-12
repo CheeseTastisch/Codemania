@@ -35,8 +35,6 @@ class Table extends Component
     public function delete(int $id): void
     {
         $this->deleteTarget = ContestDay::find($id);
-
-//        $this->emit('modal', 'show', 'confirmDelete-contest');
     }
 
     public function confirmedDelete(): void

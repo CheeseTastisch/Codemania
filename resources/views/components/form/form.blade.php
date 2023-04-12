@@ -1,6 +1,3 @@
-{{--<div>--}}
-{{--    --}}
-{{--</div>--}}
 @if($form)
     <form action="#" class="{{ $margin }} {{ $space }}">
         {{ $slot }}

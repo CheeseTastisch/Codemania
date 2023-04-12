@@ -18,6 +18,7 @@ class Button extends Component
         public string $wireType = 'prevent',
         public bool $wireLoading = true,
         public bool $fullWidth = true,
+        public string|bool $modal = false,
     )
     {
         //
