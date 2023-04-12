@@ -21,7 +21,6 @@ return new class extends Migration {
             $table->timestamp('freeze_leaderboard_at')->nullable();
             $table->boolean('leaderboard_unfrozen')->default(false);
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

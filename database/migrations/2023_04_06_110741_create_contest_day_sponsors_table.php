@@ -21,7 +21,6 @@ return new class extends Migration
             $table->foreignIdFor(UploadedFile::class, 'logo_id');
             $table->enum('background', ['light', 'dark'])->default('light');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

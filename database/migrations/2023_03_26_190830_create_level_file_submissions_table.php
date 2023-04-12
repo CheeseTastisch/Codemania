@@ -21,7 +21,6 @@ return new class extends Migration
             $table->enum('status', ['checking', 'accepted', 'rejected'])->default('checking');
             $table->foreignIdFor(UploadedFile::class);
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

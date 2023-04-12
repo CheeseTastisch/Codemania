@@ -29,7 +29,6 @@ class Contests extends Component
             ->get()
             ->flatMap(fn ($contestDay) => $contestDay->contests);
 
-
         $this->emit('loadSwiper', '#contests-swiper', [
             'breakpoints' => [
                 640 => [

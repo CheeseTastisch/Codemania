@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('extension');
             $table->uuid('storage_path')->unique();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

@@ -6,12 +6,9 @@ use Color;
 use File;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ContestDayTheme extends Model
 {
-
-    use SoftDeletes;
 
     protected static $backup = [
         'fifty' => '#f9fafb',

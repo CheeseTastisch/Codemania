@@ -18,7 +18,6 @@ return new class extends Migration
             $table->foreignIdFor(Level::class);
             $table->foreignIdFor(UploadedFile::class, 'solution_file_id');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

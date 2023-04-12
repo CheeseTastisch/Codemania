@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('email');
+            $table->string('email')->unique();
 
             $table->string('first_name');
             $table->string('last_name');
@@ -28,8 +28,6 @@ return new class extends Migration
             $table->longText('about')->nullable();
             $table->foreignIdFor(UploadedFile::class, 'profile_picture_id')->nullable();
 
-            $table->string('ban_reason')->nullable()->default(null);
-
             $table->string('theme')->default('light');
             $table->boolean('is_admin')->default(false);
             $table->string('two_factor_secret')->nullable();
@@ -41,7 +39,6 @@ return new class extends Migration
             $table->rememberToken();
 
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
