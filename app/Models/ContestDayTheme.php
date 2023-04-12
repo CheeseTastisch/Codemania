@@ -38,6 +38,25 @@ class ContestDayTheme extends Model
         'nine_hundred_fifty'
     ];
 
+    public static function default(): self {
+        $generated = static::create([
+            'fifty' => implode(' ', Color::toRgb(static::$backup['fifty'])),
+            'hundred' => implode(' ', Color::toRgb(static::$backup['hundred'])),
+            'two_hundred' => implode(' ', Color::toRgb(static::$backup['two_hundred'])),
+            'three_hundred' => implode(' ', Color::toRgb(static::$backup['three_hundred'])),
+            'four_hundred' => implode(' ', Color::toRgb(static::$backup['four_hundred'])),
+            'five_hundred' => implode(' ', Color::toRgb(static::$backup['five_hundred'])),
+            'six_hundred' => implode(' ', Color::toRgb(static::$backup['six_hundred'])),
+            'seven_hundred' => implode(' ', Color::toRgb(static::$backup['seven_hundred'])),
+            'eight_hundred' => implode(' ', Color::toRgb(static::$backup['eight_hundred'])),
+            'nine_hundred' => implode(' ', Color::toRgb(static::$backup['nine_hundred'])),
+            'nine_hundred_fifty' => implode(' ', Color::toRgb(static::$backup['nine_hundred_fifty'])),
+        ]);
+        $generated->generateImages();
+
+        return $generated;
+    }
+
     public function contestDay(): HasOne
     {
         return $this->hasOne(ContestDay::class);

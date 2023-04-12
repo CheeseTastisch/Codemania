@@ -65,6 +65,40 @@
         @endforeach
     </x-table.container>
 
+    <x-modal
+        id="create"
+        title="Neuen Tag erstellen"
+        max-width="xl">
+        <x-form.form
+            margin="">
+            <x-form.input.simple
+                name="name"
+                label="Name"
+                wire />
+
+            <x-form.input.date
+                name="date"
+                label="Datum"
+                wire />
+
+            <x-form.input.date
+                name="registration_deadline"
+                label="Anmeldefrist"
+                wire />
+
+            <x-form.button
+                name="Erstellen"
+                wire="create"/>
+        </x-form.form>
+    </x-modal>
+
+    <div class="flex justify-end mt-3">
+        <x-form.button
+            name="Neuen Tag erstellen"
+            modal="create"
+            :full-width="false" />
+    </div>
+
     <x-crud.confirm-delete
         id="contest"
         what="{{ $deleteTarget?->name }}"

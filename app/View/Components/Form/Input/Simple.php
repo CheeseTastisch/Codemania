@@ -33,4 +33,5 @@ class Simple extends Component
     {
         return view('components.form.input.simple');
     }
+
 }
