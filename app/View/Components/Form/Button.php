@@ -19,6 +19,7 @@ class Button extends Component
         public bool $wireLoading = true,
         public bool $fullWidth = true,
         public string|bool $modal = false,
+        public string $modalAction = 'show',
     )
     {
         //
