@@ -1,3 +1,5 @@
-*
-!public/*
+files/
+livewire-tmp/
+public/themes
+
 !.gitignore
