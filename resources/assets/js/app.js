@@ -1,9 +1,13 @@
-import 'flowbite';
 import './bootstrap';
+
+import 'flowbite';
 import './jquery';
+
+import './accordion';
 import './theme';
-import './toast';
-import './swiper';
+
 import './datepicker';
 import './frolia';
-import './accordion';
+import './model'
+import './swiper';
+import './toast';
