@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use StorageFile;
 
 class LevelFileSubmission extends Model
 {
@@ -29,6 +30,11 @@ class LevelFileSubmission extends Model
     public function uploadedFile(): BelongsTo
     {
         return $this->belongsTo(UploadedFile::class, 'uploaded_file_id');
+    }
+
+    public function deleteAll() {
+        StorageFile::deleteFile($this->uploadedFile);
+        $this->delete();
     }
 
 }

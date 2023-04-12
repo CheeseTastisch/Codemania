@@ -70,4 +70,12 @@ class Contest extends Model
         return $teams;
     }
 
+    public function deleteAll(): void
+    {
+        $this->tasks->each(fn($task) => $task->deleteAll());
+        $this->teams->each(fn($team) => $team->contests()->detach($this->id));
+
+        $this->delete();
+    }
+
 }

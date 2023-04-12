@@ -25,4 +25,11 @@ class Task extends Model
         return $this->hasMany(Level::class);
     }
 
+    public function deleteAll(): void
+    {
+        $this->levels->each(fn($level) => $level->deleteAll());
+
+        $this->delete();
+    }
+
 }

@@ -14,7 +14,9 @@ class ConfirmDelete extends Component
     public function __construct(
         public string $what,
         public string $id,
-        public string|bool $wire = false
+        public string|bool $wire = false,
+        public string|null $wireType = "prevent",
+        public bool $wireLoading = true,
     )
     {
         //

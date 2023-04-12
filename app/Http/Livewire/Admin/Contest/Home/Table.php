@@ -17,6 +17,8 @@ class Table extends Component
 
     use WithPagination, WithSort;
 
+    public ContestDay|null $deleteTarget = null;
+
     public function mount(): void
     {
         $this->sortField = 'date';
@@ -28,6 +30,22 @@ class Table extends Component
         return view('livewire.admin.contest.home.table', [
             'contests' => ContestDay::orderBy($this->sortField, $this->sortDirection)->paginate(10),
         ]);
+    }
+
+    public function delete(int $id): void
+    {
+        $this->deleteTarget = ContestDay::find($id);
+
+//        $this->emit('modal', 'show', 'confirmDelete-contest');
+    }
+
+    public function confirmedDelete(): void
+    {
+        $this->deleteTarget->deleteAll();
+        $this->deleteTarget = null;
+
+        $this->emit('modal', 'hide', '#confirmDelete-contest');
+        $this->emit('showToast', 'Du hast den Tag erfolgreich gelöscht.');
     }
 
 

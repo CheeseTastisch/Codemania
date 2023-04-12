@@ -10,6 +10,7 @@ Livewire.on('modal', function (action, target) {
 
         case 'hide':
             modal.hide();
+            $('*[modal-backdrop=""]').remove();
             break;
     }
 })

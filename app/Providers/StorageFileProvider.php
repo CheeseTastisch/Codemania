@@ -48,6 +48,12 @@ class StorageFileProvider
         }, $this->getBaseName($file));
     }
 
+    public function deleteFile(UploadedFile $file): void
+    {
+        Storage::delete($this->getStoragePath($file->storage_path));
+        $file->delete();
+    }
+
     public function getStoragePath(string $storageName): string
     {
         return "files/$storageName.secure";

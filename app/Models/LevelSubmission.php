@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use StorageFile;
 
 class LevelSubmission extends Model
 {
@@ -65,6 +66,16 @@ class LevelSubmission extends Model
             && $this->status_changed_at->isAfter($contest->freeze_leaderboard_at)) return false;
 
         return $level->instantly_rated === true || $contest->end_time->isPast();
+    }
+
+    public function deleteAll(): void
+    {
+        StorageFile::deleteFile($this->sourceFile);
+        StorageFile::deleteFile($this->imageFile);
+
+        $this->levelFileSubmissions->each(fn($levelFileSubmission) => $levelFileSubmission->deleteAll());
+
+        $this->delete();
     }
 
 }

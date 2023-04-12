@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use StorageFile;
 
 class LevelFile extends Model
 {
@@ -28,6 +29,14 @@ class LevelFile extends Model
     public function levelFileSubmissions(): HasMany
     {
         return $this->hasMany(LevelFileSubmission::class);
+    }
+
+    public function deleteAll(): void
+    {
+        StorageFile::deleteFile($this->solutionFile);
+        $this->levelFileSubmissions->each(fn($levelFileSubmission) => $levelFileSubmission->deleteAll());
+
+        $this->delete();
     }
 
 }
