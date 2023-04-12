@@ -74,7 +74,7 @@ class Kernel extends HttpKernel
 
         'admin.full' => [
             '2fa',
-//            '2fa_enabled',
+            '2fa_enabled',
             'admin.db',
         ],
     ];
