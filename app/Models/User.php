@@ -8,13 +8,14 @@ use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
 {
-    use HasApiTokens, Notifiable, TwoFactorAuthenticatable;
+    use HasApiTokens, Notifiable, TwoFactorAuthenticatable, SoftDeletes;
 
     protected $fillable = [
         'email',

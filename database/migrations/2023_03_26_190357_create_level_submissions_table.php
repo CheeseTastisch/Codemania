@@ -23,6 +23,7 @@ return new class extends Migration
             $table->foreignIdFor(UploadedFile::class, 'source_file_id')->nullable();
             $table->foreignIdFor(UploadedFile::class, 'image_file_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

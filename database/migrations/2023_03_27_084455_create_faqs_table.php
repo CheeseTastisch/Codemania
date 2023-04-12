@@ -19,6 +19,7 @@ return new class extends Migration
             $table->boolean('first')->default(false);
             $table->foreignIdFor(Faq::class, 'next_id')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

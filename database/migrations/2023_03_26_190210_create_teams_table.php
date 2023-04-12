@@ -18,8 +18,9 @@ return new class extends Migration
             $table->string('name');
             $table->foreignIdFor(ContestDay::class);
             $table->foreignIdFor(UploadedFile::class, 'logo_file_id')->nullable();
-            $table->boolean('banned')->default(false);
+            $table->string('ban_reason')->nullable()->default(null);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('nine_hundred');
             $table->string('nine_hundred_fifty');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

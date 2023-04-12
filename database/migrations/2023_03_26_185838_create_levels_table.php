@@ -21,6 +21,7 @@ return new class extends Migration
             $table->boolean('instantly_rated');
             $table->foreignIdFor(UploadedFile::class, 'description_file_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
