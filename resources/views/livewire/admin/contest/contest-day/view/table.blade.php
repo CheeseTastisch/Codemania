@@ -41,7 +41,7 @@
                 </x-table.content.column>
                 <x-table.content.column>
                     <div class="flex space-x-2">
-                        <a href="#">
+                        <a href="{{ route('admin.contest.contest-day.edit', $contest->id) }}">
                             <svg class="w-6 h-6 hover:text-accent-400 dark:hover:text-accent-600" fill="none"
                                  stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
                                  xmlns="http://www.w3.org/2000/svg" aria-hidden="true">

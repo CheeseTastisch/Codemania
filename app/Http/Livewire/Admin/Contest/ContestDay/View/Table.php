@@ -1,17 +1,14 @@
 <?php
 
-namespace App\Http\Livewire\Admin\Contest\Home;
+namespace App\Http\Livewire\Admin\Contest\ContestDay\View;
 
 use App\Concerns\Livewire\WithSort;
-use App\Concerns\Livewire\LoadsDataLater;
 use App\Models\ContestDay;
 use App\Models\ContestDayTheme;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Query\Builder;
-use Illuminate\Support\Collection;
-use Illuminate\Validation\Rule;
+use Illuminate\Http\RedirectResponse;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -35,7 +32,7 @@ class Table extends Component
 
     public function render(): View|\Illuminate\Foundation\Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        return view('livewire.admin.contest.home.table', [
+        return view('livewire.admin.contest.contest-day.view.table', [
             'contests' => ContestDay::orderBy($this->sortField, $this->sortDirection)->paginate(10),
         ]);
     }
@@ -54,7 +51,7 @@ class Table extends Component
         $this->emit('showToast', 'Du hast den Tag erfolgreich gelöscht.');
     }
 
-    public function create(): void
+    public function create(): RedirectResponse
     {
         $this->validate();
 
@@ -66,8 +63,7 @@ class Table extends Component
             'contest_day_theme_id' => $theme->id,
         ]);
 
-
-        // TODO: Redirect to edit page
+        return redirect()->route('admin.contest.contest-day.edit', $contestDay->id);
     }
 
     protected function getRules(): array

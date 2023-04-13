@@ -35,7 +35,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('admin.contest.home') }}" class="nav-link @if(str(Route::currentRouteName())->startsWith('admin.contest')) !text-accent-400 dark:!text-accent-600 @endif">
+                    <a href="{{ route('admin.contest.contest-day.view') }}" class="nav-link @if(str(Route::currentRouteName())->startsWith('admin.contest')) !text-accent-400 dark:!text-accent-600 @endif">
                         Contests
                     </a>
                 </li>
