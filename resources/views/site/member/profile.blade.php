@@ -5,32 +5,17 @@
 @push('content')
     <div class="container mx-auto sm:px-4 px-2">
         <div class="grid grid-cols-1 px-4 pt-6 xl:grid-cols-2 xl:gap-4">
-            <div class="col-span-full xl:col-auto">
-                <div
-                    class="p-4 mb-4 space-y-6 border-2 rounded-lg shadow-sm 2xl:col-span-2 sm:p-6 border-accent-400 dark:border-accent-600">
-                    <div
-                        class="px-4 py-2 text-gray-400 rounded font-bold text-xl">
-                        <h3>Einstellungen</h3>
-                    </div>
-                    <div
-                        class="px-4 py-2 rounded">
-                        @livewire('member.profile.settings-form')
-                    </div>
-                </div>
-            </div>
-            <div class="col-span-full xl:col-auto">
-                <div
-                    class="p-4 mb-4 space-y-6 border-2 rounded-lg shadow-sm 2xl:col-span-2 sm:p-6 border-accent-400 dark:border-accent-600">
-                    <div
-                        class="px-4 py-2 text-gray-400 rounded font-bold text-xl">
-                        <h3>Persönliche Informationen</h3>
-                    </div>
-                    <div
-                        class="px-4 py-2 rounded">
-                        @livewire('member.profile.personal-form')
-                    </div>
-                </div>
-            </div>
+            <x-card
+                title="Einstellungen"
+                class="mb-4 xl:mb-0 col-span-full xl:col-auto">
+                @livewire('member.profile.settings-form')
+            </x-card>
+
+            <x-card
+                title="Persönliche Informationen"
+                class="mb-4 xl:mb-0 col-span-full xl:col-auto">
+                @livewire('member.profile.personal-form')
+            </x-card>
         </div>
     </div>
 @endpush

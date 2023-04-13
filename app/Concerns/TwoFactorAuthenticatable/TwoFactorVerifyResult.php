@@ -32,6 +32,11 @@ class TwoFactorVerifyResult
         return $this->type === TwoFactorVerifyResultType::RecoveryCodeUsed;
     }
 
+    public function wasAuthenticated(): bool
+    {
+        return $this->wasSuccessful() || $this->wasRecoveryCodeUsed();
+    }
+
     public static function success(): self
     {
         return new self(TwoFactorVerifyResultType::Success);

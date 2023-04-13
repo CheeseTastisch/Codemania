@@ -1,9 +1,9 @@
 @if($form)
-    <form action="#" class="{{ $margin }} {{ $space }}">
+    <form action="#" class="{{ $space }}">
         {{ $slot }}
     </form>
 @else
-    <div class="{{ $margin }} {{ $space }}">
+    <div class="{{ $space }}">
         {{ $slot }}
     </div>
 @endif

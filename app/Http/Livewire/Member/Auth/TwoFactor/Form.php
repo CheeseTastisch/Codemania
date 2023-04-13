@@ -50,6 +50,7 @@ class Form extends Component
         else if ($result->wasRecoveryCodeUsed()) {
             session()->flash('2fa.old', $result->oldRecoveryCode);
             session()->flash('2fa.new', $result->newRecoveryCode);
+            session()->flash('2fa.codes', auth()->user()->get2FaRecoveryCodes());
 
             return redirect()->route('member.auth.2fa.recovery');
         }

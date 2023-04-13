@@ -3,11 +3,25 @@
 @section('title', 'Zwei Faktor Authentifizierung')
 
 @push('content')
-    <x-alert.complex type="info" title="Zwei Faktor Authentifizierung Backup Codes" sr-info="Info">
-        <p>Du hast einen Backup-Code für die Zwei Faktor Authentifizierung benutzt. Dieser Code ist nur einmalig gültig und wurde ersetzt.</p>
-        <p class="mt-2">Deine neuen Backup-Codes findest du unten.</p>
-        <div class="grid grid-rows-4 grid-cols-2">
-            @foreach(session('2fa.new_codes') as $code)
+    <x-card
+        title="Zwei Faktor Authentifizierung"
+        class="w-full max-w-xl">
+
+        @if(session()->has('2fa.new'))
+            <p>
+                Du hast einen Backup-Code für die Zwei Faktor Authentifizierung benutzt.
+                Dieser Code ist nur einmalig gültig und wurde ersetzt.
+            </p>
+
+            <p class="mt-2">Deine neuen Backup-Codes findest du unten.</p>
+
+            <p class="mt-2 mb-4">
+                Es sind alle Backup-Codes unscharf, bis du über sie gehst.
+                Dies ist eine Sicherheitsmaßnahme, damit du sie nicht versehentlich aufzeichnest.
+                Nur der Code, den du gerade benutzt hast, ist scharf.
+            </p>
+
+            @foreach(session('2fa.codes') as $code)
                 @if($code == session('2fa.new'))
                     <div>
                         <span class="line-through">
@@ -18,17 +32,30 @@
                         </span>
                     </div>
                 @else
+                    <div>
                     <span class="blur-sm hover:blur-none">
                         {{ $code }}
                     </span>
+                    </div>
                 @endif
             @endforeach
-        </div>
-        <p class="mt-2">Bitte bewahre diese Codes sicher auf. Du kannst sie jederzeit erneut anfordern.</p>
-        <x-slot name="actions">
-            <x-alert.action.link :href="session()->has('url.intended') ? session()->pull('url.intended') : route('member.dashboard')" type="info">
-                Ich habe die Codes gespeichert
-            </x-alert.action.link>
-        </x-slot>
-    </x-alert.complex>
+
+            <p class="my-4">
+                Bitte bewahre diese Codes sicher auf, du kannst auf sie nicht erneut zugreifen.
+            </p>
+
+            <x-link.button
+                name="Ich habe die Codes gespeichert"
+                :href="session()->has('url.intended') ? session()->pull('url.intended') : route('member.dashboard')" />
+        @else
+            <p class="mb-4">
+                Du hast dir deine Backup-Codes für die Zwei Faktor Authentifizierung bereits angesehen.
+                Deshalb können sie nicht erneut angezeigt werden.
+            </p>
+
+            <x-link.button
+                name="Zurück"
+                :href="session()->has('url.intended') ? session()->pull('url.intended') : route('member.dashboard')" />
+        @endif
+    </x-card>
 @endpush

@@ -109,7 +109,7 @@ trait TwoFactorAuthenticatable
 
     public function try2Fa(string $code): TwoFactorVerifyResult
     {
-        if (($code = $this->validate2FaCode($code))->wasSuccessful()) session()->put('2fa.verified', true);
+        if (($code = $this->validate2FaCode($code))->wasAuthenticated()) session()->put('2fa.verified', true);
 
         return $code;
     }
