@@ -13,7 +13,6 @@ class Form extends Component
      */
     public function __construct(
         public bool $form = true,
-        public string $margin = 'mt-8',
         public string $space = 'space-y-6',
     )
     {

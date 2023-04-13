@@ -1,4 +1,4 @@
-<x-form.form :form="false" margin="">
+<x-form.form :form="false">
     <div>
         <div class="grid md:grid-cols-2 md:gap-6">
             <x-form.input.simple name="firstname" label="Vorname" wire wire-type="lazy" updatable/>
@@ -28,7 +28,7 @@
 
     <x-form.input.textarea name="about" label="Über dich" wire wire-type="lazy" updatable />
 
-    <x-form.form space="space-y-2" margin="">
+    <x-form.form space="space-y-2">
         <x-form.input.file name="profile_picture" label="Profilbild" wire wire-type="defer" />
 
         <x-form.button wire="uploadProfilePicture" name="Profilbild hochladen" />

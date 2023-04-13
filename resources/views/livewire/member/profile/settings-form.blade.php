@@ -1,4 +1,4 @@
-<x-form.form :form="false" margin="">
+<x-form.form :form="false">
     <x-form.input.dropdown name="theme" label="Theme" wire wire-type="lazy" updatable>
         <x-form.input.option value="light" name="Hell"/>
         <x-form.input.option value="dark" name="Dunkel"/>
@@ -6,7 +6,7 @@
 
     <x-form.input.simple name="email" label="E-Mail" wire wire-type="lazy" updatable />
 
-    <x-form.form space="space-y-2" margin="">
+    <x-form.form space="space-y-2">
         <x-form.input.password.input name="current_password" label="Derzeitiges Passwort" wire wire-type="lazy" />
         <x-form.input.password.input name="password" label="Neues Passwort" wire wire-type="lazy" indicator />
         <x-form.input.password.input name="password_confirmation" label="Neues Passwort bestätigen" wire wire-type="lazy" />
@@ -14,7 +14,7 @@
         <x-form.button wire="changePassword" name="Passwort ändern" />
     </x-form.form>
 
-    <x-form.form space="space-y-2" margin="">
+    <x-form.form space="space-y-2">
         @if(auth()->user()->hasCompleted2Fa())
             <x-form.input.password.input name="disable_2fa_password" label="Derzeitiges Passwort" wire wire-type="lazy" />
             <x-form.input.simple name="disable_2fa_code" label="2FA Code" wire wire-type="lazy" />
