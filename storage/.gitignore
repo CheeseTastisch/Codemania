@@ -1,3 +1,2 @@
 *.index
-*.index-shm
-*.index-wal
+*.index-*
