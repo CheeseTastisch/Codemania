@@ -208,7 +208,6 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        'Color' => \App\Facades\ColorFacade::class,
         'StorageFile' => \App\Facades\StorageFileFacade::class,
         'TwoFactor' => \App\Facades\TwoFactorAuthenticationFacade::class,
     ])->toArray(),

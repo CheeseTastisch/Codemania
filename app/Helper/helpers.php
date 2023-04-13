@@ -54,3 +54,11 @@ if (!function_exists('themeWaves')) {
         return theme()?->waves([1, 2, 3, 4]) ?? waves([1, 2, 3, 4]);
     }
 }
+
+if (!function_exists('is_assoc')) {
+    function is_assoc(array $array): bool
+    {
+        if ([] === $array) return false;
+        return array_keys($array) !== range(0, count($array) - 1);
+    }
+}
