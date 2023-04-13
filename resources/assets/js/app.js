@@ -11,3 +11,4 @@ import './frolia';
 import './model'
 import './swiper';
 import './toast';
+import './updatable';

@@ -16,6 +16,7 @@ class Checkbox extends Component
         public bool $wire = false,
         public string|bool $wireType = 'defer',
         public bool|null $checked = null,
+        public bool $updatable = false,
     )
     {
         //

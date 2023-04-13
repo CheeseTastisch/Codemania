@@ -200,6 +200,8 @@ return [
         'disable_2fa_code' => 'Zwei-Faktor-Authentifizierungscode',
         'confirm_2fa_code' => 'Zwei-Faktor-Authentifizierungscode',
         'enable_2fa_password' => 'Derzeitiges Passwort',
+        'name' => 'Name',
+        'date' => 'Datum',
     ],
 
 ];
