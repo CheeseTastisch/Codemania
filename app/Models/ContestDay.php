@@ -6,9 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Laravel\Scout\Searchable;
 
 class ContestDay extends Model
 {
+
+    use Searchable;
 
     protected $fillable = [
         'date',
@@ -25,9 +29,9 @@ class ContestDay extends Model
         'allow_training_from' => 'datetime',
     ];
 
-    public function theme(): BelongsTo
+    public function theme(): HasOne
     {
-        return $this->belongsTo(ContestDayTheme::class, 'id');
+        return $this->hasOne(ContestDayTheme::class, 'id', 'contest_day_theme_id');
     }
 
     public function sponsors(): HasMany
@@ -53,6 +57,15 @@ class ContestDay extends Model
         $this->contests->each(fn($contest) => $contest->deleteAll());
 
         $this->delete();
+    }
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'date' => $this->date->format('d. m. Y'),
+        ];
     }
 
 }

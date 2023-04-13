@@ -5,6 +5,7 @@ namespace App\Models;
 use Color;
 use File;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class ContestDayTheme extends Model
@@ -57,9 +58,9 @@ class ContestDayTheme extends Model
         return $generated;
     }
 
-    public function contestDay(): HasOne
+    public function contestDay(): BelongsTo
     {
-        return $this->hasOne(ContestDay::class);
+        return $this->belongsTo(ContestDay::class, 'id', 'contest_day_theme_id');
     }
 
     public function getVariablesAttribute(): string

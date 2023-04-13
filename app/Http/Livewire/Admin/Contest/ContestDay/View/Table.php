@@ -10,6 +10,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Livewire\Component;
+use Livewire\Redirector;
 use Livewire\WithPagination;
 
 class Table extends Component
@@ -51,7 +52,7 @@ class Table extends Component
         $this->emit('showToast', 'Du hast den Tag erfolgreich gelöscht.');
     }
 
-    public function create(): RedirectResponse
+    public function create(): RedirectResponse|Redirector
     {
         $this->validate();
 
