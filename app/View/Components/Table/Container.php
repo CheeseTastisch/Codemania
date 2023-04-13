@@ -12,7 +12,8 @@ class Container extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public bool $withPagination = false
+        public bool $withPagination = false,
+        public bool $withSearch = false,
     )
     {
         //

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin\Contest\ContestDay\View;
 
+use App\Concerns\Livewire\WithSearch;
 use App\Concerns\Livewire\WithSort;
 use App\Models\ContestDay;
 use App\Models\ContestDayTheme;
@@ -9,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Livewire\Component;
 use Livewire\Redirector;
 use Livewire\WithPagination;
@@ -16,7 +18,7 @@ use Livewire\WithPagination;
 class Table extends Component
 {
 
-    use WithPagination, WithSort;
+    use WithPagination, WithSort, WithSearch;
 
     public ContestDay|null $deleteTarget = null;
 
@@ -34,7 +36,11 @@ class Table extends Component
     public function render(): View|\Illuminate\Foundation\Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
         return view('livewire.admin.contest.contest-day.view.table', [
-            'contests' => ContestDay::orderBy($this->sortField, $this->sortDirection)->paginate(10),
+            'contests' => ($this->search != ''
+                    ? ContestDay::search($this->search)
+                    : ContestDay::query())
+                ->orderBy($this->sortField, $this->sortDirection)
+                ->paginate(10),
         ]);
     }
 

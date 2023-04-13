@@ -1,10 +1,13 @@
 <div>
-    <x-table.container with-pagination>
+    <x-table.container
+        with-pagination
+        with-search>
         <x-slot name="header">
             <x-table.header.field
                 name="id"
                 label="#"
             />
+
             <x-table.header.field
                 name="name"
                 label="Name"
@@ -13,6 +16,7 @@
                 sort-direction="{{ $sortDirection }}"
                 wire-method="sortBy"
             />
+
             <x-table.header.field
                 name="date"
                 label="Datum"
