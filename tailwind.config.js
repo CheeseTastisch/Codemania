@@ -34,6 +34,18 @@ module.exports = {
                     '950': 'rgb(var(--color-accent-950) / <alpha-value>)',
                 }
             },
+            keyframes: {
+                'hide': {
+                    'to': {
+                        height: '0',
+                        width: '0',
+                        overflow: 'hidden',
+                    }
+                }
+            },
+            animation: {
+                'hide': 'hide 0s ease-in 5s forwards',
+            },
         },
   },
     plugins: [
