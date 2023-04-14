@@ -12,6 +12,16 @@ if (!function_exists('setDay')) {
     }
 }
 
+if (!function_exists('setDayAndView')) {
+    function setDayAndView(ContestDay $day, $view = null, $data = [], $mergeData = []): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory
+    {
+        Cache::driver('array')->forever('global.day', $day);
+        Cache::driver('array')->forever('global.theme', $day->theme);
+
+        return view($view, $data, $mergeData);
+    }
+}
+
 if (!function_exists('day')) {
 
     function day(): ContestDay|null
