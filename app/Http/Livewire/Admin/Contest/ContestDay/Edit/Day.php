@@ -23,8 +23,8 @@ class Day extends Component
     {
         $this->name = $this->contestDay->name;
         $this->date = $this->contestDay->date->format('d.m.Y');
-        $this->registration_deadline = $this->contestDay->registration_deadline->format('d.m.Y');
-        $this->allow_training_from = $this->contestDay->allow_training_from->format('d.m.Y');
+        $this->registration_deadline = optional($this->contestDay->registration_deadline)->format('d.m.Y');
+        $this->allow_training_from = optional($this->contestDay->allow_training_from)->format('d.m.Y');
         $this->current = $this->contestDay->current;
     }
 
@@ -65,7 +65,7 @@ class Day extends Component
     {
         $this->validateOnly('registration_deadline');
 
-        $this->contestDay->update(['registration_deadline' => $this->registration_deadline]);
+        $this->contestDay->update(['registration_deadline' => $this->registration_deadline == '' ? null : $this->registration_deadline]);
         session()->flash('updated', 'registration_deadline');
     }
 
@@ -73,7 +73,7 @@ class Day extends Component
     {
         $this->validateOnly('allow_training_from');
 
-        $this->contestDay->update(['allow_training_from' => $this->allow_training_from]);
+        $this->contestDay->update(['allow_training_from' => $this->allow_training_from == '' ? null : $this->allow_training_from]);
         session()->flash('updated', 'allow_training_from');
     }
 
@@ -92,8 +92,8 @@ class Day extends Component
         return [
             'name' => 'required|string',
             'date' => 'required|date',
-            'registration_deadline' => 'required|date',
-            'allow_training_from' => 'required|date',
+            'registration_deadline' => 'nullable|date',
+            'allow_training_from' => 'nullable|date',
             'current' => 'required|boolean',
         ];
     }

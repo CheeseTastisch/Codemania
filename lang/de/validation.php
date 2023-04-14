@@ -202,6 +202,10 @@ return [
         'enable_2fa_password' => 'Derzeitiges Passwort',
         'name' => 'Name',
         'date' => 'Datum',
+        'registration_deadline' => 'Anmeldefrist',
+        'allow_training_from' => 'Training erlaubt ab',
+        'current' => 'Aktueller Tag',
+        'color' => 'Farbe',
     ],
 
 ];
