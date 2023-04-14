@@ -122,7 +122,7 @@
                     description="Als Designer und Entwickler bin ich dafür zuständig, die Website und die Online-Plattform zu gestalten und mit Funktionen auszustatten." />
                 <x-public.home.team
                     name="Elmedin Zukic"
-                    image="https://placehold.co/500x500"
+                    image="{{ asset('storage/img/team/elmedin.png') }}"
                     description="Als Business Man übernehme ich die Verantwortung für das Sponsoring und Marketing. Meine Expertise und Erfahrung im Bereich des Marketings ermöglicht es mir, effektive und zielgerichtete Kampagnen zu entwerfen" />
             </div>
         </div>
