@@ -183,7 +183,7 @@ class Color
         $min = min($this->rgb);
 
         if ($max === $min) $h = 0;
-        else if ($max === $this->rgb['r']) $h = (60 * (($this->rgb['g'] - $this->rgb['b']) / ($max - $min)) + 360) % 360;
+        else if ($max === $this->rgb['r']) $h = intval(60 * (($this->rgb['g'] - $this->rgb['b']) / ($max - $min)) + 360) % 360;
         else if ($max === $this->rgb['g']) $h = 60 * (($this->rgb['b'] - $this->rgb['r']) / ($max - $min)) + 120;
         else $h = 60 * (($this->rgb['r'] - $this->rgb['g']) / ($max - $min)) + 240;
 

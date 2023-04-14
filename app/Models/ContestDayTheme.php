@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\Color as ColorCast;
 use App\Helper\Color\Color;
 use App\Helper\Color\PaletteGenerator;
 use Exception;
@@ -13,19 +14,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class ContestDayTheme extends Model
 {
 
-    protected static array $backup = [
-        'fifty' => '#f9fafb',
-        'hundred' => '#f3f4f6',
-        'two_hundred' => '#e5e7eb',
-        'three_hundred' => '#d1d5db',
-        'four_hundred' => '#9ca3af',
-        'five_hundred' => '#6b7280',
-        'six_hundred' => '#4b5563',
-        'seven_hundred' => '#374151',
-        'eight_hundred' => '#1f2937',
-        'nine_hundred' => '#111827',
-        'nine_hundred_fifty' => '#030712',
-    ];
+    protected static array $backup;
 
     protected $fillable = [
         'fifty',
@@ -41,23 +30,74 @@ class ContestDayTheme extends Model
         'nine_hundred_fifty'
     ];
 
+    protected $casts = [
+        'fifty' => ColorCast::class,
+        'hundred' => ColorCast::class,
+        'two_hundred' => ColorCast::class,
+        'three_hundred' => ColorCast::class,
+        'four_hundred' => ColorCast::class,
+        'five_hundred' => ColorCast::class,
+        'six_hundred' => ColorCast::class,
+        'seven_hundred' => ColorCast::class,
+        'eight_hundred' => ColorCast::class,
+        'nine_hundred' => ColorCast::class,
+        'nine_hundred_fifty' => ColorCast::class,
+    ];
+
     public static function default(): self {
         $generated = static::create([
-            'fifty' => Color::parseRgb(static::$backup['fifty'])->getRgb(false)->implode(' '),
-            'hundred' => Color::parseRgb(static::$backup['hundred'])->getRgb(false)->implode(' '),
-            'two_hundred' => Color::parseRgb(static::$backup['two_hundred'])->getRgb(false)->implode(' '),
-            'three_hundred' => Color::parseRgb(static::$backup['three_hundred'])->getRgb(false)->implode(' '),
-            'four_hundred' => Color::parseRgb(static::$backup['four_hundred'])->getRgb(false)->implode(' '),
-            'five_hundred' => Color::parseRgb(static::$backup['five_hundred'])->getRgb(false)->implode(' '),
-            'six_hundred' => Color::parseRgb(static::$backup['six_hundred'])->getRgb(false)->implode(' '),
-            'seven_hundred' => Color::parseRgb(static::$backup['seven_hundred'])->getRgb(false)->implode(' '),
-            'eight_hundred' => Color::parseRgb(static::$backup['eight_hundred'])->getRgb(false)->implode(' '),
-            'nine_hundred' => Color::parseRgb(static::$backup['nine_hundred'])->getRgb(false)->implode(' '),
-            'nine_hundred_fifty' => Color::parseRgb(static::$backup['nine_hundred_fifty'])->getRgb(false)->implode(' '),
+            'fifty' => static::getBackup()['fifty'],
+            'hundred' => static::getBackup()['hundred'],
+            'two_hundred' => static::getBackup()['two_hundred'],
+            'three_hundred' => static::getBackup()['three_hundred'],
+            'four_hundred' => static::getBackup()['four_hundred'],
+            'five_hundred' => static::getBackup()['five_hundred'],
+            'six_hundred' => static::getBackup()['six_hundred'],
+            'seven_hundred' => static::getBackup()['seven_hundred'],
+            'eight_hundred' => static::getBackup()['eight_hundred'],
+            'nine_hundred' => static::getBackup()['nine_hundred'],
+            'nine_hundred_fifty' => static::getBackup()['nine_hundred_fifty'],
         ]);
         $generated->generateImages();
 
         return $generated;
+    }
+
+    public static function getBackup(): array
+    {
+        if (!isset(static::$backup)) {
+            static::$backup = [
+                'fifty' => Color::parseRgb('#f9fafb'),
+                'hundred' => Color::parseRgb('#f3f4f6'),
+                'two_hundred' => Color::parseRgb('#e5e7eb'),
+                'three_hundred' => Color::parseRgb('#d1d5db'),
+                'four_hundred' => Color::parseRgb('#9ca3af'),
+                'five_hundred' => Color::parseRgb('#6b7280'),
+                'six_hundred' => Color::parseRgb('#4b5563'),
+                'seven_hundred' => Color::parseRgb('#374151'),
+                'eight_hundred' => Color::parseRgb('#1f2937'),
+                'nine_hundred' => Color::parseRgb('#111827'),
+                'nine_hundred_fifty' => Color::parseRgb('#030712'),
+            ];
+        }
+
+        return static::$backup;
+    }
+
+    public static function getDefaultVariableAttributes(): string
+    {
+        return "
+            --color-accent-50:" . static::getBackup()->get('fifty')->getRgb(false)->implode(' ') . ";
+            --color-accent-100:" . static::getBackup()->get('hundred')->getRgb(false)->implode(' ') . ";
+            --color-accent-200:" . static::getBackup()->get('two_hundred')->getRgb(false)->implode(' ') . ";
+            --color-accent-300:" . static::getBackup()->get('three_hundred')->getRgb(false)->implode(' ') . ";
+            --color-accent-400:" . static::getBackup()->get('four_hundred')->getRgb(false)->implode(' ') . ";
+            --color-accent-500:" . static::getBackup()->get('five_hundred')->getRgb(false)->implode(' ') . ";
+            --color-accent-600:" . static::getBackup()->get('six_hundred')->getRgb(false)->implode(' ') . ";
+            --color-accent-700:" . static::getBackup()->get('seven_hundred')->getRgb(false)->implode(' ') . ";
+            --color-accent-800:" . static::getBackup()->get('eight_hundred')->getRgb(false)->implode(' ') . ";
+            --color-accent-900:" . static::getBackup()->get('nine_hundred')->getRgb(false)->implode(' ') . ";
+            --color-accent-950:" . static::getBackup()->get('nine_hundred_fifty')->getRgb(false)->implode(' ');
     }
 
     public function contestDay(): BelongsTo
@@ -68,17 +108,17 @@ class ContestDayTheme extends Model
     public function getVariablesAttribute(): string
     {
         return "
-            --color-accent-50: $this->fifty;
-            --color-accent-100: $this->hundred;
-            --color-accent-200: $this->two_hundred;
-            --color-accent-300: $this->three_hundred;
-            --color-accent-400: $this->four_hundred;
-            --color-accent-500: $this->five_hundred;
-            --color-accent-600: $this->six_hundred;
-            --color-accent-700: $this->seven_hundred;
-            --color-accent-800: $this->eight_hundred;
-            --color-accent-900: $this->nine_hundred;
-            --color-accent-950: $this->nine_hundred_fifty;
+            --color-accent-50: {$this->fifty->getRgb(false)->implode(' ')};
+            --color-accent-100: {$this->hundred->getRgb(false)->implode(' ')};
+            --color-accent-200: {$this->two_hundred->getRgb(false)->implode(' ')};
+            --color-accent-300: {$this->three_hundred->getRgb(false)->implode(' ')};
+            --color-accent-400: {$this->four_hundred->getRgb(false)->implode(' ')};
+            --color-accent-500: {$this->five_hundred->getRgb(false)->implode(' ')};
+            --color-accent-600: {$this->six_hundred->getRgb(false)->implode(' ')};
+            --color-accent-700: {$this->seven_hundred->getRgb(false)->implode(' ')};
+            --color-accent-800: {$this->eight_hundred->getRgb(false)->implode(' ')};
+            --color-accent-900: {$this->nine_hundred->getRgb(false)->implode(' ')};
+            --color-accent-950: {$this->nine_hundred_fifty->getRgb(false)->implode(' ')};
         ";
     }
 
@@ -90,17 +130,17 @@ class ContestDayTheme extends Model
         $palette = (new PaletteGenerator($by))->generatePalette();
 
         $this->update([
-            'fifty' => $palette->get(50)->getRgb(false)->implode(' '),
-            'hundred' => $palette->get(100)->getRgb(false)->implode(' '),
-            'two_hundred' => $palette->get(200)->getRgb(false)->implode(' '),
-            'three_hundred' => $palette->get(300)->getRgb(false)->implode(' '),
-            'four_hundred' => $palette->get(400)->getRgb(false)->implode(' '),
-            'five_hundred' => $palette->get(500)->getRgb(false)->implode(' '),
-            'six_hundred' => $palette->get(600)->getRgb(false)->implode(' '),
-            'seven_hundred' => $palette->get(700)->getRgb(false)->implode(' '),
-            'eight_hundred' => $palette->get(800)->getRgb(false)->implode(' '),
-            'nine_hundred' => $palette->get(900)->getRgb(false)->implode(' '),
-            'nine_hundred_fifty' => $palette->get(950)->getRgb(false)->implode(' '),
+            'fifty' => $palette->get(50),
+            'hundred' => $palette->get(100),
+            'two_hundred' => $palette->get(200),
+            'three_hundred' => $palette->get(300),
+            'four_hundred' => $palette->get(400),
+            'five_hundred' => $palette->get(500),
+            'six_hundred' => $palette->get(600),
+            'seven_hundred' => $palette->get(700),
+            'eight_hundred' => $palette->get(800),
+            'nine_hundred' => $palette->get(900),
+            'nine_hundred_fifty' => $palette->get(950),
         ]);
         $this->generateImages();
     }
@@ -113,8 +153,7 @@ class ContestDayTheme extends Model
         File::deleteDirectory($folderPath);
         File::copyDirectory($backupPath, $folderPath);
 
-        $this->replaceColors($folderPath,  collect(static::$backup)
-            ->mapWithKeys(fn ($value, $key) => [$value => Color::parseRgb( $this->$key)->getHex()]));
+        $this->replaceColors($folderPath,  collect(static::getBackup())->mapWithKeys(fn ($value, $key) => [$value->getHex() => $this->$key->getHex()]));
     }
 
     protected function replaceColors($folderPath, $colors): void
