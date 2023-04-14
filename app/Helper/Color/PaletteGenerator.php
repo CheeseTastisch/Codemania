@@ -65,11 +65,11 @@ class PaletteGenerator
         $palette[$this->baseColorIndex] = [$this->baseColor, self::$lightness[$this->baseColorIndex][2]];
 
         for ($i = $this->baseColorIndex - 1; $i >= 0; $i--) {
-            $palette[$i] = [$palette[$i + 1][0]->shiftLightness($i == 0 ? -0.5 : -0.07778), self::$lightness[$i][2]];
+            $palette[$i] = [$palette[$i + 1][0]->shiftLightness($i == 0 ? -0.05 : -0.07778), self::$lightness[$i][2]];
         }
 
         for ($i = $this->baseColorIndex + 1; $i < count(self::$lightness); $i++) {
-            $palette[$i] = [$palette[$i - 1][0]->shiftLightness($i == 0 ? 0.5 : 0.07778), self::$lightness[$i][2]];
+            $palette[$i] = [$palette[$i - 1][0]->shiftLightness(($i == count(self::$lightness) - 1) ? 0.05 : 0.07778), self::$lightness[$i][2]];
         }
 
         return collect($palette)->mapWithKeys(fn($value) => [$value[1] => $value[0]])->sortKeys();
