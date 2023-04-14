@@ -2,7 +2,8 @@
 
 namespace App\Models;
 
-use Color;
+use App\Helper\Color\Color;
+use App\Helper\Color\PaletteGenerator;
 use File;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -11,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class ContestDayTheme extends Model
 {
 
-    protected static $backup = [
+    protected static array $backup = [
         'fifty' => '#f9fafb',
         'hundred' => '#f3f4f6',
         'two_hundred' => '#e5e7eb',
@@ -41,17 +42,17 @@ class ContestDayTheme extends Model
 
     public static function default(): self {
         $generated = static::create([
-            'fifty' => implode(' ', Color::toRgb(static::$backup['fifty'])),
-            'hundred' => implode(' ', Color::toRgb(static::$backup['hundred'])),
-            'two_hundred' => implode(' ', Color::toRgb(static::$backup['two_hundred'])),
-            'three_hundred' => implode(' ', Color::toRgb(static::$backup['three_hundred'])),
-            'four_hundred' => implode(' ', Color::toRgb(static::$backup['four_hundred'])),
-            'five_hundred' => implode(' ', Color::toRgb(static::$backup['five_hundred'])),
-            'six_hundred' => implode(' ', Color::toRgb(static::$backup['six_hundred'])),
-            'seven_hundred' => implode(' ', Color::toRgb(static::$backup['seven_hundred'])),
-            'eight_hundred' => implode(' ', Color::toRgb(static::$backup['eight_hundred'])),
-            'nine_hundred' => implode(' ', Color::toRgb(static::$backup['nine_hundred'])),
-            'nine_hundred_fifty' => implode(' ', Color::toRgb(static::$backup['nine_hundred_fifty'])),
+            'fifty' => Color::parseRgb(static::$backup['fifty'])->getRgb(false)->implode(' '),
+            'hundred' => Color::parseRgb(static::$backup['hundred'])->getRgb(false)->implode(' '),
+            'two_hundred' => Color::parseRgb(static::$backup['two_hundred'])->getRgb(false)->implode(' '),
+            'three_hundred' => Color::parseRgb(static::$backup['three_hundred'])->getRgb(false)->implode(' '),
+            'four_hundred' => Color::parseRgb(static::$backup['four_hundred'])->getRgb(false)->implode(' '),
+            'five_hundred' => Color::parseRgb(static::$backup['five_hundred'])->getRgb(false)->implode(' '),
+            'six_hundred' => Color::parseRgb(static::$backup['six_hundred'])->getRgb(false)->implode(' '),
+            'seven_hundred' => Color::parseRgb(static::$backup['seven_hundred'])->getRgb(false)->implode(' '),
+            'eight_hundred' => Color::parseRgb(static::$backup['eight_hundred'])->getRgb(false)->implode(' '),
+            'nine_hundred' => Color::parseRgb(static::$backup['nine_hundred'])->getRgb(false)->implode(' '),
+            'nine_hundred_fifty' => Color::parseRgb(static::$backup['nine_hundred_fifty'])->getRgb(false)->implode(' '),
         ]);
         $generated->generateImages();
 
@@ -80,6 +81,25 @@ class ContestDayTheme extends Model
         ";
     }
 
+    public function generatePalette(Color $by) {
+        $palette = (new PaletteGenerator($by))->generatePalette();
+
+        $this->update([
+            'fifty' => $palette->get(50)->getRgb(false)->implode(' '),
+            'hundred' => $palette->get(100)->getRgb(false)->implode(' '),
+            'two_hundred' => $palette->get(200)->getRgb(false)->implode(' '),
+            'three_hundred' => $palette->get(300)->getRgb(false)->implode(' '),
+            'four_hundred' => $palette->get(400)->getRgb(false)->implode(' '),
+            'five_hundred' => $palette->get(500)->getRgb(false)->implode(' '),
+            'six_hundred' => $palette->get(600)->getRgb(false)->implode(' '),
+            'seven_hundred' => $palette->get(700)->getRgb(false)->implode(' '),
+            'eight_hundred' => $palette->get(800)->getRgb(false)->implode(' '),
+            'nine_hundred' => $palette->get(900)->getRgb(false)->implode(' '),
+            'nine_hundred_fifty' => $palette->get(950)->getRgb(false)->implode(' '),
+        ]);
+        $this->generateImages();
+    }
+
     public function generateImages(): void
     {
         $folderPath = storage_path('app/public/themes/' . $this->id);
@@ -89,7 +109,7 @@ class ContestDayTheme extends Model
         File::copyDirectory($backupPath, $folderPath);
 
         $this->replaceColors($folderPath,  collect(static::$backup)
-            ->mapWithKeys(fn ($value, $key) => [$value => Color::toHex(explode(' ', $this->$key))]));
+            ->mapWithKeys(fn ($value, $key) => [$value => Color::parseRgb( $this->$key)->getHex()]));
     }
 
     protected function replaceColors($folderPath, $colors): void

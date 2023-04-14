@@ -3,6 +3,7 @@
 namespace App\Helper\Color;
 
 use Exception;
+use Illuminate\Support\Collection;
 
 class Color
 {
@@ -104,28 +105,28 @@ class Color
         }
     }
 
-    public function getRgb(bool $decimal = true, int|null $precision = null): array
+    public function getRgb(bool $decimal = true, int|null $precision = null): Collection
     {
         if ($precision === null) $precision = $decimal ? 3 : 0;
 
-        return $decimal ? $this->rgb : array_map(fn($value) => round($value * 255, $precision), $this->rgb);
+        return collect($this->rgb)->map(fn($value) => round($decimal ? $value : $value * 255, $precision));
     }
 
     public function getHex(): string
     {
         $values = $this->getRgb(false);
 
-        return sprintf('#%02x%02x%02x', $values['r'], $values['g'], $values['b']);
+        return sprintf('#%02x%02x%02x', $values->get('r'), $values->get('g'), $values->get('b'));
     }
 
-    public function getHsl(bool $decimal = true, int|null $precision = null): array
+    public function getHsl(bool $decimal = true, int|null $precision = null): Collection
     {
         if ($precision === null) $precision = $decimal ? 3 : 0;
 
-        return $decimal ? $this->hsl : array_map(fn($key, $value) => round( match ($key) {
+        return collect($this->hsl)->map(fn($value, $key) => round($decimal ? $value : match($key) {
             'h' => $value * 360,
             's', 'l' => $value * 100,
-        }, 1), array_keys($this->hsl), array_values($this->hsl));
+        }, $precision));
     }
 
     public function shiftLightness(float $amount): Color
@@ -149,7 +150,7 @@ class Color
     private function generateHslValues(array $values, bool $decimal): array
     {
         $values = array_map(fn($key, $value) => match ($key) {
-            'h', 0 => $decimal ? $value % 360 : ($value % 360) / 360,
+            'h', 0 => $decimal ? $value : ($value % 360) / 360,
             's', 1, 'l', 2 => $decimal ? $value : $value / 100,
         }, array_keys($values), array_values($values));
 
