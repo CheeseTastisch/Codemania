@@ -10,11 +10,12 @@ use File;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Collection;
 
 class ContestDayTheme extends Model
 {
 
-    protected static array $backup;
+    protected static Collection $backup;
 
     protected $fillable = [
         'fifty',
@@ -63,10 +64,10 @@ class ContestDayTheme extends Model
         return $generated;
     }
 
-    public static function getBackup(): array
+    public static function getBackup(): Collection
     {
         if (!isset(static::$backup)) {
-            static::$backup = [
+            static::$backup = collect([
                 'fifty' => Color::parseRgb('#f9fafb'),
                 'hundred' => Color::parseRgb('#f3f4f6'),
                 'two_hundred' => Color::parseRgb('#e5e7eb'),
@@ -78,7 +79,7 @@ class ContestDayTheme extends Model
                 'eight_hundred' => Color::parseRgb('#1f2937'),
                 'nine_hundred' => Color::parseRgb('#111827'),
                 'nine_hundred_fifty' => Color::parseRgb('#030712'),
-            ];
+            ]);
         }
 
         return static::$backup;
@@ -153,7 +154,7 @@ class ContestDayTheme extends Model
         File::deleteDirectory($folderPath);
         File::copyDirectory($backupPath, $folderPath);
 
-        $this->replaceColors($folderPath,  collect(static::getBackup())->mapWithKeys(fn ($value, $key) => [$value->getHex() => $this->$key->getHex()]));
+        $this->replaceColors($folderPath,  static::getBackup()->mapWithKeys(fn ($value, $key) => [$value->getHex() => $this->$key->getHex()]));
     }
 
     protected function replaceColors($folderPath, $colors): void

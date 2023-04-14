@@ -162,9 +162,7 @@ return [
     |
     */
     'custom' => [
-        'profile_picture' => [
-            'required' => 'Profilbild ist erforderlich. Solltest du bereits ein Profilbild hochgeladen haben, warte bitte kurz, bis es verarbeitet wurde und versuche es erneut.',
-        ],
+
     ],
 
 
@@ -206,6 +204,20 @@ return [
         'allow_training_from' => 'Training erlaubt ab',
         'current' => 'Aktueller Tag',
         'color' => 'Farbe',
+
+        'updateSponsor' => [
+            'name' => 'Name',
+            'url' => 'URL',
+            'background' => 'Hintergrund',
+            'logo' => 'Logo',
+        ],
+
+        'createSponsor' => [
+            'name' => 'Name',
+            'url' => 'URL',
+            'background' => 'Hintergrund',
+            'logo' => 'Logo',
+        ],
     ],
 
 ];
