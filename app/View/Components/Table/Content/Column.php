@@ -13,6 +13,7 @@ class Column extends Component
      */
     public function __construct(
         public bool $head = false,
+        public string $class = '',
     )
     {
         //

@@ -28,7 +28,7 @@
             <x-card
                 title="Sponsoren"
                 class="mb-3">
-{{--                @livewire('admin.contest.contest-day.edit.sponsors', ['contestDay' => $contestDay])--}}
+                @livewire('admin.contest.contest-day.edit.sponsors', ['contestDay' => $contestDay])
             </x-card>
 
             <x-card

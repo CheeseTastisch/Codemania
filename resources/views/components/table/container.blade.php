@@ -1,4 +1,4 @@
-<div class="relative overflow-x-auto rounded-lg">
+<div class="relative overflow-x-auto">
     @if($withSearch)
         <div class="flex justify-end">
             <div class="pb-4">
@@ -13,7 +13,7 @@
         </div>
     @endif
 
-    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 overflow-hidden rounded-lg">
         <thead class="text-xs text-gray-700 dark:text-gray-300 uppercase bg-accent-300 dark:bg-accent-700">
         <tr>
             {{ $header }}
