@@ -29,9 +29,7 @@
     <x-form.input.textarea name="about" label="Über dich" wire wire-type="lazy" updatable />
 
     <x-form.form space="space-y-2">
-        <x-form.input.file name="profile_picture" label="Profilbild" wire wire-type="defer" />
-
-        <x-form.button wire="uploadProfilePicture" name="Profilbild hochladen" />
+        <x-form.input.file name="profile_picture" label="Profilbild" wire wire-type="defer" updatable />
 
         <x-form.button type="button" wire="removeProfilePicture" name="Profilbild entfernen" />
     </x-form.form>

@@ -54,7 +54,8 @@ class PersonalForm extends Component
         return view('livewire.member.profile.personal-form');
     }
 
-    public function updatedFirstname() {
+    public function updatedFirstname(): void
+    {
         $this->validateOnly('firstname');
 
         if (auth()->user()->first_name != $this->firstname) {
@@ -63,7 +64,8 @@ class PersonalForm extends Component
         }
     }
 
-    public function updatedLastname() {
+    public function updatedLastname(): void
+    {
         $this->validateOnly('lastname');
 
         if (auth()->user()->last_name != $this->lastname) {
@@ -72,7 +74,8 @@ class PersonalForm extends Component
         }
     }
 
-    public function updatedNickname() {
+    public function updatedNickname(): void
+    {
         $this->validateOnly('nickname');
 
         if (auth()->user()->nickname != $this->nickname) {
@@ -81,7 +84,8 @@ class PersonalForm extends Component
         }
     }
 
-    public function updatedDisplayName() {
+    public function updatedDisplayName(): void
+    {
         $this->validateOnly('display_name');
 
         if (auth()->user()->display_name_type != $this->display_name) {
@@ -90,7 +94,8 @@ class PersonalForm extends Component
         }
     }
 
-    public function updatedBirthday() {
+    public function updatedBirthday(): void
+    {
         $this->validateOnly('birthday');
 
         if (auth()->user()->birthday != $this->birthday) {
@@ -99,7 +104,8 @@ class PersonalForm extends Component
         }
     }
 
-    public function updatedClass() {
+    public function updatedClass(): void
+    {
         $this->validateOnly('class');
 
         if (auth()->user()->class != $this->class) {
@@ -108,7 +114,8 @@ class PersonalForm extends Component
         }
     }
 
-    public function updatedGender() {
+    public function updatedGender(): void
+    {
         $this->validateOnly('gender');
 
         if (auth()->user()->gender != $this->gender) {
@@ -117,7 +124,8 @@ class PersonalForm extends Component
         }
     }
 
-    public function updatedAbout() {
+    public function updatedAbout(): void
+    {
         $this->validateOnly('about');
 
         if (auth()->user()->slogan != $this->about) {
@@ -126,19 +134,20 @@ class PersonalForm extends Component
         }
     }
 
-    public function uploadProfilePicture() {
+    public function updatedProfilePicture(): void
+    {
         $this->validateOnly('profile_picture');
 
         $uploadedFile = StorageFile::uploadFile($this->profile_picture, auth()->user());
         auth()->user()->update(['profile_picture_id' => $uploadedFile->id]);
 
         $this->profile_picture = null;
-        $this->emit('showToast', 'Dein Profilbild wurde erfolgreich aktualisiert!');
-
-        $this->profile_picture = null;
+        session()->flash('updated', 'profile_picture');
     }
 
-    public function removeProfilePicture() {
+
+    public function removeProfilePicture(): void
+    {
         auth()->user()->update(['profile_picture_id' => null]);
         $this->emit('showToast', 'Dein Profilbild wurde erfolgreich entfernt!');
     }
