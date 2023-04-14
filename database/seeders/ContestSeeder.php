@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Helper\Color\Color;
 use App\Models\Contest;
 use App\Models\ContestDay;
 use App\Models\ContestDayTheme;
@@ -16,20 +17,8 @@ class ContestSeeder extends Seeder
      */
     public function run(): void
     {
-        $trainingTheme = ContestDayTheme::create([
-            'fifty' => '255 241 242',
-            'hundred' => '255 223 224',
-            'two_hundred' => '255 197 199',
-            'three_hundred' => '255 157 161',
-            'four_hundred' => '255 100 106',
-            'five_hundred' => '255 36 44',
-            'six_hundred' => '237 21 29',
-            'seven_hundred' => '200 13 20',
-            'eight_hundred' => '165 15 20',
-            'nine_hundred' => '136 20 24',
-            'nine_hundred_fifty' => '75 4 7',
-        ]);
-        $trainingTheme->generateImages();
+        $trainingTheme = ContestDayTheme::default();
+        $trainingTheme->generatePalette(Color::parseRgb('255 36 44'));
 
         $training = ContestDay::create([
             'date' => Carbon::create(),
@@ -52,20 +41,8 @@ class ContestSeeder extends Seeder
         ]);
 
 
-        $summer2023Theme = ContestDayTheme::create([
-            'fifty' => '245 251 234',
-            'hundred' => '232 245 210',
-            'two_hundred' => '209 237 169',
-            'three_hundred' => '179 223 119',
-            'four_hundred' => '150 206 77',
-            'five_hundred' => '133 200 52',
-            'six_hundred' => '91 143 33',
-            'seven_hundred' => '70 109 30',
-            'eight_hundred' => '59 87 29',
-            'nine_hundred' => '50 74 29',
-            'nine_hundred_fifty' => '24 40 11',
-        ]);
-        $summer2023Theme->generateImages();
+        $summer2023Theme = ContestDayTheme::default();
+        $summer2023Theme->generatePalette(Color::parseRgb('133 200 52'));
 
         $summer2023 = ContestDay::create([
             'date' => Carbon::create(2023, 6, 21),
@@ -87,20 +64,8 @@ class ContestSeeder extends Seeder
         ]);
 
 
-        $winter2023Theme = ContestDayTheme::create([
-            'fifty' => '238 249 255',
-            'hundred' => '218 240 255',
-            'two_hundred' => '189 230 255',
-            'three_hundred' => '143 216 255',
-            'four_hundred' => '90 193 255',
-            'five_hundred' => '52 163 253',
-            'six_hundred' => '29 133 243',
-            'seven_hundred' => '22 110 224',
-            'eight_hundred' => '25 88 180',
-            'nine_hundred' => '26 76 142',
-            'nine_hundred_fifty' => '8 50 73',
-        ]);
-        $winter2023Theme->generateImages();
+        $winter2023Theme = ContestDayTheme::create();
+        $winter2023Theme->generatePalette(Color::parseRgb('52 163 253'));
 
         $winter2023 = ContestDay::create([
             'date' => Carbon::create(2023, 12, 20),

@@ -11,6 +11,9 @@ class Color
     public array $rgb;
     public array $hsl;
 
+    /**
+     * @throws Exception
+     */
     public static function parseRgb(mixed $rgb): Color|null {
         if (is_array($rgb)) {
             if (collect($rgb)->every(fn($value) => is_float($value) && $value >= 0 && $value <= 1)) return new Color($rgb, true, true);
@@ -20,7 +23,7 @@ class Color
 
         if (is_string($rgb)) {
             if (preg_match('/^#([a-f0-9]{3}|[a-f0-9]{6})$/i', $rgb)) {
-                $rgb = str_split(substr($rgb, 1), 2);
+                $rgb = str_split(substr($rgb, 1), strlen($rgb) > 4 ? 2 : 1);
                 $rgb = array_map(fn($value) => hexdec($value), $rgb);
                 return new Color($rgb, true, false);
             }
@@ -55,6 +58,9 @@ class Color
         return null;
     }
 
+    /**
+     * @throws Exception
+     */
     public static function parseHsl(mixed $hsl): Color|null
     {
         if (is_array($hsl)) {
@@ -94,6 +100,9 @@ class Color
         return null;
     }
 
+    /**
+     * @throws Exception
+     */
     public function __construct(array $values, bool $rgb = true, bool $decimal = true)
     {
         if ($rgb) {
@@ -129,6 +138,9 @@ class Color
         }, $precision));
     }
 
+    /**
+     * @throws Exception
+     */
     public function shiftLightness(float $amount): Color
     {
         return new Color([
@@ -138,6 +150,9 @@ class Color
         ], false, true);
     }
 
+    /**
+     * @throws Exception
+     */
     private function generateRgbValues(array $values, bool $decimal): array
     {
         $values = array_map(fn($value) => $decimal ? $value : $value / 255, $values);
@@ -147,6 +162,9 @@ class Color
         else throw new Exception('Invalid RGB values');
     }
 
+    /**
+     * @throws Exception
+     */
     private function generateHslValues(array $values, bool $decimal): array
     {
         $values = array_map(fn($key, $value) => match ($key) {

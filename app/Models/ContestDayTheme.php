@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Helper\Color\Color;
 use App\Helper\Color\PaletteGenerator;
+use Exception;
 use File;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -81,7 +82,11 @@ class ContestDayTheme extends Model
         ";
     }
 
-    public function generatePalette(Color $by) {
+    /**
+     * @throws Exception
+     */
+    public function generatePalette(Color $by): void
+    {
         $palette = (new PaletteGenerator($by))->generatePalette();
 
         $this->update([

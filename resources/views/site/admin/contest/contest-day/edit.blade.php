@@ -14,7 +14,7 @@
             <x-card
                 title="Theme bearbeiten"
                 class="col-span-1 mb-3 xl:col-span-3">
-{{--                @livewire('admin.contest.contest-day.edit.theme', ['contestDay' => $contestDay])--}}
+                @livewire('admin.contest.contest-day.edit.theme', ['contestDay' => $contestDay])
             </x-card>
         </div>
 
