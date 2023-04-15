@@ -5,7 +5,7 @@ const modals = {}
 Livewire.on('modal', function (action, target) {
     const modal = target in modals ? modals[target] : modals[target] = new Modal(document.querySelector(target), {
         backdrop: $(target).data('modal-backdrop'),
-        placement: $(target).data('modal-placement'),
+        placement: $(target).data('modal-placement')
     });
 
     switch (action) {
@@ -15,7 +15,7 @@ Livewire.on('modal', function (action, target) {
 
         case 'hide':
             modal.hide();
-            $('*[modal-backdrop=""]').remove();
+            $('*[data-modal-backdrop]').remove();
             break;
     }
 })

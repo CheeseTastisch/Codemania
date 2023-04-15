@@ -34,7 +34,7 @@
             <x-card
                 title="Teams"
                 class="mb-3">
-{{--                @livewire('admin.contest.contest-day.edit.teams', ['contestDay' => $contestDay])--}}
+                @livewire('admin.contest.contest-day.edit.teams', ['contestDay' => $contestDay])
             </x-card>
         </div>
     </div>
