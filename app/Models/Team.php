@@ -34,7 +34,7 @@ class Team extends Model
 
     public function blockedBy(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'blocked_by');
     }
 
     public function contests(): BelongsToMany
