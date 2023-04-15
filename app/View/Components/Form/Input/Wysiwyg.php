@@ -16,8 +16,7 @@ class Wysiwyg extends Component
         public string $label,
         public string $id = '',
         public bool $wire = false,
-        public string $accordionContainer = '',
-        public string $accordionTarget = '',
+        public string|null $froalaLoaded = null,
     )
     {
         //

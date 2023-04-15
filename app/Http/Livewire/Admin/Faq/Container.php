@@ -10,8 +10,10 @@ use Livewire\Component;
 class Container extends Component
 {
 
+    public $selected;
+
     protected $listeners = [
-        'renderContainer' => 'render',
+        'renderContainer' => 'deleted',
     ];
 
     public function render(): View|\Illuminate\Foundation\Application|Factory|\Illuminate\Contracts\Foundation\Application
@@ -29,8 +31,13 @@ class Container extends Component
         if (Faq::count() == 1) $faq->update(['first' => true]);
         else Faq::whereNextId(null)->where('id', '!=', $faq->id)->update(['next_id' => $faq->id]);
 
-        $this->emit('accordion', 'add', 'faq-accordion', "#faq-container-$faq->id", true);
         $this->emit('addHtmlEditor', "answer-$faq->id");
+        $this->selected = $faq->id;
+    }
+
+    public function deleted(): void
+    {
+        $this->selected = null;
     }
 
 }

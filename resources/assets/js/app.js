@@ -1,13 +1,18 @@
 import './bootstrap';
 
+import Alpine from "alpinejs";
+window.Alpine = Alpine;
+Alpine.start();
+
+import './domchange';
+
 import 'flowbite';
 import './jquery';
 
-import './accordion';
 import './theme';
 
 import './datepicker';
-import './frolia';
+import './froala';
 import './model'
 import './swiper';
 import './toast';

@@ -14,14 +14,11 @@ import 'froala-editor/js/plugins/special_characters.min'
 import 'froala-editor/js/plugins/url.min'
 
 import 'froala-editor/js/languages/de'
+import {addScopeToNode} from "alpinejs/src/scope";
 
 function addWysiwygEditor(element) {
-    const elementId = element.attr('id')
+    const elementId = element.id
     const textarea = document.querySelector(`#${elementId}-textarea`)
-    const jTextarea = $(textarea)
-
-    const accordionContainer = element.data('accordion-container')
-    const accordionTarget = element.data('accordion-target')
 
     const editor = new FroalaEditor(`#${elementId}`, {
         language: 'de',
@@ -29,28 +26,37 @@ function addWysiwygEditor(element) {
         events: {
             contentChanged: function() {
                 if (textarea !== undefined) {
-                    jTextarea.val(editor.html.get())
+                    textarea.value = editor.html.get()
                     textarea.dispatchEvent(new Event('input'))
                 }
             }
         }
     }, function () {
-        if (textarea !== undefined) editor.html.set(jTextarea.val())
-        if (accordionContainer !== undefined && accordionTarget !== undefined) {
-            Livewire.emit('accordion', 'updateSize', accordionContainer, accordionTarget)
-        }
+        if (textarea !== undefined) editor.html.set(textarea.value)
+
+        element.dispatchEvent(new Event('froala-loaded'))
     })
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    $('.html-editor').each(function() {
-        if ($(this).hasClass('fr-box')) return
+    document.querySelectorAll('.html-editor').forEach(function(element) {
+        if (element.classList.contains('fr-box')) return
 
-        addWysiwygEditor($(this))
-    })
+        addWysiwygEditor(element)
+    });
+
+    onDomChange(function(list) {
+        for (const mutation of list) {
+            for (const added of mutation.addedNodes) {
+                if (!(added instanceof Element)) continue
+
+                const nodes = [added, ...added.querySelectorAll('*')]
+
+                for (const node of nodes) {
+                    if (node.classList !== undefined && node.classList.contains('html-editor') && !node.classList.contains('fr-box'))
+                        addWysiwygEditor(node)
+                }
+            }
+        }
+    });
 })
-
-Livewire.on('addHtmlEditor', (id) => {
-    addWysiwygEditor($(`#${id}`))
-});
-
