@@ -6,15 +6,20 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Laravel\Scout\Searchable;
 
 class Team extends Model
 {
+
+    use Searchable;
 
     protected $fillable = [
         'contest_day_id',
         'name',
         'logo_file_id',
-        'banned'
+        'is_blocked',
+        'block_reason',
+        'blocked_by',
     ];
 
     public function contestDay(): BelongsTo
@@ -25,6 +30,11 @@ class Team extends Model
     public function logoFile(): BelongsTo
     {
         return $this->belongsTo(UploadedFile::class);
+    }
+
+    public function blockedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function contests(): BelongsToMany
@@ -73,6 +83,14 @@ class Team extends Model
     {
         if (!$this->contests->contains($contest)) return null;
         return $contest->getLeaderboard($ignoreFreeze)->get($this->id);
+    }
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name
+        ];
     }
 
 }
