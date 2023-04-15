@@ -25,13 +25,12 @@ class Sponsors extends Component
         'url' => '',
         'background' => '',
         'logo' => null,
-        ],
-        $createSponsor = [
-            'name' => '',
-            'url' => '',
-            'background' => 'light',
-            'logo' => null,
-        ];
+    ], $createSponsor = [
+        'name' => '',
+        'url' => '',
+        'background' => 'light',
+        'logo' => null,
+    ];
 
     public ContestDaySponsor|null $deleteSponsor = null;
 
@@ -44,8 +43,7 @@ class Sponsors extends Component
     public function render(): View|\Illuminate\Foundation\Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
         return view('livewire.admin.contest.contest-day.edit.sponsors', [
-            'sponsors' => ContestDaySponsor::whereContestDayId($this->contestDay->id)
-                ->when($this->search, fn($query) => $query->search($this->search))
+            'sponsors' => ($this->search ? ContestDaySponsor::search($this->search) : ContestDaySponsor::query())
                 ->orderBy($this->sortField, $this->sortDirection)
                 ->paginate(10)
         ]);

@@ -18,7 +18,7 @@ class Field extends Component
         public bool $sortable = false,
         public string|bool $sortField = false,
         public string|bool $sortDirection = false,
-        public string|bool $wireMethod = false,
+        public string $wireMethod = 'sortBy',
     )
     {
         if ($this->srOnly && $this->sortable) {

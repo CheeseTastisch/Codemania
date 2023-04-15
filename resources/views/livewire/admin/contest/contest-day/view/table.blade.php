@@ -12,18 +12,16 @@
                 name="name"
                 label="Name"
                 sortable
-                sort-field="{{ $sortField }}"
-                sort-direction="{{ $sortDirection }}"
-                wire-method="sortBy"
+                :sort-field="$sortField"
+                :sort-direction="$sortDirection"
             />
 
             <x-table.header.field
                 name="date"
                 label="Datum"
                 sortable
-                sort-field="{{ $sortField }}"
-                sort-direction="{{ $sortDirection }}"
-                wire-method="sortBy"
+                :sort-field="$sortField"
+                :sort-direction="$sortDirection"
             />
             <x-table.header.field name="Aktionen" sr-only/>
         </x-slot>
