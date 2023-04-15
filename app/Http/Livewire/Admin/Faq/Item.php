@@ -12,8 +12,15 @@ class Item extends Component
 
     public Faq $faq;
 
+    public $faqId;
+
+
     public $question, $answer, $after;
     public $open;
+
+    protected $listeners = [
+        'deletedFaq' => 'deleted',
+    ];
 
     public function mount(): void
     {
@@ -44,7 +51,8 @@ class Item extends Component
         if ($this->after !== $this->faq->previous?->id && ($this->after !== -1 || $this->faq->first)) {
             $this->faq->moveAfter($this->after === -1 ? null : Faq::find($this->after));
             session()->flash('updated', 'after');
-            $this->emitUp('renderContainer');
+
+            $this->emitUp('updateOrder');
         }
     }
 
@@ -58,11 +66,17 @@ class Item extends Component
     public function delete(): void
     {
         $this->faq->previous?->update(['next_id' => $this->faq->next_id]);
+        if ($this->faq->first) $this->faq->next?->update(['first' => true]);
+
         $this->faq->delete();
 
-        $this->emitUp('renderContainer');
+        $this->emit('deletedFaq', $this->faq->id);
         $this->emit('showToast', 'Die Frage wurde erfolgreich gelöscht.');
-        $this->emit('accordion', 'remove', '#faq-accordion', "faq-{$this->faq->id}");
+    }
+
+    public function deleted(int $id): void
+    {
+        if ($this->faq->id !== $id) $this->render();
     }
 
     protected function getRules(): array

@@ -13,7 +13,8 @@ class Container extends Component
     public $selected;
 
     protected $listeners = [
-        'renderContainer' => 'deleted',
+        'deletedFaq' => 'deleted',
+        'updateOrder' => '$refresh',
     ];
 
     public function render(): View|\Illuminate\Foundation\Application|Factory|\Illuminate\Contracts\Foundation\Application
@@ -35,9 +36,9 @@ class Container extends Component
         $this->selected = $faq->id;
     }
 
-    public function deleted(): void
+    public function deleted(int $id): void
     {
-        $this->selected = null;
+        if ($this->selected === $id) $this->selected = null;
     }
 
 }
