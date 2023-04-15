@@ -2,17 +2,17 @@
 
 namespace App\Models;
 
-use Cache;
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
+use Laravel\Scout\Searchable;
 
 class Contest extends Model
 {
+
+    use Searchable;
 
     protected $fillable = [
         'name',
@@ -22,9 +22,9 @@ class Contest extends Model
     ];
 
     protected $casts = [
-        'start_time' => 'timestamp',
-        'end_time' => 'timestamp',
-        'freeze_leaderboard_at' => 'timestamp',
+        'start_time' => 'datetime',
+        'end_time' => 'datetime',
+        'freeze_leaderboard_at' => 'datetime',
     ];
 
     public function contestDay(): BelongsTo
@@ -76,6 +76,14 @@ class Contest extends Model
         $this->teams->each(fn($team) => $team->contests()->detach($this->id));
 
         $this->delete();
+    }
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+        ];
     }
 
 }

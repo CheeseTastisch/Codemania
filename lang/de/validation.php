@@ -143,6 +143,7 @@ return [
     ],
     'starts_with' => ':attribute muss mit einem der folgenden Werte beginnen: ":values".',
     'string' => ':attribute muss ein String sein.',
+    'time' => ':attribute muss eine gültige Zeit sein.',
     'timezone' => ':attribute muss eine gültige Zeitzone sein.',
     'unique' => ':attribute ist bereits vergeben.',
     'uploaded' => ':attribute konnte nicht hochgeladen werden.',

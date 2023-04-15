@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
-use App\Providers\Color\ColorProvider;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\ServiceProvider;
+use Validator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -31,5 +31,7 @@ class AppServiceProvider extends ServiceProvider
             ->line('Solltest du dich nicht bei uns registriert haben, kannst du diese E-Mail einfach ignorieren.')
             ->salutation('Dein Codemania-Team')
         );
+
+        Validator::extend('time', fn (string $attribute, mixed $value) => preg_match('/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/', $value));
     }
 }

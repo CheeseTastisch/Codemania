@@ -21,7 +21,7 @@
         <x-card
             title="Contests"
             class="mb-3">
-{{--            @livewire('admin.contest.contest-day.edit.contests', ['contestDay' => $contestDay])--}}
+            @livewire('admin.contest.contest-day.edit.contests', ['contestDay' => $contestDay])
         </x-card>
 
         <div class="grid grid-cols-1 xl:grid-cols-2 xl:gap-x-4">

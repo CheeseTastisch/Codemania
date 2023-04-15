@@ -16,6 +16,6 @@
             </svg>
         </div>
     @else
-        {{ $name }}
+        {{ $label ?? $name }}
     @endif
 </th>
