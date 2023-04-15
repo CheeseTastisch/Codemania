@@ -24,7 +24,15 @@
         }
     </style>
 
-    <link rel="icon" href="{{ theme()?->imagePath('logo/dark-text.svg') ?? asset('storage/backup/logo/dark-text.svg') }}">
+    <link rel="icon"
+          type="image/svg+xml"
+          href="{{ theme()?->imagePath('logo/dark-text.svg') ?? asset('storage/backup/logo/dark-text.svg') }}"
+          media="(prefers-color-scheme: light)">
+
+    <link rel="icon"
+          type="image/svg+xml"
+          href="{{ theme()?->imagePath('logo/light-text.svg') ?? asset('storage/backup/logo/light-text.svg') }}"
+          media="(prefers-color-scheme: dark)">
 
     @stack('styles')
 
