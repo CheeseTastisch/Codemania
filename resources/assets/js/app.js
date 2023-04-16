@@ -7,7 +7,6 @@ Alpine.start();
 import './domchange';
 
 import 'flowbite';
-import './jquery';
 
 import './theme';
 

@@ -1,11 +1,11 @@
-<div x-data="{ open: false }" x-show="open">
+<div x-data="{ open: false }" x-show="open" x-cloak>
     <div id="{{ $id }}" wire:ignore.self tabindex="-1" :aria-hidden="!open" role="dialog" aria-modal="true"
          x-on:modal-open="open = true" x-on:moda-close="open = false"
-         x-on:modal-toggle="open = !open" @keydown.escape.window="open = false" x-cloak
-         class="fixed top-0 left-0 right-0 w-full overflow-x-hidden overflow-y-auto md:inset-0 h-full flex justify-center items-center z-[110]">
+         x-on:modal-toggle="open = !open" @keydown.escape.window="open = false"
+         class="fixed top-0 left-0 right-0 w-full overflow-x-hidden overflow-y-auto md:inset-0 h-full flex justify-center items-center z-[50]">
         <div class="relative w-full {{ $getMaxWidth }} max-h-full">
             <div class="relative bg-slate-200 dark:bg-slate-800 rounded-lg shadow-lg"
-                 @click.outside="open = false">
+                 @click.outside="if (![...$event.target.classList].some(target => target.includes('datepicker'))) open = false">
                 <!-- Modal header -->
                 @if($title)
                     <div
@@ -45,5 +45,5 @@
         </div>
     </div>
 
-    <div class="bg-gray-900 bg-opacity-50 fixed top-0 left-0 right-0 w-full h-full z-[100]"></div>
+    <div class="bg-gray-900 bg-opacity-50 fixed top-0 left-0 right-0 w-full h-full z-[40]"></div>
 </div>
