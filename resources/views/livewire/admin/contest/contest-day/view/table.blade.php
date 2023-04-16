@@ -1,4 +1,4 @@
-<div>
+<div x-data="{deleteId: @entangle('deleteId').defer, deleteName: null}">
     <x-table.container
         with-pagination
         with-search>
@@ -52,9 +52,7 @@
                             </svg>
                         </a>
 
-                        <svg wire:click="delete({{ $contest->id }})"
-                             data-modal-target="confirmDelete-contest"
-                             data-modal-show="confirmDelete-contest"
+                        <svg @click="deleteId = {{ $contest->id }}; deleteName = '{{ $contest->name }}'; modal.open('confirm-delete')"
                              class="w-6 h-6 cursor-pointer hover:text-accent-400 dark:hover:text-accent-600" fill="none"
                              stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
                              xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -67,12 +65,11 @@
         @endforeach
     </x-table.container>
 
-    <x-modal
+    <x-modal.modal
         id="create"
         title="Neuen Tag erstellen"
-        max-width="xl">
-        <x-form.form
-            margin="">
+        max-width="2xl">
+        <x-form.form>
             <x-form.input.simple
                 name="name"
                 label="Name"
@@ -92,17 +89,21 @@
                 name="Erstellen"
                 wire="create"/>
         </x-form.form>
-    </x-modal>
+    </x-modal.modal>
 
     <div class="flex justify-end mt-3">
         <x-form.button
             name="Neuen Tag erstellen"
             modal="create"
+            modal-action="open"
             :full-width="false" />
     </div>
 
-    <x-crud.confirm-delete
-        id="contest"
-        what="{{ $deleteTarget?->name }}"
-        wire="confirmedDelete"/>
+    <x-modal.confirm
+        id="delete"
+        action="löschen"
+        wire="delete">
+        <h3 class="text-lg font-medium">Möchtest du <span x-text="deleteName"></span> wirklich löschen?</h3>
+        <p class="mt-2 text-sm text-red-400 dark:text-red-600">Dieser Vorgang kann nicht rückgängig gemacht werden.</p>
+    </x-modal.confirm>
 </div>

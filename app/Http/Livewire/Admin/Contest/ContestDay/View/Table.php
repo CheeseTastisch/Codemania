@@ -20,7 +20,7 @@ class Table extends Component
 
     use WithPagination, WithSort, WithSearch;
 
-    public ContestDay|null $deleteTarget = null;
+    public $deleteId = null;
 
     public
         $name,
@@ -44,17 +44,12 @@ class Table extends Component
         ]);
     }
 
-    public function delete(int $id): void
+    public function delete(): void
     {
-        $this->deleteTarget = ContestDay::find($id);
-    }
+        ContestDay::find($this->deleteId)->deleteAll();
+        $this->deleteId = null;
 
-    public function confirmedDelete(): void
-    {
-        $this->deleteTarget->deleteAll();
-        $this->deleteTarget = null;
-
-        $this->emit('modal', 'hide', '#confirmDelete-contest');
+        $this->emit('modal', 'hide', 'confirmDelete-contest');
         $this->emit('showToast', 'Du hast den Tag erfolgreich gelöscht.');
     }
 
