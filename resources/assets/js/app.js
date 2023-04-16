@@ -13,7 +13,7 @@ import './theme';
 
 import './datepicker';
 import './froala';
-import './model'
+import './modal'
 import './swiper';
 import './toast';
 import './updatable';
