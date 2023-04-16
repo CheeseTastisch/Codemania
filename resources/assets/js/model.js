@@ -1,21 +1,21 @@
-import { Modal} from "flowbite";
+window.modal = {
+    open: (modalId) => document.getElementById(modalId).dispatchEvent(new Event('modal-open')),
+    close: (modalId) => document.getElementById(modalId).dispatchEvent(new Event('modal-close')),
+    toggle: (modalId) => document.getElementById(modalId).dispatchEvent(new Event('modal-toggle'))
+}
 
-const modals = {}
-
-Livewire.on('modal', function (action, target) {
-    const modal = target in modals ? modals[target] : modals[target] = new Modal(document.querySelector(target), {
-        backdrop: $(target).data('modal-backdrop'),
-        placement: $(target).data('modal-placement')
-    });
-
+Livewire.on('modal', (action, target) => {
     switch (action) {
         case 'show':
-            modal.show();
+            modal.open(target);
             break;
 
         case 'hide':
-            modal.hide();
-            $('*[data-modal-backdrop]').remove();
+            modal.close(target);
+            break;
+
+        case 'toggle':
+            modal.toggle(target);
             break;
     }
-})
+});

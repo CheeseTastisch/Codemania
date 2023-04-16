@@ -1,22 +1,24 @@
 <?php
 
-namespace App\View\Components\Crud;
+namespace App\View\Components\Modal;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class ConfirmDelete extends Component
+class Confirm extends Component
 {
     /**
      * Create a new component instance.
      */
     public function __construct(
-        public string $what,
-        public string $id,
+        public string      $id,
+        public string      $action,
         public string|bool $wire = false,
         public string|null $wireType = "prevent",
-        public bool $wireLoading = true,
+        public bool        $wireLoading = true,
+        public bool        $closeButton = true,
+        public string      $maxWidth = 'md',
     )
     {
         //
@@ -27,6 +29,6 @@ class ConfirmDelete extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.crud.confirm-delete');
+        return view('components.modal.confirm');
     }
 }

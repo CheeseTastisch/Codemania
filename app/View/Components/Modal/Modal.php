@@ -1,25 +1,19 @@
 <?php
 
-namespace App\View\Components;
+namespace App\View\Components\Modal;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
-use function PHPUnit\Framework\matches;
 
 class Modal extends Component
 {
-    /**
-     * Create a new component instance.
-     */
     public function __construct(
-        public string $id,
+        public string      $id,
         public string|null $title = null,
-        public bool $closeButton = true,
-        public string $backdrop = 'dynamic',
-        public string $maxWidth = 'lg',
-        public string $placement = 'center-center',
-        public bool $withFooter = false,
+        public bool        $closeButton = true,
+        public string      $maxWidth = 'lg',
+        public bool        $withFooter = false,
     )
     {
         //
@@ -30,11 +24,12 @@ class Modal extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.modal');
+        return view('components.modal.modal');
     }
 
 
-    public function getMaxWidth() {
+    public function getMaxWidth()
+    {
         return match ($this->maxWidth) {
             'xs' => 'max-w-xs',
             'sm' => 'max-w-sm',
@@ -49,5 +44,4 @@ class Modal extends Component
             default => 'max-w-lg',
         };
     }
-
 }
