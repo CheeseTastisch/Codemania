@@ -2,13 +2,13 @@
 
 namespace App\Models\Components\Styled;
 
-enum Style
+enum Style: string
 {
 
-    case Info;
-    case Danger;
-    case Success;
-    case Warning;
-    case Accent;
+    case Info = 'info';
+    case Danger = 'danger';
+    case Success = 'success';
+    case Warning = 'warning';
+    case Accent = 'accent';
 
 }
