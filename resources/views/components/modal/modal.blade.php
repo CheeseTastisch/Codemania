@@ -1,6 +1,6 @@
 <div x-data="{ open: false }" x-show="open" x-cloak>
     <div id="{{ $id }}" wire:ignore.self tabindex="-1" :aria-hidden="!open" role="dialog" aria-modal="true"
-         x-on:modal-open="open = true" x-on:moda-close="open = false"
+         x-on:modal-open="open = true" x-on:modal-close="open = false"
          x-on:modal-toggle="open = !open" @keydown.escape.window="open = false"
          class="fixed top-0 left-0 right-0 w-full overflow-x-hidden overflow-y-auto md:inset-0 h-full flex justify-center items-center z-[50]">
         <div class="relative w-full {{ $getMaxWidth }} max-h-full">

@@ -10,7 +10,7 @@ Livewire.on('modal', (action, target) => {
             modal.open(target);
             break;
 
-        case 'hide':
+        case 'close':
             modal.close(target);
             break;
 

@@ -49,7 +49,7 @@ class Table extends Component
         ContestDay::find($this->deleteId)->deleteAll();
         $this->deleteId = null;
 
-        $this->emit('modal', 'hide', 'confirmDelete-contest');
+        $this->emit('modal', 'close', 'confirm-delete');
         $this->emit('showToast', 'Du hast den Tag erfolgreich gelöscht.');
     }
 

@@ -52,7 +52,7 @@
                             </svg>
                         </a>
 
-                        <svg @click="deleteId = {{ $contest->id }}; deleteName = '{{ $contest->name }}'; modal.open('confirm-delete')"
+                        <svg @click="deleteId = @js($contest->id); deleteName = @js($contest->name); modal.open('confirm-delete')"
                              class="w-6 h-6 cursor-pointer hover:text-accent-400 dark:hover:text-accent-600" fill="none"
                              stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
                              xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -104,6 +104,6 @@
         action="löschen"
         wire="delete">
         <h3 class="text-lg font-medium">Möchtest du <span x-text="deleteName"></span> wirklich löschen?</h3>
-        <p class="mt-2 text-sm text-red-400 dark:text-red-600">Dieser Vorgang kann nicht rückgängig gemacht werden.</p>
+        <p class="mb-2 text-sm text-red-400 dark:text-red-600">Dieser Vorgang kann nicht rückgängig gemacht werden.</p>
     </x-modal.confirm>
 </div>
