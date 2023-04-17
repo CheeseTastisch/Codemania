@@ -1,0 +1,71 @@
+# A ! in front of a tag indicates that another tag is the short form of the tag after the !
+
+#Props[key: value, value, ...; key: value, value, ...]
+  # The key is the name of the property
+  # The values are the possible values of the property
+  # The first value is the default value
+  # A ? indicates that the property can be any value
+  # A value in front of a ? represents the default value
+
+#Modeled: !#Props[model: livewire, alpinejs, value]
+  # Livewire: !#Props[model: ?; update: default, lazy, defer debounce; debounce: 250ms?]
+  # AlpineJs: !#Props[model: ?; update: default, lazy, debounce; debounce: 250ms?; type: text, number]
+#MultipleErrors: !#Props[multiple-errors: true, false]
+#Styled: !#Props[style: info, danger, success, warning, accent]
+#Outlined: !#Props[outlined: true, false]
+#Updateable: !#Props[updatable: false, true]
+#Slots[...]: Indicates that the component has slots
+
+components:
+  - alert:
+      - actions:
+          - link #Styled #Outlined #Props[href: ?; target: _blank, _self, _parent, _top]
+      - x #Styled #Props[title: ?, sr-info: ?] #Slots[content]
+  - button:
+      - js #Styled #Outlined #Props[type: button, submit, reset; action: ?; label: ?]
+      - livewire #Styled #Outlined #Props[type: button, submit, reset; action: ?; label: ?]
+      - modal #Styled #Outlined #Props[type: button, submit, reset; modal: ?, action: open, close, toggle; label: ?]
+      - x #Styled #Outlined #Props[type: button, submit, reset; label: ?]
+  - card:
+      - x #Styled #Props[title: ?, sr-info: ?] #Slots[content]
+  - dropdown:
+      - x #Styled #Props[title: ?, sr-info: ?] #Slots[button, content]
+  - form:
+      - alerts:
+          - rate-limit #Modeled #Props[action: ?; error: false, ?; poll: null, ?]
+      - input:
+          - checkbox #Modeled #Updateable #MultipleErrors #Props[id: ?] #Slot[content]
+          - color #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?]
+          - date #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?]
+          - file #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?; type: input, dropzone; multiple: true, false; accept: */*, ?]
+          - hidden #Modeled #Props[id: ?]
+          - password #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?; indicated: true, false]
+          - textarea #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?; wysiwyg: true, false; rows: ?]
+          - time #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?]
+          - x #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?; type: text, number, email]
+      - select:
+          - searchable #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?; multiple: true, false] #Slots[content]
+          - x #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?; multiple: true, false] #Slots[content]
+          - options:
+              - x #Modeled #Props[value: ?; selected: true, false]
+      - x #Props[type: form, container; spaced: space-y-6, ?; livewire: false, ?; prevent: true, false] #Slots[content]
+  - modal:
+      - x #Props[id: ?; title: ?, sr-info: ?; close-button: true, false, max-width: lg, xs, sm, md, xl, 2xl] #Slots[content, footer]
+      - confirm #Props[id: ?; title: ?, sr-info: ?; close-button: true, false, max-width: lg, xs, sm, md, xl, 2xl] #Slots[content, footer]
+  - popover:
+      - x #Slots[button, content]
+  - tooltip:
+      - x #Slots[button, content]
+  - breadcrumb:
+      - items:
+          - x #Props[href: ?; active: true, false]
+      - x #Props[separator: /, >, |, -] #Slots[content]
+  - table:
+      - body:
+          - cell #Props[colspan: 1, ?; rowspan: 1, ?; header: true, false] #Slots[content]
+          - row #Props[hover: true, false; stripe: true, false; border: true, false] #Slots[content]
+      - header:
+          - sr #Props[name: ?]
+          - simple #Props[name: ?]
+          - sortable #Props[name: ?; current-field: ?; current-direction: asc, desc; field: ?]
+      - x #Props[search: false, true; pagination: false, ?]
