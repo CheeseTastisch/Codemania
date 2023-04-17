@@ -17,14 +17,6 @@
 #Slots[...]: Indicates that the component has slots
 
 components:
-  - alert:
-      - actions:
-          - link #Styled #Outlined #Props[href: ?; target: _blank, _self, _parent, _top]
-      - x #Styled #Props[title: ?, sr-info: ?] #Slots[content]
-  - breadcrumb:
-      - items:
-          - x #Props[href: ?; active: true, false]
-      - x #Props[separator: /, >, |, -] #Slots[content]
   - button:
       - js #Styled #Outlined #Props[type: button, submit, reset; action: ?; label: ?]
       - livewire #Styled #Outlined #Props[type: button, submit, reset; action: ?; label: ?]
@@ -71,3 +63,11 @@ components:
       - x #Slots[button, content]
   - overlay:
       - x #Slots[overlay, content]
+
+done:
+  - alert:
+      - actions:
+          - link #Styled #Outlined #Props[href: ?; target: _blank, _self, _parent, _top]
+      - x #Styled #Props[title: ?, sr-info: ?] #Slots[content]
+  - breadcrumb:
+      - x #Props[items: ?, separator: /, |] #Slots[content]
