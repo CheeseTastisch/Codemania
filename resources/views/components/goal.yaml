@@ -21,6 +21,10 @@ components:
       - actions:
           - link #Styled #Outlined #Props[href: ?; target: _blank, _self, _parent, _top]
       - x #Styled #Props[title: ?, sr-info: ?] #Slots[content]
+  - breadcrumb:
+      - items:
+          - x #Props[href: ?; active: true, false]
+      - x #Props[separator: /, >, |, -] #Slots[content]
   - button:
       - js #Styled #Outlined #Props[type: button, submit, reset; action: ?; label: ?]
       - livewire #Styled #Outlined #Props[type: button, submit, reset; action: ?; label: ?]
@@ -54,12 +58,6 @@ components:
       - confirm #Props[id: ?; title: ?, sr-info: ?; close-button: true, false, max-width: lg, xs, sm, md, xl, 2xl] #Slots[content, footer]
   - popover:
       - x #Slots[button, content]
-  - tooltip:
-      - x #Slots[button, content]
-  - breadcrumb:
-      - items:
-          - x #Props[href: ?; active: true, false]
-      - x #Props[separator: /, >, |, -] #Slots[content]
   - table:
       - body:
           - cell #Props[colspan: 1, ?; rowspan: 1, ?; header: true, false] #Slots[content]
@@ -69,3 +67,7 @@ components:
           - simple #Props[name: ?]
           - sortable #Props[name: ?; current-field: ?; current-direction: asc, desc; field: ?]
       - x #Props[search: false, true; pagination: false, ?]
+  - tooltip:
+      - x #Slots[button, content]
+  - overlay:
+      - x #Slots[overlay, content]
