@@ -18,15 +18,15 @@ abstract class Model
         return implode(' ', $this->attributes);
     }
 
-    public static function livewire(string $model, LivewireUpdate $update, string $debounce = '250ms'): Livewire {
+    public static function livewire(string $model, LivewireUpdate $update = LivewireUpdate::Default, string $debounce = '250ms'): Livewire {
         return new Livewire($model, $update, $debounce);
     }
 
-    public static function alpineJs(string $model, AlpineJsUpdate $update, string $debounce = '250ms'): AlpineJs {
+    public static function alpineJs(string $model, AlpineJsUpdate $update = AlpineJsUpdate::Default, string $debounce = '250ms'): AlpineJs {
         return new AlpineJs($model, $update, $debounce, AlpineJsType::Text);
     }
 
-    public static function alpineJsNumber(string $model, AlpineJsUpdate $update, string $debounce = '250ms'): AlpineJs {
+    public static function alpineJsNumber(string $model, AlpineJsUpdate $update = AlpineJsUpdate::Default, string $debounce = '250ms'): AlpineJs {
         return new AlpineJs($model, $update, $debounce, AlpineJsType::Number);
     }
 

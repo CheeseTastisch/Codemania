@@ -5,8 +5,10 @@ namespace App\View\Components\Alert;
 use App\Concerns\Components\WithStyle;
 use App\Models\Components\Styled\Style;
 use Closure;
+use Exception;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
+use Log;
 
 class X extends Component
 {
@@ -17,12 +19,14 @@ class X extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public string $title,
-        public string $srInfo,
+        public string $title = '',
+        public string $srInfo = '',
         public Style  $style = Style::Accent,
     )
     {
-        //
+        if ($this->srInfo != '' && $this->title == '') {
+            throw new Exception('Alert components sr-info will be ignored if title is not set.');
+        }
     }
 
     /**
