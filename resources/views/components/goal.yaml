@@ -17,20 +17,15 @@
 #Slots[...]: Indicates that the component has slots
 
 components:
-  - button:
-      - js #Styled #Outlined #Props[type: button, submit, reset; action: ?; label: ?]
-      - livewire #Styled #Outlined #Props[type: button, submit, reset; action: ?; label: ?]
-      - modal #Styled #Outlined #Props[type: button, submit, reset; modal: ?, action: open, close, toggle; label: ?]
-      - x #Styled #Outlined #Props[type: button, submit, reset; label: ?]
   - card:
-      - x #Styled #Props[title: ?, sr-info: ?] #Slots[content]
+      - x #Styled #Props[title: ?, sr-info: ?] #Slots[slot]
   - dropdown:
-      - x #Styled #Props[title: ?, sr-info: ?] #Slots[button, content]
+      - x #Styled #Props[title: ?, sr-info: ?] #Slots[button, slot]
   - form:
       - alerts:
           - rate-limit #Modeled #Props[action: ?; error: false, ?; poll: null, ?]
       - input:
-          - checkbox #Modeled #Updateable #MultipleErrors #Props[id: ?] #Slot[content]
+          - checkbox #Modeled #Updateable #MultipleErrors #Props[id: ?] #Slot[slot]
           - color #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?]
           - date #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?]
           - file #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?; type: input, dropzone; multiple: true, false; accept: */*, ?]
@@ -40,34 +35,39 @@ components:
           - time #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?]
           - x #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?; type: text, number, email]
       - select:
-          - searchable #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?; multiple: true, false] #Slots[content]
-          - x #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?; multiple: true, false] #Slots[content]
+          - searchable #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?; multiple: true, false] #Slots[slot]
+          - x #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?; multiple: true, false] #Slots[slot]
           - options:
               - x #Modeled #Props[value: ?; selected: true, false]
-      - x #Props[type: form, container; spaced: space-y-6, ?; livewire: false, ?; prevent: true, false] #Slots[content]
+      - x #Props[type: form, container; spaced: space-y-6, ?; livewire: false, ?; prevent: true, false] #Slots[slot]
   - modal:
-      - x #Props[id: ?; title: ?, sr-info: ?; close-button: true, false, max-width: lg, xs, sm, md, xl, 2xl] #Slots[content, footer]
-      - confirm #Props[id: ?; title: ?, sr-info: ?; close-button: true, false, max-width: lg, xs, sm, md, xl, 2xl] #Slots[content, footer]
+      - x #Props[id: ?; title: ?, sr-info: ?; close-button: true, false, max-width: lg, xs, sm, md, xl, 2xl] #Slots[slot, footer]
+      - confirm #Props[id: ?; title: ?, sr-info: ?; close-button: true, false, max-width: lg, xs, sm, md, xl, 2xl] #Slots[slot, footer]
   - popover:
       - x #Slots[button, content]
   - table:
       - body:
-          - cell #Props[colspan: 1, ?; rowspan: 1, ?; header: true, false] #Slots[content]
-          - row #Props[hover: true, false; stripe: true, false; border: true, false] #Slots[content]
+          - cell #Props[colspan: 1, ?; rowspan: 1, ?; header: true, false] #Slots[slot]
+          - row #Props[hover: true, false; stripe: true, false; border: true, false] #Slots[slot]
       - header:
           - sr #Props[name: ?]
           - simple #Props[name: ?]
           - sortable #Props[name: ?; current-field: ?; current-direction: asc, desc; field: ?]
       - x #Props[search: false, true; pagination: false, ?]
   - tooltip:
-      - x #Slots[button, content]
+      - x #Slots[button, slot]
   - overlay:
-      - x #Slots[overlay, content]
+      - x #Slots[overlay, slot]
 
 done:
   - alert:
       - actions:
           - link #Styled #Outlined #Props[href: ?; target: _blank, _self, _parent, _top]
-      - x #Styled #Props[title: ?, sr-info: ?] #Slots[content]
+      - x #Styled #Props[title: ?, sr-info: ?] #Slots[slot]
   - breadcrumb:
-      - x #Props[items: ?, separator: /, |] #Slots[content]
+      - x #Props[items: ?, separator: /, |] #Slots[slot]
+  - button:
+      - js #Styled #Outlined #Props[type: button, submit, reset; action: ?] #Slots[slot]
+      - livewire #Styled #Outlined #Props[type: button, submit, reset; action: ?; prevent: true, false] #Slots[slot]
+      - modal #Styled #Outlined #Props[type: button, submit, reset; modal: ?, action: open, close, toggle] #Slots[slot]
+      - x #Styled #Outlined #Props[type: button, submit, reset; label: ?] #Slots[slot]
