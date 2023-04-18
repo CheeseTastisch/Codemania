@@ -17,8 +17,6 @@
 #Slots[...]: Indicates that the component has slots
 
 components:
-  - card:
-      - x #Styled #Props[title: ?, sr-info: ?] #Slots[slot]
   - dropdown:
       - x #Styled #Props[title: ?, sr-info: ?] #Slots[button, slot]
   - form:
@@ -71,3 +69,5 @@ done:
       - livewire #Styled #Outlined #Props[type: button, submit, reset; action: ?; prevent: true, false] #Slots[slot]
       - modal #Styled #Outlined #Props[type: button, submit, reset; modal: ?, action: open, close, toggle] #Slots[slot]
       - x #Styled #Outlined #Props[type: button, submit, reset; label: ?] #Slots[slot]
+  - card:
+      - x #Styled #Props[title: ?, sr-info: ?] #Slots[slot]
