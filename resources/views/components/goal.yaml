@@ -46,7 +46,7 @@ components:
 #          - color #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?, theme: monolith, classic, nano; opacity: false, true]
           - date #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?]
           - file #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?; type: input, dropzone; multiple: true, false; accept: */*, ?]
-          - hidden #Modeled #Props[id: ?]
+#          - hidden #Modeled #Props[id: ?]
           - password #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?; indicated: true, false]
           - textarea #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?; wysiwyg: true, false; rows: ?]
           - time #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?]
