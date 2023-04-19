@@ -18,7 +18,7 @@
                     @endforeach
                 </ul>
             @elseif($errors->has($id))
-                <p id="{{ $name }}-error" class="text-xs text-red-400 dark:text-red-600">
+                <p id="{{ $id }}-error" class="text-xs text-red-400 dark:text-red-600">
                     {{ $errors->first('password') }}
                 </p>
             @endif
