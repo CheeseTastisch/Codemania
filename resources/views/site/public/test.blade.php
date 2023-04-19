@@ -1,11 +1,9 @@
-@extends('layouts.center')
+@extends('layouts.app')
 
 @push('content')
-    <x-button.js
-    id="test"
-    action="alert('test')"
-    :style="\App\Models\Components\Styled\OutlinedStyle::OutlinedDanger"
-    >
-        Test
-    </x-button.js>
+    <div class="container mx-auto mt-5">
+        <x-card.x>
+            @livewire('public.test')
+        </x-card.x>
+    </div>
 @endpush

@@ -5,14 +5,10 @@ window.Alpine = Alpine;
 Alpine.start();
 
 import './domchange';
-
-import 'flowbite';
-
 import './theme';
 
-import './datepicker';
+import './colorpicker';
+
 import './froala';
-import './modal'
 import './swiper';
 import './toast';
-import './updatable';
