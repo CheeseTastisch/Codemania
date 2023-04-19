@@ -40,7 +40,7 @@
             | @yield('title')
         @endif</title>
 </head>
-<body class="bg-slate-200 dark:bg-slate-800 h-screen dark:text-white">
+<body class="bg-slate-200 dark:bg-slate-800 h-screen dark:text-white selection:bg-accent-200 dark:selection:bg-accent-800">
 @hasSection('baseContent')
     @yield('baseContent')
 @endif
