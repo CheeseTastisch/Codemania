@@ -1,8 +1,10 @@
 <div class="relative">
     <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="{{ $id }}">{{ $label }}</label>
     <input id="{{ $id }}" type="file" accept="{{ $accept }}"
-           class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-           @error($id) aria-describedby="{{ $name }}-error" aria-invalid="true" @enderror
+           class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+           file:!bg-accent-300 file:hover:!bg-accent-400 dark:file:!bg-accent-700 dark:file:hover:!bg-accent-600 file:!text-black dark:file:!text-white
+           @error($id) !border-red-400 dark:!border-red-600 @enderror"
+           @error($id) aria-describedby="{{ $id }}-error" aria-invalid="true" @enderror
             {{ $model->getAttributesAsString() }}>
 
     @if(count($errors->get($id)) > 1 && $multipleErrors)
