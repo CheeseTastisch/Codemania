@@ -8,7 +8,6 @@ import './domchange';
 import './theme';
 
 import './colorpicker';
-
 import './froala';
 import './swiper';
 import './toast';

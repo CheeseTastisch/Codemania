@@ -48,7 +48,7 @@ components:
 #          - file #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?; multiple: true, false; accept: */*, ?]
 #          - hidden #Modeled #Props[id: ?]
 #          - password #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?; indicated: true, false]
-          - textarea #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?; wysiwyg: true, false; rows: ?]
+#          - textarea #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?; wysiwyg: true, false; rows: ?]
           - time #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?]
 #          - x #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?; type: text, number, email]
       - select:
