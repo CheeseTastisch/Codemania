@@ -71,7 +71,7 @@ components:
           - simple #Props[name: ?]
           - sortable #Props[name: ?; current-field: ?; current-direction: asc, desc; field: ?]
       - x #Props[search: false, true; pagination: false, ?]
-  - tooltip:
-      - x #Slots[button, slot]
+#  - tooltip:
+#      - x #Slots[button, slot]
   - overlay:
       - x #Slots[overlay, slot]
