@@ -15,7 +15,7 @@ abstract class Model
     public $attributes = [];
 
     public function getAttributesAsString(): string {
-        return implode(' ', $this->attributes);
+        return collect($this->attributes)->map(fn($value, $key) => "$key=$value")->implode(' ');
     }
 
     public static function livewire(string $model, LivewireUpdate $update = LivewireUpdate::Default, string $debounce = '250ms'): Livewire {
