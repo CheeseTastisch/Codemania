@@ -60,8 +60,8 @@ components:
   - modal:
       - x #Props[id: ?; title: ?, sr-info: ?; close-button: true, false, max-width: lg, xs, sm, md, xl, 2xl] #Slots[slot, footer]
       - confirm #Props[id: ?; title: ?, sr-info: ?; close-button: true, false, max-width: lg, xs, sm, md, xl, 2xl] #Slots[slot, footer]
-  - popover:
-      - x #Slots[button, content]
+#  - popover:
+#      - x #Slots[button, content]
   - table:
       - body:
           - cell #Props[colspan: 1, ?; rowspan: 1, ?; header: true, false] #Slots[slot]
