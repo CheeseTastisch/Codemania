@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\Button;
+namespace App\View\Components\Button\Big;
 
 use App\Concerns\Components\WithOutlinedStyle;
 use App\Models\Components\Styled\OutlinedStyle;
@@ -20,7 +20,8 @@ class Js extends Component
         public string $id,
         public string $action,
         public string $type = 'button',
-        public OutlinedStyle $style = OutlinedStyle::FilledAccent
+        public OutlinedStyle $style = OutlinedStyle::FilledAccent,
+        public bool $fullWidth = false,
     )
     {
         //
@@ -31,6 +32,6 @@ class Js extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.button.js');
+        return view('components.button.big.js');
     }
 }

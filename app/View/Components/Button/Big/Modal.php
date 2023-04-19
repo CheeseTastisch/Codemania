@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\Button;
+namespace App\View\Components\Button\Big;
 
 use App\Concerns\Components\WithOutlinedStyle;
 use App\Models\Components\Styled\OutlinedStyle;
@@ -8,7 +8,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class Livewire extends Component
+class Modal extends Component
 {
 
     use WithOutlinedStyle;
@@ -18,10 +18,11 @@ class Livewire extends Component
      */
     public function __construct(
         public string $id,
-        public string $action,
+        public string $modal,
+        public string $action = 'open',
         public string $type = 'button',
-        public bool $prevent = true,
-        public OutlinedStyle $style = OutlinedStyle::FilledAccent
+        public OutlinedStyle $style = OutlinedStyle::FilledAccent,
+        public bool $fullWidth = false,
     )
     {
         //
@@ -32,6 +33,6 @@ class Livewire extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.button.livewire');
+        return view('components.button.big.modal');
     }
 }

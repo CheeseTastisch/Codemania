@@ -17,9 +17,30 @@
 #Slots[...]: Indicates that the component has slots
 
 components:
+#  - alert:
+#    - actions:
+#        - link #Styled #Outlined #Props[href: ?; target: _blank, _self, _parent, _top]
+#    - x #Styled #Props[title: ?, sr-info: ?] #Slots[slot]
+#  - breadcrumb:
+#      - x #Props[items: ?, separator: /, |] #Slots[slot]
+#  - card:
+#      - x #Styled #Props[title: ?, sr-info: ?] #Slots[slot]
+#  - dropdown:
+#      - x #Slots[button, slot]
+#  - button:
+#      - small:
+#        - js #Styled #Outlined #Props[type: button, submit, reset; action: ?] #Slots[slot]
+#        - livewire #Styled #Outlined #Props[type: button, submit, reset; action: ?; prevent: true, false; loading: true, false] #Slots[slot]
+#        - modal #Styled #Outlined #Props[type: button, submit, reset; modal: ?, action: open, close, toggle] #Slots[slot]
+#        - x #Styled #Outlined #Props[type: button, submit, reset; label: ?] #Slots[slot]
+#      - big:
+#        - js #Styled #Outlined #Props[type: button, submit, reset; action: ?] #Slots[slot]
+#        - livewire #Styled #Outlined #Props[type: button, submit, reset; action: ?; prevent: true, false; loading: true, false] #Slots[slot]
+#        - modal #Styled #Outlined #Props[type: button, submit, reset; modal: ?, action: open, close, toggle] #Slots[slot]
+#        - x #Styled #Outlined #Props[type: button, submit, reset; label: ?] #Slots[slot]
   - form:
-      - alerts:
-          - rate-limit #Props[action: ?; error: false, ?; poll: null, ?, from: value, alpinejs, message; value: ?]
+#      - alerts:
+#          - rate-limit #Props[action: ?; error: false, ?; poll: null, ?, from: value, alpinejs, message; value: ?]
       - input:
           - checkbox #Modeled #Updateable #MultipleErrors #Props[id: ?] #Slot[slot]
           - color #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?]
@@ -35,7 +56,7 @@ components:
           - x #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?; multiple: true, false] #Slots[slot]
           - options:
               - x #Modeled #Props[value: ?; selected: true, false]
-      - x #Props[type: form, container; spaced: space-y-6, ?; livewire: false, ?; prevent: true, false] #Slots[slot]
+#      - x #Props[type: form, container; spaced: space-y-6, ?; livewire: false, ?; prevent: true, false] #Slots[slot]
   - modal:
       - x #Props[id: ?; title: ?, sr-info: ?; close-button: true, false, max-width: lg, xs, sm, md, xl, 2xl] #Slots[slot, footer]
       - confirm #Props[id: ?; title: ?, sr-info: ?; close-button: true, false, max-width: lg, xs, sm, md, xl, 2xl] #Slots[slot, footer]
@@ -54,20 +75,3 @@ components:
       - x #Slots[button, slot]
   - overlay:
       - x #Slots[overlay, slot]
-
-done:
-  - alert:
-      - actions:
-          - link #Styled #Outlined #Props[href: ?; target: _blank, _self, _parent, _top]
-      - x #Styled #Props[title: ?, sr-info: ?] #Slots[slot]
-  - breadcrumb:
-      - x #Props[items: ?, separator: /, |] #Slots[slot]
-  - button:
-      - js #Styled #Outlined #Props[type: button, submit, reset; action: ?] #Slots[slot]
-      - livewire #Styled #Outlined #Props[type: button, submit, reset; action: ?; prevent: true, false] #Slots[slot]
-      - modal #Styled #Outlined #Props[type: button, submit, reset; modal: ?, action: open, close, toggle] #Slots[slot]
-      - x #Styled #Outlined #Props[type: button, submit, reset; label: ?] #Slots[slot]
-  - card:
-      - x #Styled #Props[title: ?, sr-info: ?] #Slots[slot]
-  - dropdown:
-      - x #Slots[button, slot]

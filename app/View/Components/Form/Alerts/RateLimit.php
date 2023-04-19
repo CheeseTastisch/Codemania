@@ -24,6 +24,10 @@ class RateLimit extends Component
         if ($this->from !== 'message' && $this->value === null) {
             throw new Exception('RateLimit component requires a value when not using the message');
         }
+
+        if ($this->from === 'message' && $this->error === '') {
+            throw new Exception('RateLimit component requires an error when using message');
+        }
     }
 
     /**

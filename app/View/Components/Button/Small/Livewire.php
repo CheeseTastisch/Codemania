@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\Button;
+namespace App\View\Components\Button\Small;
 
 use App\Concerns\Components\WithOutlinedStyle;
 use App\Models\Components\Styled\OutlinedStyle;
@@ -8,7 +8,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class X extends Component
+class Livewire extends Component
 {
 
     use WithOutlinedStyle;
@@ -18,8 +18,11 @@ class X extends Component
      */
     public function __construct(
         public string $id,
+        public string $action,
         public string $type = 'button',
-        public OutlinedStyle $style = OutlinedStyle::FilledAccent
+        public bool $prevent = true,
+        public bool $loading = true,
+        public OutlinedStyle $style = OutlinedStyle::FilledAccent,
     )
     {
         //
@@ -30,6 +33,6 @@ class X extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.button.x');
+        return view('components.button.small.livewire');
     }
 }
