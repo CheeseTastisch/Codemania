@@ -21,8 +21,8 @@ class X extends Component
         public string $type = 'text',
     )
     {
-        if ($this->type !== 'text' && $this->type !== 'number' && $this->type !== 'email') {
-            throw new \Exception('Form/X component currently only supports text, number and email types.');
+        if ($this->type !== 'text' && $this->type !== 'number' && $this->type !== 'email' && $this->type !== 'time') {
+            throw new \Exception('Form/X component currently only supports text, number, email and time input types.');
         }
     }
 

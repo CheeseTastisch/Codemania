@@ -47,10 +47,8 @@ components:
 #          - hidden #Modeled #Props[id: ?]
 #          - password #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?; indicated: true, false]
 #          - textarea #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?; wysiwyg: true, false; rows: ?]
-          - time #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?]
 #          - x #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?; type: text, number, email]
       - select:
-          - searchable #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?; multiple: true, false] #Slots[slot]
           - x #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?; multiple: true, false] #Slots[slot]
           - options:
               - x #Modeled #Props[value: ?; selected: true, false]
