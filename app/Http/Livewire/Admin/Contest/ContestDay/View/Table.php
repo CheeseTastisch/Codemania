@@ -49,7 +49,7 @@ class Table extends Component
         ContestDay::find($this->deleteId)->deleteAll();
         $this->deleteId = null;
 
-        $this->emit('modal', 'close', 'confirm-delete');
+        $this->emit('modal', 'close', 'delete');
         $this->emit('showToast', 'Du hast den Tag erfolgreich gelöscht.');
     }
 
@@ -60,8 +60,8 @@ class Table extends Component
         $theme = ContestDayTheme::default();
         $contestDay = ContestDay::create([
             'name' => $this->name,
-            'date' => $this->date,
-            'registration_deadline' => $this->registration_deadline,
+            'date' => Carbon::createFromTimestampMs($this->date),
+            'registration_deadline' => Carbon::createFromTimestampMs($this->registration_deadline),
             'contest_day_theme_id' => $theme->id,
         ]);
 
@@ -74,14 +74,14 @@ class Table extends Component
             'name' => 'required|string|unique:contest_days,name',
             'date' => [
                 'required',
-                'date',
+                'integer',
                 function ($attribute, $value, $fail) {
-                    if (ContestDay::where('date', Carbon::parse($value))->exists()) {
+                    if (ContestDay::where('date', Carbon::createFromTimestampMs($value))->exists()) {
                         $fail('Datum ist bereits vergeben.');
                     }
                 },
             ],
-            'registration_deadline' => 'required|date',
+            'registration_deadline' => 'nullable|integer',
         ];
     }
 

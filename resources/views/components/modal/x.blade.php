@@ -14,7 +14,7 @@
                 default => 'max-w-full',
             } }} max-h-full">
             <div class="relative bg-slate-200 dark:bg-slate-800 rounded-lg shadow-lg"
-                 @click.outside="if (![...$event.target.classList].some(target => target.includes('datepicker'))) open = false">
+                 @click.outside="if (!$event.target.closest('.datepicker')) { open = false }">
                 <!-- Modal header -->
                 @if($title)
                     <div

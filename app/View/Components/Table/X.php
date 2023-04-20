@@ -4,6 +4,7 @@ namespace App\View\Components\Table;
 
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Pagination\AbstractPaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\View\Component;
 
@@ -14,7 +15,7 @@ class X extends Component
      */
     public function __construct(
         public bool $searchable = false,
-        public Paginator|null $paginator = null,
+        public AbstractPaginator|null $paginator = null,
     )
     {
         //

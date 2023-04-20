@@ -1,47 +1,39 @@
 <div x-data="{deleteId: @entangle('deleteId').defer, deleteName: null}">
-    <x-table.container
-        with-pagination
-        with-search>
+    <x-table.x
+        searchable
+        :paginator="$contests">
         <x-slot name="header">
-            <x-table.header.field
-                name="id"
-                label="#"
-            />
+            <x-table.header.simple name="#" />
 
-            <x-table.header.field
+            <x-table.header.sortable
                 name="name"
-                label="Name"
-                sortable
-                :sort-field="$sortField"
-                :sort-direction="$sortDirection"
-            />
+                :current-field="$sortField"
+                :current-direction="$sortDirection"
+                field="name" />
 
-            <x-table.header.field
+            <x-table.header.sortable
                 name="date"
-                label="Datum"
-                sortable
-                :sort-field="$sortField"
-                :sort-direction="$sortDirection"
-            />
-            <x-table.header.field name="Aktionen" sr-only/>
-        </x-slot>
+                :current-field="$sortField"
+                :current-direction="$sortDirection"
+                field="date" />
 
-        <x-slot name="pagination">
-            {{ $contests->links('layouts.pagination.table') }}
+            <x-table.header.sr name="Aktionen" />
         </x-slot>
 
         @foreach($contests as $contest)
-            <x-table.content.row with-hover :with-stripe="$loop->even" :with-border="!$loop->last">
-                <x-table.content.column head>{{ $contest->id }}</x-table.content.column>
-                <x-table.content.column>{{ $contest->name }}</x-table.content.column>
-                <x-table.content.column>
+            <x-table.body.row :stripe="$loop->even" :border="!$loop->last">
+                <x-table.body.cell header>{{ $contest->id }}</x-table.body.cell>
+                <x-table.body.cell>{{ $contest->name }}</x-table.body.cell>
+
+                <x-table.body.cell>
                     @if($contest->training_only)
                         Nur Training
                     @else
                         {{ $contest->date->format('d. m. Y') }}
                     @endif
-                </x-table.content.column>
-                <x-table.content.column>
+                </x-table.body.cell>
+
+                <x-table.body.cell>
                     <div class="flex space-x-2">
                         <a href="{{ route('admin.contest.contest-day.edit', $contest->id) }}">
                             <svg class="w-6 h-6 hover:text-accent-400 dark:hover:text-accent-600" fill="none"
@@ -52,7 +44,7 @@
                             </svg>
                         </a>
 
-                        <svg @click="deleteId = @js($contest->id); deleteName = @js($contest->name); modal.open('confirm-delete')"
+                        <svg @click="deleteId = @js($contest->id); deleteName = @js($contest->name); modal.open('delete')"
                              class="w-6 h-6 cursor-pointer hover:text-accent-400 dark:hover:text-accent-600" fill="none"
                              stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
                              xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -60,50 +52,59 @@
                                   d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"></path>
                         </svg>
                     </div>
-                </x-table.content.column>
-            </x-table.content.row>
+                </x-table.body.cell>
+            </x-table.body.row>
         @endforeach
-    </x-table.container>
+    </x-table.x>
 
-    <x-modal.modal
+    <x-modal.x
         id="create"
         title="Neuen Tag erstellen"
         max-width="2xl">
-        <x-form.form>
-            <x-form.input.simple
-                name="name"
-                label="Name"
-                wire />
+        <x-form.x>
+            <x-form.input.x
+                id="name" label="Name"
+                :model="\App\Models\Components\Modeled\Model::livewire('name', \App\Models\Components\Modeled\Livewire\LivewireUpdate::Defer)" />
 
             <x-form.input.date
-                name="date"
-                label="Datum"
-                wire />
+                id="date" label="Datum"
+                :model="\App\Models\Components\Modeled\Model::livewire('date', \App\Models\Components\Modeled\Livewire\LivewireUpdate::Defer)" />
 
             <x-form.input.date
-                name="registration_deadline"
-                label="Anmeldefrist"
-                wire />
+                id="registration_deadline" label="Anmeldefrist"
+                :model="\App\Models\Components\Modeled\Model::livewire('registration_deadline', \App\Models\Components\Modeled\Livewire\LivewireUpdate::Defer)" />
 
-            <x-form.button
-                name="Erstellen"
-                wire="create"/>
-        </x-form.form>
-    </x-modal.modal>
+            <x-button.big.livewire
+                id="create" action="create"
+                prevent loading full-width>
+                Erstellen
+            </x-button.big.livewire>
+        </x-form.x>
+    </x-modal.x>
 
     <div class="flex justify-end mt-3">
-        <x-form.button
-            name="Neuen Tag erstellen"
-            modal="create"
-            modal-action="open"
-            :full-width="false" />
+        <x-button.big.modal id="create" modal="create" action="open">
+            Neuen Tag erstellen
+        </x-button.big.modal>
     </div>
 
-    <x-modal.confirm
-        id="delete"
-        action="löschen"
-        wire="delete">
+    <x-modal.confirm id="delete">
         <h3 class="text-lg font-medium">Möchtest du <span x-text="deleteName"></span> wirklich löschen?</h3>
         <p class="mb-2 text-sm text-red-400 dark:text-red-600">Dieser Vorgang kann nicht rückgängig gemacht werden.</p>
+
+        <div class="flex justify-center mt-5 space-x-2">
+            <x-button.big.livewire
+                id="delete" action="delete"
+                prevent loading
+                :style="\App\Models\Components\Styled\OutlinedStyle::FilledDanger">
+                Löschen
+            </x-button.big.livewire>
+
+            <x-button.big.modal
+                id="cancle" modal="delete" action="close"
+                :style="\App\Models\Components\Styled\OutlinedStyle::OutlinedDanger">
+                Abbrechen
+            </x-button.big.modal>
+        </div>
     </x-modal.confirm>
 </div>

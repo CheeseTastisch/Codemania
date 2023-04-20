@@ -12,7 +12,8 @@
         }) : '';
     });
     $refs.datepicker.addEventListener('changeDate', event => {
-        timestamp = event.detail.date.getTime();
+        if (event.detail.date) timestamp = event.detail.date.getTime();
+        else timestamp = null;
     });
     setTimeout(() => {
         new Datepicker($refs.datepicker, {
@@ -38,14 +39,15 @@
                 <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
             </svg>
         </div>
-        <input type="text" id="{{ $id }}" name="{{ $id }}" pattern="\d{2}\.\d{2}\.\d{4}"
+        <input type="hidden" id="{{ $id }}-backend" {{ $model->getAttributesAsString() }}>
+
+        <input datepicker x-ref="datepicker"
+               type="text" id="{{ $id }}" name="{{ $id }}"
                class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-accent-400 focus:border-accent-400 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-accent-600 dark:focus:border-accent-600
                @error($id) !border-red-400 dark:!border-red-600 @enderror"
                placeholder="Datum auswählen"
                @error($id) aria-describedby="{{ $id }}-error" @enderror
-               {{ $model->getAttributesAsString() }}
-                x-model="date"
-               data-popover-target="{{ $id }}-picker" data-popover-placement="top" data-popover-trigger="click">
+                x-model="date">
 
         @if($updatable && session('updated') === $id)
             <svg x-data x-ref="self" aria-hidden="true" x-init="setTimeout(() => $refs.self ? $refs.self.remove() : null, 2000)"
@@ -66,7 +68,4 @@
             {{ $errors->first($id) }}
         </p>
     @endif
-
-    <div data-popover id="{{ $id }}-picker" inline-datepicker :data-date="new Date(parseInt(timestamp)).toLocaleDateString('en-gb', {year: 'numeric', month: '2-digit', day: '2-digit'})" x-ref="datepicker" class="invisible" wire:ignore>
-    </div>
 </div>
