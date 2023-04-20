@@ -1,4 +1,4 @@
-<div @if($indicated) x-data="{password: '', strength: 0, open: false}"
+<div @if($indicated) x-data="{password: '', strength: 0}"
      x-init="$watch('password', value => strength = /[A-Z]/u.test(value) + /[a-z]/u.test(value) + /[0-9]/u.test(value) + /\p{Z}|\p{S}|\p{P}/u.test(value) + ((value.length >= 12) ? 1 : 0) + ((value.length >= 8) ? 1 : 0))" @endif>
     <div class="relative">
         <input type="password" id="{{ $id }}" name="{{ $id }}" placeholder=" "
@@ -6,7 +6,7 @@
                @error($id) !border-red-400 dark:!border-red-600 @enderror"
                @error($id) aria-describedby="{{ $id }}-error" aria-invalid="true" @enderror
                {{ $model->getAttributesAsString() }}
-               @if($indicated) x-ref="field" x-model="password" @mouseenter="open = true" @mouseleave="if ($refs.field !== document.activeElement) open = false" @focusin="open = true" @focusout="open = false" @endif>
+               @if($indicated) x-ref="field" x-model="password" data-popover-target="{{ $id }}-indicator" data-popover-placement="bottom" @endif>
 
         @if($updatable && session('updated') === $id)
             <svg x-data x-ref="self" aria-hidden="true" x-init="setTimeout(() => $refs.self ? $refs.self.remove() : null, 2000)"
@@ -35,7 +35,7 @@
     @endif
 
     @if($indicated)
-        <div x-show="open" x-transition wire:ignore class="absolute z-20 inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm w-72 dark:bg-gray-900 dark:border-gray-600 dark:text-gray-400">
+        <div data-popover id="{{ $id }}-indicator" wire:ignore class="absolute z-20 invisible inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm w-72 dark:bg-gray-900 dark:border-gray-600 dark:text-gray-400">
             <div class="p-3 space-y-2">
                 <h3 class="font-semibold text-gray-900 dark:text-white">Deine Passwortstärke:</h3>
                 <div class="grid grid-cols-6 gap-2">

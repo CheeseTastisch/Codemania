@@ -25,8 +25,6 @@ components:
 #      - x #Props[items: ?, separator: /, |] #Slots[slot]
 #  - card:
 #      - x #Styled #Props[title: ?, sr-info: ?] #Slots[slot]
-#  - dropdown:
-#      - x #Slots[button, slot]
 #  - button:
 #      - small:
 #        - js #Styled #Outlined #Props[type: button, submit, reset; action: ?] #Slots[slot]
@@ -60,8 +58,6 @@ components:
   - modal:
       - x #Props[id: ?; title: ?, sr-info: ?; close-button: true, false, max-width: lg, xs, sm, md, xl, 2xl] #Slots[slot, footer]
       - confirm #Props[id: ?; title: ?, sr-info: ?; close-button: true, false, max-width: lg, xs, sm, md, xl, 2xl] #Slots[slot, footer]
-#  - popover:
-#      - x #Slots[button, content]
   - table:
       - body:
           - cell #Props[colspan: 1, ?; rowspan: 1, ?; header: true, false] #Slots[slot]
@@ -71,7 +67,5 @@ components:
           - simple #Props[name: ?]
           - sortable #Props[name: ?; current-field: ?; current-direction: asc, desc; field: ?]
       - x #Props[search: false, true; pagination: false, ?]
-#  - tooltip:
-#      - x #Slots[button, slot]
   - overlay:
       - x #Slots[overlay, slot]

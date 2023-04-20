@@ -4,10 +4,11 @@ import Alpine from "alpinejs";
 window.Alpine = Alpine;
 Alpine.start();
 
-import './domchange';
-import './theme';
+import './global/theme';
+import './global/toast';
 
-import './colorpicker';
-import './froala';
+import './components/colorpicker';
+import './components/wyiswyg';
+import 'flowbite'
+
 import './swiper';
-import './toast';

@@ -1,4 +1,5 @@
 import Toastify from 'toastify-js'
+import '../../css/global/toast.css'
 
 function showToast(text, duration, close, style) {
     Toastify({
