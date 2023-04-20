@@ -10,6 +10,7 @@ import './global/toast';
 import 'flowbite'
 import './components/colorpicker';
 import './components/datepicker';
+import './components/modal';
 import './components/wyiswyg';
 
 import './swiper';
