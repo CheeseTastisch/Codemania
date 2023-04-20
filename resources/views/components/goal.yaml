@@ -50,9 +50,9 @@ components:
 #          - textarea #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?; wysiwyg: true, false; rows: ?]
 #          - x #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?; type: text, number, email]
 #      - x #Props[type: form, container; spaced: space-y-6, ?; livewire: false, ?; prevent: true, false] #Slots[slot]
-  - modal:
+#  - modal:
 #      - x #Props[id: ?; title: ?, sr-info: ?; close-button: true, false, max-width: lg, xs, sm, md, xl, 2xl] #Slots[slot, footer]
-      - confirm #Props[id: ?; title: ?, sr-info: ?; close-button: true, false, max-width: lg, xs, sm, md, xl, 2xl] #Slots[slot, footer]
+#      - confirm #Props[id: ?; title: ?, sr-info: ?; close-button: true, false, max-width: lg, xs, sm, md, xl, 2xl] #Slots[slot, footer]
   - table:
       - body:
           - cell #Props[colspan: 1, ?; rowspan: 1, ?; header: true, false] #Slots[slot]
@@ -62,5 +62,5 @@ components:
           - simple #Props[name: ?]
           - sortable #Props[name: ?; current-field: ?; current-direction: asc, desc; field: ?]
       - x #Props[search: false, true; pagination: false, ?]
-  - overlay:
-      - x #Slots[overlay, slot]
+#  - overlay:
+#      - x #Slots[overlay, slot]
