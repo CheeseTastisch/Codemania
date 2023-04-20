@@ -1,18 +1,20 @@
 <?php
 
-namespace App\View\Components\Overlay;
+namespace App\View\Components\Public;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class X extends Component
+class Team extends Component
 {
     /**
      * Create a new component instance.
      */
     public function __construct(
-        public string $classes = '',
+        public string $name,
+        public string $description,
+        public string $image,
     )
     {
         //
@@ -23,6 +25,6 @@ class X extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.overlay.x');
+        return view('components.public.team');
     }
 }

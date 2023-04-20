@@ -1,4 +1,4 @@
-<div class="@if($widths) {{ $widths }} @else w-full @endif">
+<div class="{{ $classes }}">
     <div class="relative w-full h-full">
         <div class="w-full h-full">
             {{ $slot }}

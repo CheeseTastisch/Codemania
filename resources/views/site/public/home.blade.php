@@ -107,20 +107,20 @@
                 </div>
             </div>
 
-            <div class="text-center text-xl font-bold mt-8 mb-6">
+            <div class="text-center text-xl font-bold mt-8 mb-4">
                 Das Team
             </div>
 
             <div class="flex flex-wrap justify-center">
-                <x-public.home.team
+                <x-public.team
                     name="Lisa Buchendorfer"
                     image="{{ asset('storage/img/team/lisa.png') }}"
                     description="Als kreativer Kopf bin ich dafür zuständig, Aufgaben zu planen, zu strukturieren und zu definieren, um sicherzustellen, dass sie effektiv und effizient erledigt werden können." />
-                <x-public.home.team
+                <x-public.team
                     name="Lian Hörschläger"
                     image="{{ asset('storage/img/team/lian.png') }}"
                     description="Als Designer und Entwickler bin ich dafür zuständig, die Website und die Online-Plattform zu gestalten und mit Funktionen auszustatten." />
-                <x-public.home.team
+                <x-public.team
                     name="Elmedin Zukic"
                     image="{{ asset('storage/img/team/elmedin.png') }}"
                     description="Als Business Man übernehme ich die Verantwortung für das Sponsoring und Marketing. Meine Expertise und Erfahrung im Bereich des Marketings ermöglicht es mir, effektive und zielgerichtete Kampagnen zu entwerfen" />
