@@ -42,7 +42,7 @@ components:
       - input:
 #          - checkbox #Modeled #Updateable #MultipleErrors #Props[id: ?] #Slot[slot]
 #          - color #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?, theme: monolith, classic, nano; opacity: false, true]
-          - date #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?]
+#          - date #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?]
 #          - file #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?; multiple: true, false; accept: */*, ?]
 #          - hidden #Modeled #Props[id: ?]
 #          - password #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?; indicated: true, false]

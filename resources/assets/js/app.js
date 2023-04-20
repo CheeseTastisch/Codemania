@@ -7,8 +7,9 @@ Alpine.start();
 import './global/theme';
 import './global/toast';
 
-import './components/colorpicker';
-import './components/wyiswyg';
 import 'flowbite'
+import './components/colorpicker';
+import './components/datepicker';
+import './components/wyiswyg';
 
 import './swiper';
