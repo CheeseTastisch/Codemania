@@ -4,10 +4,10 @@
 
 @push('content')
     <div class="flex flex-col items-center justify-center px-6 pt-8 mx-auto pt:mt-0">
-        <x-card
+        <x-card.x
             title="Password zurücksetzen"
-            class="w-full max-w-xl">
+            max-width="xl">
             @livewire('member.auth.password.request.form')
-        </x-card>
+        </x-card.x>
     </div>
 @endpush

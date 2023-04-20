@@ -35,7 +35,7 @@ class Form extends Component
         return view('livewire.member.auth.password.reset.form');
     }
 
-    public function resetPassword()
+    public function resetPassword(): void
     {
         $this->validate();
 

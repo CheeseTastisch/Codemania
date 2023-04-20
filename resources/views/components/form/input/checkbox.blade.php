@@ -3,7 +3,7 @@
         <div class="flex items-center @error($id) mb-4 @enderror">
             <input id="{{ $id }}" type="checkbox" name="{{ $id }}"
                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-accent-400 dark:focus:ring-accent-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-slate-800 dark:border-gray-600 checked:!bg-accent-400 dark:checked:!bg-accent-600"
-                   @error($id) aria-describedby="{{ $name }}-error" aria-invalid="true" @enderror
+                   @error($id) aria-describedby="{{ $id }}-error" aria-invalid="true" @enderror
                 {{ $model->getAttributesAsString() }}>
         </div>
         <div class="ml-2 text-sm">
@@ -19,7 +19,7 @@
                 </ul>
             @elseif($errors->has($id))
                 <p id="{{ $id }}-error" class="text-xs text-red-400 dark:text-red-600">
-                    {{ $errors->first('password') }}
+                    {{ $errors->first($id) }}
                 </p>
             @endif
         </div>

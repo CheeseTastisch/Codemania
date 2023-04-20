@@ -4,14 +4,10 @@
 
 @push('content')
     <div class="flex flex-col items-center justify-center px-6 pt-8 mx-auto pt:mt-0">
-        <x-card
+        <x-card.x
             title="Registrieren"
-            class="w-full max-w-xl">
+            max-width="xl">
             @livewire('member.auth.register.form')
-        </x-card>
+        </x-card.x>
     </div>
-@endpush
-
-@push('scripts')
-    <x-form.input.password.indicator-script for="password" />
 @endpush

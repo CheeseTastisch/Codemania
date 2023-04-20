@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Member\Profile;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\File;
@@ -30,7 +31,7 @@ class PersonalForm extends Component
         'lastname' => 'required|string',
         'nickname' => 'nullable|string|required_if:display_name,Nickname',
         'display_name' => 'required|string|in:first_name,last_name,full_name,Nickname',
-        'birthday' => 'nullable|date',
+        'birthday' => 'nullable|integer',
         'class' => 'nullable|string',
         'gender' => 'nullable|string|in:null,m,f,o',
         'about' => 'nullable|string',
@@ -43,7 +44,7 @@ class PersonalForm extends Component
         $this->lastname = auth()->user()->last_name;
         $this->nickname = auth()->user()->nickname ?? '';
         $this->display_name = auth()->user()->display_name_type == 'nickname' ? 'Nickname' : auth()->user()->display_name_type;
-        $this->birthday = optional(auth()->user()->birthday)->format('d.m.Y') ?? '';
+        $this->birthday = optional(auth()->user()->birthday)->getPreciseTimestamp(3);
         $this->class = auth()->user()->class ?? '';
         $this->gender = auth()->user()->gender ?? 'null';
         $this->about = auth()->user()->about ?? '';
@@ -98,8 +99,10 @@ class PersonalForm extends Component
     {
         $this->validateOnly('birthday');
 
-        if (auth()->user()->birthday != $this->birthday) {
-            auth()->user()->update(['birthday' => $this->birthday == '' ? null : $this->birthday]);
+        $usableBirthday = Carbon::createFromTimestampMs($this->birthday);
+
+        if (auth()->user()->birthday != $usableBirthday) {
+            auth()->user()->update(['birthday' => $this->birthday == '' ? null : $usableBirthday]);
             session()->flash('updated', 'birthday');
         }
     }

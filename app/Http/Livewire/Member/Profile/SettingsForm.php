@@ -37,7 +37,7 @@ class SettingsForm extends Component
         return view('livewire.member.profile.settings-form');
     }
 
-    public function updatedTheme()
+    public function updatedTheme(): void
     {
         $this->validateOnly('theme');
 
@@ -47,7 +47,7 @@ class SettingsForm extends Component
         }
     }
 
-    public function updatedEmail()
+    public function updatedEmail(): void
     {
         $this->validateOnly('email');
 
@@ -57,7 +57,7 @@ class SettingsForm extends Component
         }
     }
 
-    public function changePassword()
+    public function changePassword(): void
     {
         $this->validateMultiple(['current_password', 'password', 'password_confirmation']);
 
@@ -74,7 +74,7 @@ class SettingsForm extends Component
         }
     }
 
-    public function enable2Fa()
+    public function enable2Fa(): void
     {
         $this->validateOnly('enable_2fa_password');
 
@@ -86,7 +86,7 @@ class SettingsForm extends Component
         }
     }
 
-    public function confirm2Fa()
+    public function confirm2Fa(): void
     {
         $this->validateOnly('confirm_2fa_code');
 
@@ -97,7 +97,8 @@ class SettingsForm extends Component
         }
     }
 
-    public function disable2Fa() {
+    public function disable2Fa(): void
+    {
         $this->validateMultiple(['disable_2fa_password', 'disable_2fa_code']);
 
         if (Hash::check($this->disable_2fa_password, auth()->user()->password)) {

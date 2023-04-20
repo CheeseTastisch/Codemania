@@ -27,7 +27,7 @@ class Date extends Component
         if ($this->model instanceof AlpineJs) throw new Exception('The AlpineJs model is not implemented for the date component.');
         if ($this->model instanceof Livewire) {
             if ($this->model->update === LivewireUpdate::Lazy || $this->model->update === LivewireUpdate::Debounce) {
-                throw new Exception('The Livewire lazy and debounce update modes are not implemented for the color component.');
+                throw new Exception('The Livewire lazy and debounce update modes are not implemented for the date component.');
             }
         }
     }

@@ -21,7 +21,7 @@ class Form extends Component
         return view('livewire.member.auth.password.request.form');
     }
 
-    public function send()
+    public function send(): void
     {
         $this->validate();
 

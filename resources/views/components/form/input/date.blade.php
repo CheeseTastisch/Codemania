@@ -5,7 +5,7 @@
                 @endif,
     date: ''}"
     x-init="$watch('timestamp', value => {
-        date = value ? new Date(value).toLocaleDateString('de-DE', {
+        date = value ? new Date(parseInt(value)).toLocaleDateString('de-DE', {
             day: '2-digit',
             month: '2-digit',
             year: 'numeric'
@@ -23,7 +23,7 @@
             format: 'dd.mm.yyyy'
         });
         if (timestamp) {
-            date = new Date(timestamp).toLocaleDateString('de-DE', {
+            date = new Date(parseInt(timestamp)).toLocaleDateString('de-DE', {
                 day: '2-digit',
                 month: '2-digit',
                 year: 'numeric'
@@ -67,6 +67,6 @@
         </p>
     @endif
 
-    <div data-popover id="{{ $id }}-picker" inline-datepicker :data-date="new Date(timestamp).toLocaleDateString('en-gb', {year: 'numeric', month: '2-digit', day: '2-digit'})" x-ref="datepicker" class="invisible" wire:ignore>
+    <div data-popover id="{{ $id }}-picker" inline-datepicker :data-date="new Date(parseInt(timestamp)).toLocaleDateString('en-gb', {year: 'numeric', month: '2-digit', day: '2-digit'})" x-ref="datepicker" class="invisible" wire:ignore>
     </div>
 </div>

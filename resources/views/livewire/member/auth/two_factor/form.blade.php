@@ -1,9 +1,19 @@
-<x-form.form>
-    <x-form.rate-limit first-line="Du hast zu viele Anmeldeversuche unternommen"/>
+<x-form.x prevent>
+    <x-form.alerts.rate-limit
+        message="Du hast zu viele Anmeldeversuche unternommen."
+        error="rateLimit"
+        poll="500ms" />
 
     @if(!$errors->has('rateLimit'))
-        <x-form.input.simple name="two_factor" label="Zwei-Faktor-Authentifizierungscode" wire/>
+        <x-form.input.x
+            id="two_factor"
+            label="Zwei-Faktor-Authentifizierungscode"
+            :model="\App\Models\Components\Modeled\Model::livewire('two_factor')" />
 
-        <x-form.button wire="check" name="Überprüfen"/>
+        <x-button.big.livewire
+            id="check" action="check" type="submit"
+            full-width prevent loading>
+            Überprüfen
+        </x-button.big.livewire>
     @endif
-</x-form.form>
+</x-form.x>
