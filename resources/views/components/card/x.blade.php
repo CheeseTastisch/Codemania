@@ -18,7 +18,8 @@
     \App\Models\Components\Styled\Style::Success->value => 'border-green-400 dark:border-green-600',
     \App\Models\Components\Styled\Style::Warning->value => 'border-yellow-400 dark:border-yellow-600',
     \App\Models\Components\Styled\Style::Accent->value => 'border-accent-400 dark:border-accent-600',
-]) }}">
+]) }}
+    @if($fullHeight) h-full @endif">
     @if($title != '')
         <div class="px-4 py-3 font-bold text-xl">
             <h3>{{ $title }}</h3>

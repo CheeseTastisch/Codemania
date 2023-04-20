@@ -89,12 +89,16 @@
         </div>
     </div>
 
-    <div class="mt-4">
-        <x-form.input.simple
-            label="Farbe"
-            name="color"
-            updatable
-            wire
-            wire-type="lazy" />
+    <div class="mt-4 flex justify-evenly items-center">
+        <x-form.input.color
+            id="color" label="Farbe"
+            :model="\App\Models\Components\Modeled\Model::livewire('color')"
+            updatable />
+
+        <x-button.big.livewire
+            id="download" action="download"
+            prevent loading>
+            Logos herunterladen
+        </x-button.big.livewire>
     </div>
 </div>

@@ -32,7 +32,8 @@ class Sponsors extends Component
         'logo' => null,
     ];
 
-    public ContestDaySponsor|null $deleteSponsor = null;
+    public $deleteId = null,
+        $updateId = null;
 
     public function mount(): void
     {
@@ -44,63 +45,13 @@ class Sponsors extends Component
     {
         return view('livewire.admin.contest.contest-day.edit.sponsors', [
             'sponsors' => ($this->search ? ContestDaySponsor::search($this->search) : ContestDaySponsor::query())
+                ->whereContestDayId($this->contestDay->id)
                 ->orderBy($this->sortField, $this->sortDirection)
                 ->paginate(10)
         ]);
     }
 
-    public function delete(int $id): void
-    {
-        $this->deleteSponsor = ContestDaySponsor::whereId($id)->first();
-    }
-
-    public function confirmedDelete(): void
-    {
-        $this->deleteSponsor->delete();
-        $this->deleteSponsor = null;
-
-        $this->emit('modal', 'hide', '#confirmDelete-sponsor');
-        $this->emit('showToast', 'Du hast den Sponsor erfolgreich gelöscht.');
-    }
-
-    public function prepareUpdate(int $id): void
-    {
-        $sponsor = ContestDaySponsor::whereId($id)->first();
-
-        $this->updateSponsor = [
-            'id' => $sponsor->id,
-            'name' => $sponsor->name,
-            'url' => $sponsor->url,
-            'background' => $sponsor->background,
-        ];
-
-        $this->emit('modal', 'show', '#update-sponsor');
-    }
-
-    public function updateSponsor(): void
-    {
-        $this->validateMultiple(['updateSponsor.name', 'updateSponsor.url', 'updateSponsor.background', 'updateSponsor.logo']);
-
-        $sponsor = ContestDaySponsor::whereId($this->updateSponsor['id'])->first();
-
-        $sponsor->update([
-            'name' => $this->updateSponsor['name'],
-            'url' => $this->updateSponsor['url'],
-            'background' => $this->updateSponsor['background'],
-        ]);
-
-        if (array_key_exists('logo', $this->updateSponsor) && $this->updateSponsor['logo'] != null) {
-            $file = StorageFile::uploadFile($this->updateSponsor['logo']);
-            $sponsor->update(['logo_id' => $file->id]);
-
-            $this->updateSponsor['logo'] = null;
-        }
-
-        $this->emit('modal', 'hide', '#update-sponsor');
-        $this->emit('showToast', 'Du hast den Sponsor erfolgreich aktualisiert.');
-    }
-
-    public function createSponsor(): void
+    public function create(): void
     {
         $this->validateMultiple(['createSponsor.name', 'createSponsor.url', 'createSponsor.background', 'createSponsor.logo']);
 
@@ -121,8 +72,55 @@ class Sponsors extends Component
             'logo' => null,
         ];
 
-        $this->emit('modal', 'hide', '#create-sponsor');
+        $this->emit('modal', 'hide', 'create');
         $this->emit('showToast', 'Du hast den Sponsor erfolgreich erstellt.');
+    }
+
+    public function prepareUpdate(int $id): void
+    {
+        $sponsor = ContestDaySponsor::whereId($id)->first();
+
+        $this->updateSponsor = [
+            'id' => $sponsor->id,
+            'name' => $sponsor->name,
+            'url' => $sponsor->url,
+            'background' => $sponsor->background,
+        ];
+
+        $this->emit('modal', 'open', 'update');
+    }
+
+    public function update(): void
+    {
+        $this->validateMultiple(['updateSponsor.name', 'updateSponsor.url', 'updateSponsor.background', 'updateSponsor.logo']);
+
+        $sponsor = ContestDaySponsor::whereId($this->updateSponsor['id'])->first();
+
+        $sponsor->update([
+            'name' => $this->updateSponsor['name'],
+            'url' => $this->updateSponsor['url'],
+            'background' => $this->updateSponsor['background'],
+        ]);
+
+        if (array_key_exists('logo', $this->updateSponsor) && $this->updateSponsor['logo'] != null) {
+            $file = StorageFile::uploadFile($this->updateSponsor['logo']);
+            $sponsor->update(['logo_id' => $file->id]);
+
+            $this->updateSponsor['logo'] = null;
+        }
+
+        $this->emit('modal', 'close', 'update');
+        $this->emit('showToast', 'Du hast den Sponsor erfolgreich aktualisiert.');
+    }
+
+    public function delete(): void
+    {
+        $sponsor = ContestDaySponsor::whereId($this->deleteId)->first();
+
+        $sponsor->delete();
+
+        $this->emit('modal', 'close', 'delete');
+        $this->emit('showToast', 'Du hast den Sponsor erfolgreich gelöscht.');
     }
 
     protected function getRules(): array

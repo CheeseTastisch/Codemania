@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Collection;
+use ZipArchive;
 
 class ContestDayTheme extends Model
 {
@@ -184,6 +185,32 @@ class ContestDayTheme extends Model
 
     private function wave(int $number): string {
         return ".wave-$number {background-image: url(" . asset("storage/themes/$this->id/wave/light/wave$number.svg") . ");}.dark .wave-$number {background-image: url(" . asset("storage/themes/$this->id/wave/dark/wave$number.svg") . ");}";
+    }
+
+    public function generateZipArchive(bool $includeLogos = true, bool $includeWaves = false): string
+    {
+        $zipPath = storage_path('app/public/themes/' . $this->id . '.zip');
+        if (File::exists($zipPath)) File::delete($zipPath);
+
+        $zip = new ZipArchive();
+        $zip->open($zipPath, ZipArchive::CREATE);
+
+        if ($includeLogos) {
+            $files = File::allFiles(storage_path('app/public/themes/' . $this->id . '/logo'));
+            foreach ($files as $file) $zip->addFile($file->getPathname(), 'logo/' . $file->getFilename());
+        }
+
+        if ($includeWaves) {
+            $darkWaves = File::allFiles(storage_path('app/public/themes/' . $this->id . '/wave/dark'));
+            foreach ($darkWaves as $file) $zip->addFile($file->getPathname(), 'wave/dark/' . $file->getFilename());
+
+            $lightWaves = File::allFiles(storage_path('app/public/themes/' . $this->id . '/wave/light'));
+            foreach ($lightWaves as $file) $zip->addFile($file->getPathname(), 'wave/light/' . $file->getFilename());
+        }
+
+        $zip->close();
+
+        return $zipPath;
     }
 
 }

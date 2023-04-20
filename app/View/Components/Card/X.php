@@ -19,7 +19,8 @@ class X extends Component
     public function __construct(
         public string $title = '',
         public Style $style = Style::Accent,
-        public string $maxWidth = ''
+        public string $maxWidth = '',
+        public bool $fullHeight = false,
     )
     {
         //

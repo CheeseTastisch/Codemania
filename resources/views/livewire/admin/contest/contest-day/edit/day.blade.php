@@ -1,37 +1,28 @@
-<x-form.form
-    :form="false">
-
-    <x-form.input.simple
-        name="name"
-        label="Name"
-        wire
-        wire-type="lazy"
+<x-form.x type="container">
+    <x-form.input.x
+        id="name" label="Name"
+        :model="\App\Models\Components\Modeled\Model::livewire('name', \App\Models\Components\Modeled\Livewire\LivewireUpdate::Lazy)"
         updatable />
 
     <x-form.input.date
-        name="date"
-        label="Datum"
-        wire
+        id="date" label="Datum"
+        :model="\App\Models\Components\Modeled\Model::livewire('date')"
         updatable />
 
     <x-form.input.date
-        name="registration_deadline"
-        label="Anmeldefrist"
-        wire
+        id="registration_deadline" label="Anmeldefrist"
+        :model="\App\Models\Components\Modeled\Model::livewire('registration_deadline')"
         updatable />
 
     <x-form.input.date
-        name="allow_training_from"
-        label="Training erlaubt ab"
-        wire
+        id="allow_training_from" label="Training erlaubt ab"
+        :model="\App\Models\Components\Modeled\Model::livewire('allow_training_from')"
         updatable />
 
     <x-form.input.checkbox
-        name="current"
-        wire
-        :wire-type="false"
+        id="current"
+        :model="\App\Models\Components\Modeled\Model::livewire('current', \App\Models\Components\Modeled\Livewire\LivewireUpdate::Lazy)"
         updatable>
         Aktueller Tag (wird auf der Startseite angezeigt, setzt alle anderen Tage auf nicht aktuell)
     </x-form.input.checkbox>
-
-</x-form.form>
+</x-form.x>

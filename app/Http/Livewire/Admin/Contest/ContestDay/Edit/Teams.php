@@ -18,10 +18,9 @@ class Teams extends Component
 
     public ContestDay $contestDay;
 
-    public Team $unblockTeam;
-    public Team $blockTeam;
-
-    public $block_reason;
+    public $blockTeamId = null,
+        $block_reason = null,
+        $unblockTeamId = null;
 
     public function mount(): void
     {
@@ -39,40 +38,35 @@ class Teams extends Component
         ]);
     }
 
-    public function unblockTeam(int $id): void
+    public function unblock(): void
     {
-        $this->unblockTeam = Team::whereId($id)->first();
-    }
-
-    public function confirmUnblock(): void
-    {
-        $this->unblockTeam->update([
+        $team = Team::whereId($this->unblockTeamId)->first();
+        $team->update([
             'is_blocked' => false,
             'block_reason' => null,
             'blocked_by' => null,
         ]);
 
         $this->emit('showToast', 'Du hast das Team erfolgreich entsperrt.');
-        $this->emit('modal', 'hide', '#confirmUnblock');
+        $this->emit('modal', 'close', 'unblock');
     }
 
-    public function blockTeam(int $id): void
-    {
-        $this->blockTeam = Team::whereId($id)->first();
-    }
+
 
     public function block(): void
     {
         $this->validate();
 
-        $this->blockTeam->update([
+        $team = Team::whereId($this->blockTeamId)->first();
+
+        $team->update([
             'is_blocked' => true,
             'block_reason' => $this->block_reason,
             'blocked_by' => auth()->user()->id,
         ]);
 
         $this->emit('showToast', 'Du hast das Team erfolgreich gesperrt.');
-        $this->emit('modal', 'hide', '#blockTeam');
+        $this->emit('modal', 'close', 'block');
     }
 
     protected function getRules(): array

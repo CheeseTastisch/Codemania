@@ -18,7 +18,7 @@ class Contests extends Component
 
     public ContestDay $contestDay;
 
-    public Contest|null $deleteContest;
+    public $deleteId = null;
 
     public $name,
         $start_time,
@@ -40,21 +40,7 @@ class Contests extends Component
         ]);
     }
 
-    public function delete(int $id): void
-    {
-        $this->deleteContest = Contest::findOrFail($id);
-    }
-
-    public function deleteContest(): void
-    {
-        $this->deleteContest->delete();
-        $this->deleteContest = null;
-
-        $this->emit('showToast', 'Du hast den Contest erfolgreich gelöscht');
-        $this->emit('modal', 'hide', '#confirmDelete-contest');
-    }
-
-    public function createContest(): void
+    public function create(): void
     {
         $this->validate();
 
@@ -68,6 +54,15 @@ class Contests extends Component
         ]);
 
         // TODO: Redirect to edit page
+    }
+
+    public function delete(): void
+    {
+        $contest = Contest::find($this->deleteId);
+        $contest->deleteAll();
+
+        $this->emit('modal', 'close', 'delete');
+        $this->emit('showToast', 'Du hast den Contest erfolgreich gelöscht.');
     }
 
     protected function getRules(): array
