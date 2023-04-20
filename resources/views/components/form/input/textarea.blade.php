@@ -14,7 +14,9 @@
                         $refs.textarea.dispatchEvent(new Event('input'));
                     }
                 }
-            }, () => this.html.set($refs.textarea.value))">
+            }, function () {
+                this.html.set($refs.textarea.value)
+            });">
                 <div wire:ignore id="{{ $id }}-editor"></div>
 
                 @if($model instanceof \App\Models\Components\Modeled\Livewire\Livewire)

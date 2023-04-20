@@ -33,7 +33,6 @@ class Container extends Component
         else Faq::whereNextId(null)->where('id', '!=', $faq->id)->update(['next_id' => $faq->id]);
 
         $this->emit('addHtmlEditor', "answer-$faq->id");
-        $this->selected = $faq->id;
     }
 
     public function deleted(int $id): void

@@ -6,6 +6,8 @@
     </div>
 
     <div class="flex justify-center mt-4">
-        <x-form.button wire="add" name="Frage hinzufügen" :full-width="false"/>
+        <x-button.big.livewire id="add" action="add">
+            Frage hinzufügen
+        </x-button.big.livewire>
     </div>
 </div>

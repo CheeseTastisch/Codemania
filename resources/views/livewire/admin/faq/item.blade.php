@@ -18,23 +18,29 @@
                  }
              }">
             <div class="m-4">
-                <x-form.form :form="false">
-                    <x-form.input.simple name="question" label="Frage" wire="question" wire-type="lazy" updatable/>
-                    <x-form.input.dropdown name="after" label="Nach" wire="after" wire-type="lazy" updatable>
-                        <option value="-1">Erste Frage</option>
-                        @foreach(\App\Models\Faq::sorted() as $target)
-                            @if($target->id !== $faq->id)
-                                <option value="{{ $target->id }}">{{ $target->question }}</option>
-                            @endif
-                        @endforeach
-                    </x-form.input.dropdown>
+                <x-form.x type="container">
+                    <x-form.input.x
+                        id="question" label="Frage"
+                        :model="\App\Models\Components\Modeled\Model::livewire('question', \App\Models\Components\Modeled\Livewire\LivewireUpdate::Lazy)"
+                        updatable />
 
-                    <x-form.input.wysiwyg name="answer" label="Antwort" id="{{ $faq->id }}" wire froala-loaded="updateHeight">
-                        {!! $answer !!}
-                    </x-form.input.wysiwyg>
+                    <x-form.input.select
+                        id="after" label="Nach"
+                        :model="\App\Models\Components\Modeled\Model::livewire('after', \App\Models\Components\Modeled\Livewire\LivewireUpdate::Lazy)"
+                        :options="$options"
+                        updatable />
 
-                    <x-form.button type="button" wire="delete" name="Löschen"/>
-                </x-form.form>
+                    <x-form.input.textarea
+                        id="answer" label="Antwort"
+                        :model="\App\Models\Components\Modeled\Model::livewire('answer')"
+                        updatable wyiswyg />
+
+                    <x-button.big.livewire
+                        id="delete" action="delete"
+                        prevent loading full-width>
+                        Löschen
+                    </x-button.big.livewire>
+                </x-form.x>
             </div>
         </div>
     @endif

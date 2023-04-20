@@ -13,13 +13,16 @@ class Item extends Component
     public Faq $faq;
 
     public $faqId;
-
+    public $options = [
+        ['value' => -1, 'name' => 'Erste Frage'],
+    ];
 
     public $question, $answer, $after;
     public $open;
 
     protected $listeners = [
         'deletedFaq' => 'deleted',
+        'updateOrder' => 'updateAfter',
     ];
 
     public function mount(): void
@@ -27,6 +30,11 @@ class Item extends Component
         $this->question = $this->faq->question;
         $this->answer = $this->faq->answer;
         $this->after = $this->faq->previous?->id ?? -1;
+
+        collect(Faq::sorted())
+            ->filter(fn ($faq) => $faq->id !== $this->faq->id)
+            ->map(fn ($faq) => ['value' => $faq->id, 'name' => $faq->question])
+            ->each(fn ($option) => $this->options[] = $option);
     }
 
     public function render(): View|\Illuminate\Foundation\Application|Factory|\Illuminate\Contracts\Foundation\Application
@@ -52,7 +60,7 @@ class Item extends Component
             $this->faq->moveAfter($this->after === -1 ? null : Faq::find($this->after));
             session()->flash('updated', 'after');
 
-            $this->emitUp('updateOrder');
+            $this->emit('updateOrder');
         }
     }
 
@@ -60,7 +68,10 @@ class Item extends Component
     {
         $this->validateOnly('answer');
 
-        if ($this->answer !== $this->faq->answer) $this->faq->update(['answer' => $this->answer]);
+        if ($this->answer !== $this->faq->answer) {
+            $this->faq->update(['answer' => $this->answer]);
+            session()->flash('updated', 'answer');
+        }
     }
 
     public function delete(): void
@@ -76,7 +87,17 @@ class Item extends Component
 
     public function deleted(int $id): void
     {
-        if ($this->faq->id !== $id) $this->render();
+        if ($this->faq->id !== $id) {
+            $this->options = collect($this->options)
+                ->filter(fn ($option) => $option['value'] !== $id)
+                ->toArray();
+            $this->render();
+        }
+    }
+
+    public function updateAfter(): void
+    {
+        $this->after = $this->faq->previous?->id ?? -1;
     }
 
     protected function getRules(): array
