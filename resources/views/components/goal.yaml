@@ -36,22 +36,19 @@ components:
 #        - livewire #Styled #Outlined #Props[type: button, submit, reset; action: ?; prevent: true, false; loading: true, false] #Slots[slot]
 #        - modal #Styled #Outlined #Props[type: button, submit, reset; modal: ?, action: open, close, toggle] #Slots[slot]
 #        - x #Styled #Outlined #Props[type: button, submit, reset; label: ?] #Slots[slot]
-  - form:
+#  - form:
 #      - alerts:
 #          - rate-limit #Props[action: ?; error: false, ?; poll: null, ?, from: value, alpinejs, message; value: ?]
-      - input:
+#      - input:
 #          - checkbox #Modeled #Updateable #MultipleErrors #Props[id: ?] #Slot[slot]
 #          - color #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?, theme: monolith, classic, nano; opacity: false, true]
 #          - date #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?]
 #          - file #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?; multiple: true, false; accept: */*, ?]
 #          - hidden #Modeled #Props[id: ?]
 #          - password #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?; indicated: true, false]
+#           - select #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?; items: ?]
 #          - textarea #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?; wysiwyg: true, false; rows: ?]
 #          - x #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?; type: text, number, email]
-      - select:
-          - x #Modeled #Updateable #MultipleErrors #Props[id: ?; label: ?; multiple: true, false] #Slots[slot]
-          - options:
-              - x #Modeled #Props[value: ?; selected: true, false]
 #      - x #Props[type: form, container; spaced: space-y-6, ?; livewire: false, ?; prevent: true, false] #Slots[slot]
   - modal:
       - x #Props[id: ?; title: ?, sr-info: ?; close-button: true, false, max-width: lg, xs, sm, md, xl, 2xl] #Slots[slot, footer]
