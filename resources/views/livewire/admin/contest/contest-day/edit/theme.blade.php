@@ -1,5 +1,5 @@
 <div style="{{ $contestDay->theme->getVariablesAttribute() }}">
-    <div class="grid xl:grdata-popover id-cols-2 xl:grdata-popover id-rows-6 grdata-popover id-cols-1 grdata-popover id-rows-12 gap-2">
+    <div class="grid xl:grid-cols-2 xl:grid-rows-7 grid-cols-1 grid-rows-14 gap-2">
         <div data-popover-target="tooltip-50" class="bg-accent-50 rounded-lg border border-gray-900 text-gray-900 flex justify-center items-center xl:row-start-6 relative">50</div>
         <div data-popover id="tooltip-50" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-600 text-center">
             <p>Hex: {{ $contestDay->theme->fifty->getHex() }}</p>
@@ -87,13 +87,13 @@
             <p>HSL: {{ $contestDay->theme->nine_hundred_fifty->getHsl(false)->implode(', ') }}</p>
             <div class="tooltip-arrow" data-popper-arrow></div>
         </div>
-    </div>
 
-    <div class="mt-4 flex justify-evenly items-center">
-        <x-form.input.color
-            id="color" label="Farbe"
-            :model="\App\Models\Components\Modeled\Model::livewire('color')"
-            updatable />
+        <div class="flex justify-center items-center">
+            <x-form.input.color
+                id="color" label="Farbe"
+                :model="\App\Models\Components\Modeled\Model::livewire('color')"
+                updatable/>
+        </div>
 
         <x-button.big.livewire
             id="download" action="download"
