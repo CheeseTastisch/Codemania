@@ -1,8 +1,8 @@
 @extends('errors::minimal')
 
-@section('title', 'Not Found')
+@section('title', 'Page Not Found')
 @section('code', '404')
-@section('message', 'Not Found')
+@section('message', 'Page Not Found')
 @section('description')
     <p class="mt-1">Die angeforderte Seite konnte nicht gefunden werden.</p>
     <p class="mt-1">Bitte überprüfe die URL und versuche es erneut.</p>
