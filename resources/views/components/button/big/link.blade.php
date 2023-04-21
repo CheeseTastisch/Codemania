@@ -13,6 +13,6 @@
         ]) }}
         @if($isOutlined()) bg-transparent border focus:outline-none @endif
          @if($fullWidth) w-full @endif
-        px-5 py-3 text-base font-medium text-center  rounded-lg focus:ring-4 disabled:cursor-not-allowed box">
+        px-5 py-3 text-base font-medium text-center  rounded-lg focus:ring-4 disabled:cursor-not-allowed block">
     {{ $slot }}
 </a>

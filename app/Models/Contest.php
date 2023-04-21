@@ -2,11 +2,15 @@
 
 namespace App\Models;
 
+use Cache;
+use Carbon\Carbon;
+use Carbon\CarbonInterval;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Date;
 use Laravel\Scout\Searchable;
 
 class Contest extends Model
@@ -59,17 +63,29 @@ class Contest extends Model
 
     public function getLeaderboard(bool $ignoreFreeze = false): Collection
     {
-        $teams = $this->teams->map(function ($team) use ($ignoreFreeze) {
-            $team->points = $team->getPoints($this, $ignoreFreeze);
-            $team->total_resolution_time = $team->getTotalResolutionTime($this, $ignoreFreeze);
-            return $team;
-        })->filter(fn($team) => $team->points !== null && $team->total_resolution_time !== null);
+        $usedContest = Contest::whereId($this->id)->with(
+            [
+                'tasks',
+                'tasks.levels',
+                'tasks.levels.levelSubmissions',
+                'teams',
+                'teams.contests',
+                'teams.contests.tasks',
+                'teams.contests.tasks.levels',
+                'teams.contests.tasks.levels.levelSubmissions',
+            ])->first();
 
-        $teams = $teams->sortBy('total_resolution_time')->sortByDesc('points');
-
-        $teams->map(fn($team, $index) => [$team->id => $index + 1]);
-
-        return $teams;
+        return $usedContest->teams->map(function ($team) use ($usedContest, $ignoreFreeze) {
+            $total_resolution_time = $team->getTotalResolutionTime($usedContest, $ignoreFreeze);
+            return [
+                'name' => $team->name,
+                'points' => $team->getPoints($usedContest, $ignoreFreeze),
+                'total_resolution_time' => $total_resolution_time,
+                'human_friendly_total_resolution_time' => $total_resolution_time ? CarbonInterval::seconds($total_resolution_time)->cascade()->format('%H:%I:%S') : null,
+            ];
+        })->filter(fn($team) => $team['points'] !== null && $team['total_resolution_time'] !== null)->sortBy('total_resolution_time')
+            ->sortByDesc('points')
+            ->mapWithKeys(fn($team, $index) => [$index + 1 => $team]);
     }
 
     public function deleteAll(): void

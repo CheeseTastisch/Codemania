@@ -6,12 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Laravel\Scout\Searchable;
 
 class Task extends Model
 {
 
+    use Searchable;
+
     protected $fillable = [
         'name',
+        'order',
         'contest_id'
     ];
 
@@ -30,6 +34,14 @@ class Task extends Model
         $this->levels->each(fn($level) => $level->deleteAll());
 
         $this->delete();
+    }
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name
+        ];
     }
 
 }
