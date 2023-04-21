@@ -19,6 +19,8 @@ class Contest extends Model
         'contest_day_id',
         'start_time',
         'end_time',
+        'wrong_solution_penalty',
+        'freeze_leaderboard_at',
     ];
 
     protected $casts = [
