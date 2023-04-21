@@ -44,13 +44,13 @@
                         </a>
 
                         @if($team->is_blocked)
-                            <svg @click="unblockTeamId = {{ $team->id }}; teamName = '{{ $team->name}}'; modal.open('unblock')" data-tooltip-target="tooltip-unblock-{{ $team->id }}" class="w-6 h-6 cursor-pointer hover:text-green-400 dark:hover:text-green-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"> <path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"></path> </svg>
+                            <svg @click="unblockTeamId = {{ $team->id }}; teamName = '{{ $team->name}}'; modal.open('unblockTeam')" data-tooltip-target="tooltip-unblock-{{ $team->id }}" class="w-6 h-6 cursor-pointer hover:text-green-400 dark:hover:text-green-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"> <path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"></path> </svg>
                             <div id="tooltip-unblock-{{ $team->id }}" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-600 text-center">
                                 Team freigeben
                                 <div class="tooltip-arrow" data-popper-arrow></div>
                             </div>
                         @else
-                            <svg @click="blockTeamId = {{ $team->id }}; teamName = '{{ $team->name}}'; modal.open('block')" data-tooltip-target="tooltip-block-{{ $team->id }}" class="w-6 h-6 cursor-pointer hover:text-red-400 dark:hover:text-red-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"> <path d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" stroke-linecap="round" stroke-linejoin="round"></path> </svg>
+                            <svg @click="blockTeamId = {{ $team->id }}; teamName = '{{ $team->name}}'; modal.open('blockTeam')" data-tooltip-target="tooltip-block-{{ $team->id }}" class="w-6 h-6 cursor-pointer hover:text-red-400 dark:hover:text-red-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"> <path d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" stroke-linecap="round" stroke-linejoin="round"></path> </svg>
                             <div id="tooltip-block-{{ $team->id }}" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-600 text-center">
                                 Team blockieren
                                 <div class="tooltip-arrow" data-popper-arrow></div>
@@ -62,7 +62,7 @@
         @endforeach
     </x-table.x>
 
-    <x-modal.confirm id="unblock">
+    <x-modal.confirm id="unblockTeam">
         <h3 class="text-lg font-medium">Möchtest du <span x-text="teamName"></span> wirklich freigeben?</h3>
 
         <div class="flex justify-center mt-5 space-x-2">
@@ -81,7 +81,7 @@
         </div>
     </x-modal.confirm>
 
-    <x-modal.confirm id="block">
+    <x-modal.confirm id="blockTeam">
         <h3 class="text-lg mb-5 font-normal text-gray-500 dark:text-gray-400"><span x-text="teamName"></span> blockieren</h3>
 
         <x-form.x>

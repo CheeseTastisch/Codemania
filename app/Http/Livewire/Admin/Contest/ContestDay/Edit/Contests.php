@@ -65,7 +65,7 @@ class Contests extends Component
         $contest = Contest::find($this->deleteId);
         $contest->deleteAll();
 
-        $this->emit('modal', 'close', 'delete');
+        $this->emit('modal', 'close', 'deleteContest');
         $this->emit('showToast', 'Du hast den Contest erfolgreich gelöscht.');
     }
 

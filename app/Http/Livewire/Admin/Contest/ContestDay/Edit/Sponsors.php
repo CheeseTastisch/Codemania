@@ -80,7 +80,7 @@ class Sponsors extends Component
             'logo' => null,
         ];
 
-        $this->emit('modal', 'hide', 'create');
+        $this->emit('modal', 'close', 'createSponsor');
         $this->emit('showToast', 'Du hast den Sponsor erfolgreich erstellt.');
     }
 
@@ -95,7 +95,7 @@ class Sponsors extends Component
             'background' => $sponsor->background,
         ];
 
-        $this->emit('modal', 'open', 'update');
+        $this->emit('modal', 'open', 'updateSponsor');
     }
 
     public function update(): void
@@ -125,7 +125,7 @@ class Sponsors extends Component
             $this->updateSponsor['logo'] = null;
         }
 
-        $this->emit('modal', 'close', 'update');
+        $this->emit('modal', 'close', 'updateSponsor');
         $this->emit('showToast', 'Du hast den Sponsor erfolgreich aktualisiert.');
     }
 
@@ -139,7 +139,7 @@ class Sponsors extends Component
 
         $sponsor->delete();
 
-        $this->emit('modal', 'close', 'delete');
+        $this->emit('modal', 'close', 'deleteSponsor');
         $this->emit('showToast', 'Du hast den Sponsor erfolgreich gelöscht.');
     }
 

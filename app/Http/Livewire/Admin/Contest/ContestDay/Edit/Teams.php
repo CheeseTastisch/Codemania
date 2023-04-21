@@ -49,7 +49,7 @@ class Teams extends Component
         ]);
 
         $this->emit('showToast', 'Du hast das Team erfolgreich entsperrt.');
-        $this->emit('modal', 'close', 'unblock');
+        $this->emit('modal', 'close', 'unblockTeam');
     }
 
     public function block(): void
@@ -65,7 +65,7 @@ class Teams extends Component
         ]);
 
         $this->emit('showToast', 'Du hast das Team erfolgreich gesperrt.');
-        $this->emit('modal', 'close', 'block');
+        $this->emit('modal', 'close', 'blockTeam');
     }
 
     protected function getRules(): array

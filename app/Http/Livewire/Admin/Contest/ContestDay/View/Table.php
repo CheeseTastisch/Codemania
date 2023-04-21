@@ -42,19 +42,6 @@ class Table extends Component
         ]);
     }
 
-    public function delete(): void
-    {
-        $this->validate([
-            'deleteId' => 'required|integer|exists:contest_days,id',
-        ]);
-
-        ContestDay::find($this->deleteId)->deleteAll();
-        $this->deleteId = null;
-
-        $this->emit('modal', 'close', 'delete');
-        $this->emit('showToast', 'Du hast den Tag erfolgreich gelöscht.');
-    }
-
     public function create(): RedirectResponse|Redirector
     {
         $this->validate();
@@ -67,6 +54,19 @@ class Table extends Component
         ]);
 
         return redirect()->route('admin.contest.contest-day.edit', $contestDay->id);
+    }
+
+    public function delete(): void
+    {
+        $this->validate([
+            'deleteId' => 'required|integer|exists:contest_days,id',
+        ]);
+
+        ContestDay::find($this->deleteId)->deleteAll();
+        $this->deleteId = null;
+
+        $this->emit('modal', 'close', 'deleteContestDay');
+        $this->emit('showToast', 'Du hast den Tag erfolgreich gelöscht.');
     }
 
     protected function getRules(): array
