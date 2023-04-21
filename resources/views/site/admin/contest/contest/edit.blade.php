@@ -37,7 +37,7 @@
 
             <div class="col-span-1 mb-3">
                 <x-card.x title="Links" full-height>
-{{--                    @livewire('admin.contest.contest.edit.teams', ['contest' => $contest])--}}
+                    @livewire('admin.contest.contest.edit.links', ['contest' => $contest])
                 </x-card.x>
             </div>
         </div>
