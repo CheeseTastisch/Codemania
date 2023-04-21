@@ -15,7 +15,15 @@
                 <x-table.body.cell>
                     <div class="flex items-center whitespace-nowrap dark:text-white">
                         <div class="w-12 h-12 rounded-lg flex items-center justify-center">
-                            <img class="w-10" src="{{ route('public.file', $team->logo_file_id) }}" alt="Logo">
+                            @if($team->logo_file_id)
+                                <img class="w-10 h-10" src="{{ route('public.file', $team->logo_file_id) }}" alt="Logo">
+                            @else
+                                <div class="relative rounded-lg overflow-hidden w-10 h-10">
+                                    <div class="bg-gray-100 dark:bg-gray-600 w-full h-full">
+                                        <svg class="absolute w-10 h-10 text-gray-400" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM8.94 6.94a.75.75 0 11-1.061-1.061 3 3 0 112.871 5.026v.345a.75.75 0 01-1.5 0v-.5c0-.72.57-1.172 1.081-1.287A1.5 1.5 0 108.94 6.94zM10 15a1 1 0 100-2 1 1 0 000 2z" fill-rule="evenodd"></path></svg>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                         <div class="pl-3">
                             <div class="text-base font-semibold">{{ $team->name }}</div>
