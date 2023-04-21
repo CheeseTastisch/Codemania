@@ -12,22 +12,15 @@
         <p class="text-center mt-4">@hasSection('description') @yield('description') @else Es ist ein Fehler aufgetreten. Bitte melde dich bei den Organisatoren. @endif</p>
 
         <button class="mt-6">
-            <a href="{{ url()->previous() }}"
-               class="relative inline-block text-sm font-medium text-accent-400 dark:text-accent-600 group active:text-accent-500 focus:outline-none focus:ring">
-                <span class="absolute inset-0 transition-transform translate-x-0.5 translate-y-0.5 bg-accent-500 group-hover:translate-y-0 group-hover:translate-x-0"></span>
+            <x-button.big.link id="back" :href="url()->previous()"
+                               :style="\App\Models\Components\Styled\OutlinedStyle::OutlinedAccent">
+                Zurück
+            </x-button.big.link>
 
-                <span class="relative block px-8 py-3 bg-slate-200 dark:bg-slate-800 border border-current">
-                    Zurück
-                </span>
-            </a>
-
-            <a href="{{ route('public.home') }}" class="ml-4 relative inline-block text-sm font-medium text-accent-400 dark:text-accent-600 group active:text-accent-500 focus:outline-none focus:ring">
-                <span class="absolute inset-0 transition-transform translate-x-0.5 translate-y-0.5 bg-accent-500 group-hover:translate-y-0 group-hover:translate-x-0"></span>
-
-                <span class="relative block px-8 py-3 bg-slate-200 dark:bg-slate-800 border border-current">
-                    Home
-                </span>
-            </a>
+            <x-button.big.link id="home" :href="route('public.home')"
+                               :style="\App\Models\Components\Styled\OutlinedStyle::OutlinedAccent">
+                Home
+            </x-button.big.link>
         </button>
     </main>
 @endpush
