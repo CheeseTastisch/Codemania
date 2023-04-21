@@ -36,9 +36,7 @@ class Table extends Component
     public function render(): View|\Illuminate\Foundation\Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
         return view('livewire.admin.contest.contest-day.view.table', [
-            'contests' => ($this->search != ''
-                    ? ContestDay::search($this->search)
-                    : ContestDay::query())
+            'contests' => ($this->search != '' ? ContestDay::search($this->search) : ContestDay::query())
                 ->orderBy($this->sortField, $this->sortDirection)
                 ->paginate(10),
         ]);
@@ -46,6 +44,10 @@ class Table extends Component
 
     public function delete(): void
     {
+        $this->validate([
+            'deleteId' => 'required|integer|exists:contest_days,id',
+        ]);
+
         ContestDay::find($this->deleteId)->deleteAll();
         $this->deleteId = null;
 
@@ -57,12 +59,11 @@ class Table extends Component
     {
         $this->validate();
 
-        $theme = ContestDayTheme::default();
         $contestDay = ContestDay::create([
             'name' => $this->name,
             'date' => Carbon::createFromTimestampMs($this->date),
             'registration_deadline' => Carbon::createFromTimestampMs($this->registration_deadline),
-            'contest_day_theme_id' => $theme->id,
+            'contest_day_theme_id' => ContestDayTheme::default()->id,
         ]);
 
         return redirect()->route('admin.contest.contest-day.edit', $contestDay->id);
@@ -71,7 +72,7 @@ class Table extends Component
     protected function getRules(): array
     {
         return [
-            'name' => 'required|string|unique:contest_days,name',
+            'name' => 'required|string|unique:contest_days,name|between:3,255',
             'date' => [
                 'required',
                 'integer',

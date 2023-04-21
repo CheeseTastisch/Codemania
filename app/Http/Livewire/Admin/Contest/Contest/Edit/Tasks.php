@@ -61,6 +61,10 @@ class Tasks extends Component
 
     public function delete(): void
     {
+        $this->validate([
+            'deleteId' => 'required|integer',
+        ]);
+
         Task::whereId($this->deleteId)->first()->deleteAll();
 
         $this->emit('modal', 'close', 'delete');
@@ -70,7 +74,7 @@ class Tasks extends Component
     public function getRules(): array
     {
         return [
-            'name' => 'required|string',
+            'name' => 'required|string|between:3,255',
             'order' => 'required|integer',
         ];
     }

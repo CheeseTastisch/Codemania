@@ -11,12 +11,13 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Livewire\WithPagination;
 use StorageFile;
 
 class Sponsors extends Component
 {
 
-    use WithSort, WithSearch, ValidatesMultipleInputs, WithFileUploads;
+    use WithPagination, WithSort, WithSearch, ValidatesMultipleInputs, WithFileUploads;
 
     public ContestDay $contestDay;
 
@@ -47,13 +48,20 @@ class Sponsors extends Component
             'sponsors' => ($this->search ? ContestDaySponsor::search($this->search) : ContestDaySponsor::query())
                 ->whereContestDayId($this->contestDay->id)
                 ->orderBy($this->sortField, $this->sortDirection)
-                ->paginate(10)
+                ->paginate(5, ['*'], 'sponsors')
         ]);
     }
 
     public function create(): void
     {
         $this->validateMultiple(['createSponsor.name', 'createSponsor.url', 'createSponsor.background', 'createSponsor.logo']);
+
+        if (ContestDaySponsor::whereName($this->createSponsor['name'])
+            ->whereContestDayId($this->contestDay->id)
+            ->exists()) {
+            $this->addError('createSponsor.name', 'Dieser Sponsor existiert bereits.');
+            return;
+        }
 
         $file = StorageFile::uploadFile($this->createSponsor['logo']);
 
@@ -94,6 +102,14 @@ class Sponsors extends Component
     {
         $this->validateMultiple(['updateSponsor.name', 'updateSponsor.url', 'updateSponsor.background', 'updateSponsor.logo']);
 
+        if (ContestDaySponsor::whereName($this->updateSponsor['name'])
+            ->whereContestDayId($this->contestDay->id)
+            ->where('id', '!=', $this->updateSponsor['id'])
+            ->exists()) {
+            $this->addError('updateSponsor.name', 'Dieser Sponsor existiert bereits.');
+            return;
+        }
+
         $sponsor = ContestDaySponsor::whereId($this->updateSponsor['id'])->first();
 
         $sponsor->update([
@@ -115,6 +131,10 @@ class Sponsors extends Component
 
     public function delete(): void
     {
+        $this->validate([
+            'deleteId' => 'required|integer',
+        ]);
+
         $sponsor = ContestDaySponsor::whereId($this->deleteId)->first();
 
         $sponsor->delete();
@@ -126,12 +146,12 @@ class Sponsors extends Component
     protected function getRules(): array
     {
         return [
-            'updateSponsor.name' => 'required|string',
+            'updateSponsor.name' => 'required|string|between:3,255',
             'updateSponsor.url' => 'required|url',
             'updateSponsor.background' => 'required|in:light,dark',
             'updateSponsor.logo' => 'nullable|image',
 
-            'createSponsor.name' => 'required|string',
+            'createSponsor.name' => 'required|string|between:3,255',
             'createSponsor.url' => 'required|url',
             'createSponsor.background' => 'required|in:light,dark',
             'createSponsor.logo' => 'required|image',

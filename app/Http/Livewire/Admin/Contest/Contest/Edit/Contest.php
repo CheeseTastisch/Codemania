@@ -110,11 +110,11 @@ class Contest extends Component
     public function getRules(): array
     {
         return [
-            'name' => 'required|string',
-            'start_time' => 'required|date_format::H:i',
-            'end_time' => 'required|date_format:H:i',
+            'name' => 'required|string|between:3,255',
+            'start_time' => 'required|time',
+            'end_time' => 'required|time',
             'wrong_solution_penalty' => 'required|integer|min:0|max:30',
-            'freeze_leaderboard_at' => 'required|date_format:H:i',
+            'freeze_leaderboard_at' => 'required|time',
             'leaderboard_unfrozen' => 'required|boolean',
         ];
     }

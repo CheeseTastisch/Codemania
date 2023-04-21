@@ -7,9 +7,9 @@
         <div class="mb-3">
             <x-breadcrumb.x
                 :items="[
-                ['name' => 'Contests', 'link' => route('admin.contest.contest-day.view'), 'home' => true],
-                ['name' => $contestDay->name, 'current' => true],
-            ]"
+                    ['name' => 'Contests', 'link' => route('admin.contest.contest-day.view'), 'home' => true],
+                    ['name' => $contestDay->name, 'current' => true],
+                ]"
             />
         </div>
 

@@ -219,6 +219,12 @@ return [
             'background' => 'Hintergrund',
             'logo' => 'Logo',
         ],
+
+        'start_time' => 'Startzeit',
+        'end_time' => 'Endzeit',
+        'wrong_solution_penalty' => 'Strafzeit für falsche Lösung',
+        'freeze_leaderboard_at' => 'Leaderboard einfrieren',
+        'leaderboard_unfrozen' => 'Leaderboard aktivieren',
     ],
 
 ];

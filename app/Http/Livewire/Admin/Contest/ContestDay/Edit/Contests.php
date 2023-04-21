@@ -9,12 +9,14 @@ use App\Models\ContestDay;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Contests extends Component
 {
 
-    use WithSearch, WithSort;
+    use WithPagination, WithSearch, WithSort;
 
     public ContestDay $contestDay;
 
@@ -36,28 +38,30 @@ class Contests extends Component
             'contests' => ($this->search ? Contest::search($this->search) : Contest::query())
                 ->where('contest_day_id', $this->contestDay->id)
                 ->orderBy($this->sortField, $this->sortDirection)
-                ->paginate(10)
+                ->paginate(5, ['*'], 'contests'),
         ]);
     }
 
-    public function create(): void
+    public function create(): RedirectResponse
     {
         $this->validate();
 
         $contest = Contest::create([
             'name' => $this->name,
-            'start_time' => Carbon::createFromTimeString($this->start_time)
-                ->setDate($this->contestDay->date->year, $this->contestDay->date->month, $this->contestDay->date->day),
-            'end_time' => Carbon::createFromTimeString($this->end_time)
-                ->setDate($this->contestDay->date->year, $this->contestDay->date->month, $this->contestDay->date->day),
+            'start_time' => Carbon::createFromTimeString($this->start_time)->setDateFrom($this->contestDay->date),
+            'end_time' => Carbon::createFromTimeString($this->end_time)->setDateFrom($this->contestDay->date),
             'contest_day_id' => $this->contestDay->id,
         ]);
 
-        // TODO: Redirect to edit page
+        return redirect()->route('admin.contest.contest.edit', $contest);
     }
 
     public function delete(): void
     {
+        $this->validate([
+            'deleteId' => 'required|integer',
+        ]);
+
         $contest = Contest::find($this->deleteId);
         $contest->deleteAll();
 
@@ -68,7 +72,7 @@ class Contests extends Component
     protected function getRules(): array
     {
         return [
-            'name' => 'required|string',
+            'name' => 'required|string|between:3,255',
             'start_time' => 'required|time',
             'end_time' => 'required|time',
         ];

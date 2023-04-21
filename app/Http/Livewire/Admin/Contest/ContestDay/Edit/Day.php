@@ -58,6 +58,14 @@ class Day extends Component
         }
 
         $this->contestDay->update(['date' => $this->date]);
+        $this->contestDay->contests->each(function ($contest) {
+            $contest->update([
+                'start_time' => $contest->start_time->setDateFrom($this->contestDay->date),
+                'end_time' => $contest->end_time->setDateFrom($this->contestDay->date),
+                'freeze_leaderboard_at' => optional($contest->freeze_leaderboard_at)->setDateFrom($this->contestDay->date),
+            ]);
+        });
+
         session()->flash('updated', 'date');
     }
 
@@ -90,7 +98,7 @@ class Day extends Component
     protected function getRules(): array
     {
         return [
-            'name' => 'required|string',
+            'name' => 'required|string|between:3,255',
             'date' => 'required|date',
             'registration_deadline' => 'nullable|date',
             'allow_training_from' => 'nullable|date',

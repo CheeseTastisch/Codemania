@@ -10,11 +10,12 @@ use App\Models\Team;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Teams extends Component
 {
 
-    use WithSort, WithSearch;
+    use WithPagination, WithSort, WithSearch;
 
     public ContestDay $contestDay;
 
@@ -34,7 +35,7 @@ class Teams extends Component
             'teams' => ($this->search ? Team::search($this->search) : Team::query())
                 ->where('contest_day_id', $this->contestDay->id)
                 ->orderBy($this->sortField, $this->sortDirection)
-                ->paginate(10)
+                ->paginate(10, ['*'], 'teams')
         ]);
     }
 
@@ -50,8 +51,6 @@ class Teams extends Component
         $this->emit('showToast', 'Du hast das Team erfolgreich entsperrt.');
         $this->emit('modal', 'close', 'unblock');
     }
-
-
 
     public function block(): void
     {
@@ -72,7 +71,7 @@ class Teams extends Component
     protected function getRules(): array
     {
         return [
-            'block_reason' => 'required|string',
+            'block_reason' => 'required|string|between:5,511',
         ];
     }
 
