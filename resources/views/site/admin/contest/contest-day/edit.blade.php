@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Contests')
+@section('title', $contestDay->name)
 
 @push('content')
     <div class="container mx-auto sm:px-4 px-2 pt-10">
