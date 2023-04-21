@@ -4,6 +4,15 @@
 
 @push('content')
     <div class="container mx-auto sm:px-4 px-2 pt-10">
+        <div class="mb-3">
+            <x-breadcrumb.x
+                :items="[
+                ['name' => 'Contests', 'link' => route('admin.contest.contest-day.view'), 'home' => true],
+                ['name' => $contestDay->name, 'current' => true],
+            ]"
+            />
+        </div>
+
         <div class="grid grid-cols-1 xl:grid-cols-7 xl:gap-x-4">
             <div class="col-span-1 mb-3 xl:col-span-4">
                 <x-card.x title="Tag bearbeiten" full-height>

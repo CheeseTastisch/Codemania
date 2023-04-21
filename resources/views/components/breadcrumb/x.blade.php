@@ -14,12 +14,12 @@
                         @if(array_key_exists('link', $item))
                             <a href="{{ $item['link'] }}" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-accent-600 dark:text-gray-300 dark:hover:text-accent-400">
                                 <svg aria-hidden="true" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
-                                <span>{{ $item['name'] }}</span>
+                                <span class="ml-1">{{ $item['name'] }}</span>
                             </a>
                         @else
                             <div class="inline-flex items-center">
                                 <svg aria-hidden="true" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
-                                <span class="text-sm font-medium text-gray-700 dark:text-gray-400">{{ $item['name'] }}</span>
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-400 ml-1">{{ $item['name'] }}</span>
                             </div>
                         @endif
                     </li>
