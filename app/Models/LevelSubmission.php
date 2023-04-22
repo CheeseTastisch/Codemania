@@ -68,10 +68,22 @@ class LevelSubmission extends Model
         return $level->instantly_rated === true || $contest->end_time->isPast();
     }
 
+    public function evaluateStatus(): void
+    {
+        $correct = true;
+
+        collect($this->level->levelFiles)->each(function ($levelFile) use (&$correct) {
+            $levelFileSubmission = $this->levelFileSubmissions->firstWhere('level_file_id', $levelFile->id);
+            $levelFileSubmission?->evaluateStatus();
+            if ($levelFileSubmission === null || $levelFileSubmission->status !== 'accepted') $correct = false;
+        });
+
+        $this->status = $correct ? 'accepted' : 'rejected';
+    }
+
     public function deleteAll(): void
     {
         StorageFile::deleteFile($this->sourceFile);
-        StorageFile::deleteFile($this->imageFile);
 
         $this->levelFileSubmissions->each(fn($levelFileSubmission) => $levelFileSubmission->deleteAll());
 

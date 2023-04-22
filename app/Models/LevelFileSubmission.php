@@ -32,9 +32,29 @@ class LevelFileSubmission extends Model
         return $this->belongsTo(UploadedFile::class, 'uploaded_file_id');
     }
 
-    public function deleteAll() {
+    public function deleteAll(): void
+    {
         StorageFile::deleteFile($this->uploadedFile);
         $this->delete();
+    }
+
+    public function evaluateStatus(): void
+    {
+        $correct = StorageFile::getFileContent($this->levelFile->solutionFile);
+        $submitted = StorageFile::getFileContent($this->uploadedFile);
+
+        $correctLines = collect(explode("\n", $correct))->map(fn($line) => rtrim($line));
+        $submittedLines = collect(explode("\n", $submitted))->map(fn($line) => rtrim($line));
+
+        $status = true;
+
+        if ($correctLines->last() === '') $correctLines->pop();
+        if ($submittedLines->last() === '') $submittedLines->pop();
+
+        if ($correctLines->count() !== $submittedLines->count()) $status = false;
+        else $correctLines->each(fn($line, $index) => $status = $status && $line === $submittedLines[$index]);
+
+        $this->update(['status' => $status ? 'accepted' : 'rejected']);
     }
 
 }

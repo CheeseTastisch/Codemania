@@ -13,12 +13,18 @@ class LevelFile extends Model
 
     protected $fillable = [
         'level_id',
+        'input_file_id',
         'solution_file_id'
     ];
 
     public function level(): BelongsTo
     {
         return $this->belongsTo(Level::class);
+    }
+
+    public function inputFile(): BelongsTo
+    {
+        return $this->belongsTo(UploadedFile::class, 'input_file_id');
     }
 
     public function solutionFile(): BelongsTo

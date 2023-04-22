@@ -2,6 +2,7 @@
 
 use App\Models\Contest;
 use App\Models\ContestDay;
+use App\Models\Level;
 use App\Models\Task;
 
 Route::view('/', 'site.admin.dashboard')->name('admin.dashboard');
@@ -25,4 +26,9 @@ Route::prefix('contest/')->group(function () {
         $task->contest->contestDay,
         'site.admin.contest.task.edit', compact('task'))
     )->name('admin.contest.task.edit');
+
+    Route::get('/level/{level}', fn(Level $level) => setDayAndView(
+        $level->task->contest->contestDay,
+        'site.admin.contest.level.edit', compact('level'))
+    )->name('admin.contest.level.edit');
 });

@@ -48,6 +48,12 @@ class StorageFileProvider
         }, $this->getBaseName($file));
     }
 
+    public function getFileContent(UploadedFile $file): string
+    {
+        $content = Storage::get($this->getStoragePath($file->storage_path));
+        return base64_decode($content);
+    }
+
     public function deleteFile(UploadedFile $file): void
     {
         Storage::delete($this->getStoragePath($file->storage_path));
