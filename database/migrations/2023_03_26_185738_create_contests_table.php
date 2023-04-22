@@ -14,7 +14,7 @@ return new class extends Migration {
         Schema::create('contests', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignIdFor(ContestDay::class);
+            $table->foreignIdFor(ContestDay::class)->constrained()->cascadeOnDelete();
             $table->timestamp('start_time')->useCurrent();
             $table->timestamp('end_time')->useCurrent();
             $table->integer('wrong_solution_penalty')->default(0);

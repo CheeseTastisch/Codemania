@@ -20,7 +20,6 @@ return new class extends Migration
             $table->timestamp('allow_training_from')->nullable();
             $table->boolean('training_only')->default(false);
             $table->boolean('current')->default(false);
-            $table->foreignIdFor(ContestDayTheme::class);
             $table->timestamps();
         });
     }

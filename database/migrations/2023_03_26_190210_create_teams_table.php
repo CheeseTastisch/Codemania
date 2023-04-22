@@ -17,7 +17,7 @@ return new class extends Migration
         Schema::create('teams', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignIdFor(ContestDay::class);
+            $table->foreignIdFor(ContestDay::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(UploadedFile::class, 'logo_file_id')->nullable();
             $table->boolean('is_blocked')->default(false);
             $table->string('block_reason')->nullable();

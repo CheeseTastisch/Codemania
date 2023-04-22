@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('levels', function (Blueprint $table) {
             $table->id();
             $table->integer('level');
-            $table->foreignIdFor(Task::class);
+            $table->foreignIdFor(Task::class)->constrained()->cascadeOnDelete();
             $table->integer('points');
             $table->boolean('instantly_rated')->default(true);
             $table->foreignIdFor(UploadedFile::class, 'description_file_id');

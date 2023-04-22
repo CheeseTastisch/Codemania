@@ -16,8 +16,8 @@ return new class extends Migration
     {
         Schema::create('level_submissions', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Team::class);
-            $table->foreignIdFor(Level::class);
+            $table->foreignIdFor(Team::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Level::class)->constrained()->cascadeOnDelete();
             $table->enum('status', ['pending', 'checking', 'accepted', 'rejected'])->default('pending');
             $table->timestamp('status_changed_at')->useCurrent();
             $table->foreignIdFor(UploadedFile::class, 'source_file_id')->nullable();

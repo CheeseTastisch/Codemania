@@ -16,8 +16,8 @@ return new class extends Migration
     {
         Schema::create('level_file_submissions', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(LevelSubmission::class);
-            $table->foreignIdFor(LevelFile::class);
+            $table->foreignIdFor(LevelSubmission::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(LevelFile::class)->constrained()->cascadeOnDelete();
             $table->enum('status', ['checking', 'accepted', 'rejected'])->default('checking');
             $table->foreignIdFor(UploadedFile::class);
             $table->timestamps();

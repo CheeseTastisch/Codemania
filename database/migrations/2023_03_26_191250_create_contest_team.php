@@ -14,8 +14,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('contest_team', function (Blueprint $table) {
-            $table->foreignIdFor(Contest::class);
-            $table->foreignIdFor(Team::class);
+            $table->foreignIdFor(Contest::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Team::class)->constrained()->cascadeOnDelete();
         });
     }
 

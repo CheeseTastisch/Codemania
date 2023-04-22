@@ -31,7 +31,7 @@ class ContestDay extends Model
 
     public function theme(): HasOne
     {
-        return $this->hasOne(ContestDayTheme::class, 'id', 'contest_day_theme_id');
+        return $this->hasOne(ContestDayTheme::class);
     }
 
     public function sponsors(): HasMany

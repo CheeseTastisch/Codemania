@@ -17,9 +17,6 @@ class ContestSeeder extends Seeder
      */
     public function run(): void
     {
-        $trainingTheme = ContestDayTheme::default();
-        $trainingTheme->generatePalette(Color::parseRgb('255 36 44'));
-
         $training = ContestDay::create([
             'date' => Carbon::create(),
             'registration_deadline' => Carbon::create(2000),
@@ -27,8 +24,10 @@ class ContestSeeder extends Seeder
             'allow_training_from' => Carbon::create(2000),
             'training_only' => true,
             'current' => false,
-            'contest_day_theme_id' => $trainingTheme->id,
         ]);
+
+        $trainingTheme = ContestDayTheme::default($training->id);
+        $trainingTheme->generatePalette(Color::parseRgb('255 36 44'));
 
         Contest::create([
             'name' => 'Training',
@@ -40,18 +39,16 @@ class ContestSeeder extends Seeder
             'leaderboard_unfrozen' => true,
         ]);
 
-
-        $summer2023Theme = ContestDayTheme::default();
-        $summer2023Theme->generatePalette(Color::parseRgb('133 200 52'));
-
         $summer2023 = ContestDay::create([
             'date' => Carbon::create(2023, 6, 21),
             'registration_deadline' => Carbon::create(2023, 6, 19),
             'name' => 'First Edition 2023',
             'allow_training_from' => Carbon::create(2023, 3, 26),
             'current' => true,
-            'contest_day_theme_id' => $summer2023Theme->id,
         ]);
+
+        $summer2023Theme = ContestDayTheme::default($summer2023->id);
+        $summer2023Theme->generatePalette(Color::parseRgb('133 200 52'));
 
         Contest::create([
             'name' => 'HTL Traun',

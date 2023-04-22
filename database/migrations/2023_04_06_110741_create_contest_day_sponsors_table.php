@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('contest_day_sponsors', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(ContestDay::class);
+            $table->foreignIdFor(ContestDay::class)->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->string('url');
             $table->foreignIdFor(UploadedFile::class, 'logo_id');

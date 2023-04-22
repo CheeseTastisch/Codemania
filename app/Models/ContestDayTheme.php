@@ -46,7 +46,7 @@ class ContestDayTheme extends Model
         'nine_hundred_fifty' => ColorCast::class,
     ];
 
-    public static function default(): self {
+    public static function default($contestId): self {
         $generated = static::create([
             'fifty' => static::getBackup()['fifty'],
             'hundred' => static::getBackup()['hundred'],
@@ -59,6 +59,7 @@ class ContestDayTheme extends Model
             'eight_hundred' => static::getBackup()['eight_hundred'],
             'nine_hundred' => static::getBackup()['nine_hundred'],
             'nine_hundred_fifty' => static::getBackup()['nine_hundred_fifty'],
+            'contest_day_id' => $contestId
         ]);
         $generated->generateImages();
 
@@ -104,7 +105,7 @@ class ContestDayTheme extends Model
 
     public function contestDay(): BelongsTo
     {
-        return $this->belongsTo(ContestDay::class, 'id', 'contest_day_theme_id');
+        return $this->belongsTo(ContestDay::class);
     }
 
     public function getVariablesAttribute(): string
