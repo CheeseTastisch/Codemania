@@ -50,9 +50,9 @@
                 :model="\App\Models\Components\Modeled\Model::livewire('points', \App\Models\Components\Modeled\Livewire\LivewireUpdate::Defer)"/>
 
             <x-form.input.file
-                id="descriptionFile" label="Beschreibung"
+                id="description_file" label="Beschreibung"
                 accept="application/pdf"
-                :model="\App\Models\Components\Modeled\Model::livewire('descriptionFile', \App\Models\Components\Modeled\Livewire\LivewireUpdate::Defer)"/>
+                :model="\App\Models\Components\Modeled\Model::livewire('description_file', \App\Models\Components\Modeled\Livewire\LivewireUpdate::Defer)"/>
 
             <x-button.big.livewire
                 id="create" action="create" type="submit"

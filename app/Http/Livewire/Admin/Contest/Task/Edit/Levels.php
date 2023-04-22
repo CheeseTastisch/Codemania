@@ -24,7 +24,7 @@ class Levels extends Component
 
     public $deleteId = null;
 
-    public $level, $points, $descriptionFile;
+    public $level, $points, $description_file;
 
     public function mount(): void
     {
@@ -44,12 +44,12 @@ class Levels extends Component
 
     public function create(): RedirectResponse|Redirector
     {
-        $this->validateMultiple(['level', 'points', 'descriptionFile']);
+        $this->validateMultiple(['level', 'points', 'description_file']);
 
         $level = $this->task->levels()->create([
             'level' => $this->level,
             'points' => $this->points,
-            'description_file_id' => StorageFile::uploadFile($this->descriptionFile)->id,
+            'description_file_id' => StorageFile::uploadFile($this->description_file)->id,
         ]);
 
         return redirect()->route('admin.contest.level.edit', $level);
@@ -75,7 +75,7 @@ class Levels extends Component
                 Rule::unique('levels', 'level')->where('task_id', $this->task->id),
             ],
             'points' => 'required|integer|min:1',
-            'descriptionFile' => 'required|file|mimes:pdf|max:1024',
+            'description_file' => 'required|file|mimes:pdf|max:1024',
             'deleteId' => 'required|integer|exists:levels,id',
         ];
     }

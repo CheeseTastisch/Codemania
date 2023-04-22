@@ -33,13 +33,13 @@
         max-width="2xl">
         <x-form.x>
             <x-form.input.file
-                id="inputFile" label="Eingabedatei"
-                :model="\App\Models\Components\Modeled\Model::livewire('inputFile', \App\Models\Components\Modeled\Livewire\LivewireUpdate::Defer)"
+                id="input_file" label="Eingabedatei"
+                :model="\App\Models\Components\Modeled\Model::livewire('input_file', \App\Models\Components\Modeled\Livewire\LivewireUpdate::Defer)"
                 accept="text/plain" />
 
             <x-form.input.file
-                id="solutionFile" label="Lösungsdatei"
-                :model="\App\Models\Components\Modeled\Model::livewire('solutionFile', \App\Models\Components\Modeled\Livewire\LivewireUpdate::Defer)"
+                id="solution_file" label="Lösungsdatei"
+                :model="\App\Models\Components\Modeled\Model::livewire('solution_file', \App\Models\Components\Modeled\Livewire\LivewireUpdate::Defer)"
                 accept="text/plain" />
 
             <x-button.big.livewire

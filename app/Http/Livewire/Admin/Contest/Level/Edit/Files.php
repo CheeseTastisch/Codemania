@@ -19,7 +19,7 @@ class Files extends Component
 
     public $deleteId = null, $updateId = null;
 
-    public $inputFile, $solutionFile;
+    public $input_file, $solution_file;
 
 
     public function render(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
@@ -31,15 +31,15 @@ class Files extends Component
 
     public function create(): void
     {
-        $this->validateMultiple(['inputFile', 'solutionFile']);
+        $this->validateMultiple(['input_file', 'solution_file']);
 
         $this->level->levelFiles()->create([
-            'input_file' => $this->inputFile->store('level-files'),
-            'solution_file' => $this->solutionFile->store('level-files'),
+            'input_file' => $this->input_file->store('level-files'),
+            'solution_file' => $this->solution_file->store('level-files'),
         ]);
 
-        $this->inputFile = null;
-        $this->solutionFile = null;
+        $this->input_file = null;
+        $this->solution_file = null;
 
         $this->emit('modal', 'close', 'createFile');
         $this->emit('showToast', 'Du hast die Abgabe erfolgreich erstellt!');
@@ -59,8 +59,8 @@ class Files extends Component
     protected function getRules(): array
     {
         return [
-            'inputFile' => 'required|file|max:1024|mimes:txt',
-            'solutionFile' => 'required|file|max:1024|mimes:txt',
+            'input_file' => 'required|file|max:1024|mimes:txt',
+            'solution_file' => 'required|file|max:1024|mimes:txt',
             'deleteId' => 'required|exists:level_files,id',
         ];
     }
