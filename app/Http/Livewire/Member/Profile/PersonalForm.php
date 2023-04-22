@@ -15,7 +15,7 @@ class PersonalForm extends Component
 
     use WithFileUploads;
 
-    public string $firstname,
+    public $firstname,
         $lastname,
         $nickname,
         $display_name,
