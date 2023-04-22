@@ -9,6 +9,7 @@ use App\Models\ContestDay;
 use App\Models\ContestDaySponsor;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
@@ -21,19 +22,16 @@ class Sponsors extends Component
 
     public ContestDay $contestDay;
 
-    public array $updateSponsor = [
-        'name' => '',
-        'url' => '',
-        'background' => '',
-        'logo' => null,
-    ], $createSponsor = [
+    public array $createSponsor = [
         'name' => '',
         'url' => '',
         'background' => 'light',
         'logo' => null,
     ];
 
-    public $deleteId = null, $updateId = null;
+    public $updateSponsor, $updateId = null;
+
+    public $deleteId = null;
 
     public function mount(): void
     {
@@ -81,35 +79,43 @@ class Sponsors extends Component
         $this->emit('showToast', 'Du hast den Sponsor erfolgreich erstellt.');
     }
 
-    public function prepareUpdate(int $id): void
-    {
-        $sponsor = ContestDaySponsor::whereId($id)->first();
-
-        $this->updateSponsor = [
-            'id' => $sponsor->id,
-            'name' => $sponsor->name,
-            'url' => $sponsor->url,
-            'background' => $sponsor->background,
-        ];
-
-        $this->emit('modal', 'open', 'updateSponsor');
-    }
+//    public function prepareUpdate(int $id): void
+//    {
+//        $sponsor = ContestDaySponsor::whereId($id)->first();
+//
+//        $this->updateSponsor = [
+//            'id' => $sponsor->id,
+//            'name' => $sponsor->name,
+//            'url' => $sponsor->url,
+//            'background' => $sponsor->background,
+//        ];
+//
+//        $this->emit('modal', 'open', 'updateSponsor');
+//    }
 
     public function update(): void
     {
         $this->validateMultiple(['updateSponsor.name', 'updateSponsor.url', 'updateSponsor.background', 'updateSponsor.logo']);
 
-        if (ContestDaySponsor::whereName($this->updateSponsor['name'])
-            ->whereContestDayId($this->contestDay->id)
-            ->where('id', '!=', $this->updateSponsor['id'])
-            ->exists()) {
-            $this->addError('updateSponsor.name', 'Dieser Sponsor existiert bereits.');
-            return;
-        }
+//        $sponsor = ContestDaySponsor::whereId($this->updateSponsor['id'])->first();
+//
+//        $sponsor->update([
+//            'name' => $this->updateSponsor['name'],
+//            'url' => $this->updateSponsor['url'],
+//            'background' => $this->updateSponsor['background'],
+//        ]);
+//
+//        if (array_key_exists('logo', $this->updateSponsor) && $this->updateSponsor['logo'] != null) {
+//            $file = StorageFile::uploadFile($this->updateSponsor['logo']);
+//            $sponsor->update(['logo_id' => $file->id]);
+//
+//            $this->updateSponsor['logo'] = null;
+//        }
+//
+//        $this->emit('modal', 'close', 'updateSponsor');
+//        $this->emit('showToast', 'Du hast den Sponsor erfolgreich aktualisiert.');
 
-        $sponsor = ContestDaySponsor::whereId($this->updateSponsor['id'])->first();
-
-        $sponsor->update([
+        $this->contestDay->sponsors()->whereId($this->updateId)->update([
             'name' => $this->updateSponsor['name'],
             'url' => $this->updateSponsor['url'],
             'background' => $this->updateSponsor['background'],
@@ -117,9 +123,7 @@ class Sponsors extends Component
 
         if (array_key_exists('logo', $this->updateSponsor) && $this->updateSponsor['logo'] != null) {
             $file = StorageFile::uploadFile($this->updateSponsor['logo']);
-            $sponsor->update(['logo_id' => $file->id]);
-
-            $this->updateSponsor['logo'] = null;
+            $this->contestDay->sponsors()->whereId($this->updateId)->update(['logo_id' => $file->id]);
         }
 
         $this->emit('modal', 'close', 'updateSponsor');
@@ -141,15 +145,25 @@ class Sponsors extends Component
     protected function getRules(): array
     {
         return [
-            'updateSponsor.name' => 'required|string|between:3,255',
-            'updateSponsor.url' => 'required|url',
-            'updateSponsor.background' => 'required|in:light,dark',
-            'updateSponsor.logo' => 'nullable|image',
-
-            'createSponsor.name' => 'required|string|between:3,255',
+            'createSponsor.name' => [
+                'required',
+                'string',
+                'between:3,255',
+                Rule::unique('contest_day_sponsors', 'name')->where('contest_day_id', $this->contestDay->id)
+            ],
             'createSponsor.url' => 'required|url',
             'createSponsor.background' => 'required|in:light,dark',
             'createSponsor.logo' => 'required|image',
+
+            'updateSponsor.name' => [
+                'required',
+                'string',
+                'between:3,255',
+                Rule::unique('contest_day_sponsors', 'name')->where('contest_day_id', $this->contestDay->id)->ignore($this->updateId)
+            ],
+            'updateSponsor.url' => 'required|url',
+            'updateSponsor.background' => 'required|in:light,dark',
+            'updateSponsor.logo' => 'nullable|image',
 
             'deleteId' => 'required|integer|exists:contest_day_sponsors,id',
         ];
