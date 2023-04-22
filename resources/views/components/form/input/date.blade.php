@@ -1,19 +1,14 @@
-<div x-data="{
-    timestamp: @if($model instanceof \App\Models\Components\Modeled\Livewire\Livewire && $model->update === \App\Models\Components\Modeled\Livewire\LivewireUpdate::Defer) @entangle($model->model).defer
+<div x-data="{date: @if($model instanceof \App\Models\Components\Modeled\Livewire\Livewire && $model->update === \App\Models\Components\Modeled\Livewire\LivewireUpdate::Defer) @entangle($model->model).defer
                 @elseif($model instanceof \App\Models\Components\Modeled\Livewire\Livewire ) @entangle($model->model)
                 @else {{ $model->value }}
-                @endif,
-    date: ''}"
-    x-init="$watch('timestamp', value => {
-        date = value ? new Date(parseInt(value)).toLocaleDateString('de-DE', {
+                @endif}"
+    x-init="$refs.datepicker.addEventListener('changeDate', event => {
+        if (event.detail.date) date = event.detail.date.toLocaleDateString('de-DE', {
             day: '2-digit',
             month: '2-digit',
             year: 'numeric'
-        }) : '';
-    });
-    $refs.datepicker.addEventListener('changeDate', event => {
-        if (event.detail.date) timestamp = event.detail.date.getTime();
-        else timestamp = null;
+        });
+        else date = null;
     });
     setTimeout(() => {
         new Datepicker($refs.datepicker, {
@@ -23,13 +18,6 @@
             todayHighlight: true,
             format: 'dd.mm.yyyy'
         });
-        if (timestamp) {
-            date = new Date(parseInt(timestamp)).toLocaleDateString('de-DE', {
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric'
-            })
-        }
     }, 0);
     ">
     <label for="{{ $id }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ $label }}</label>
@@ -39,7 +27,6 @@
                 <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
             </svg>
         </div>
-        <input type="hidden" id="{{ $id }}-backend" {{ $model->getAttributesAsString() }}>
 
         <input datepicker x-ref="datepicker"
                type="text" id="{{ $id }}" name="{{ $id }}"

@@ -46,9 +46,9 @@ class Sponsors extends Component
     {
         return view('livewire.admin.contest.contest-day.edit.sponsors', [
             'sponsors' => ($this->search ? ContestDaySponsor::search($this->search) : ContestDaySponsor::query())
-                ->whereContestDayId($this->contestDay->id)
+                ->where('contest_day_id', $this->contestDay->id)
                 ->orderBy($this->sortField, $this->sortDirection)
-                ->paginate(5, ['*'], 'sponsors')
+                ->paginate(5, ['*'], 'sponsor')
         ]);
     }
 

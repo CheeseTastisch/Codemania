@@ -1,4 +1,6 @@
 <div x-data="{deleteId: @entangle('deleteId').defer, deleteName: null, updateId: @entangle('updateId').defer, updating: null}">
+    {{ Debugbar::log($sponsors) }}
+
     <x-table.x :paginator="$sponsors" searchable>
         <x-slot name="header">
             <x-table.header.sortable

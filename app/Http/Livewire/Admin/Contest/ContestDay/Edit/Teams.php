@@ -35,7 +35,7 @@ class Teams extends Component
             'teams' => ($this->search ? Team::search($this->search) : Team::query())
                 ->where('contest_day_id', $this->contestDay->id)
                 ->orderBy($this->sortField, $this->sortDirection)
-                ->paginate(10, ['*'], 'teams')
+                ->paginate(10, ['*'], 'team')
         ]);
     }
 

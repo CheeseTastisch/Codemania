@@ -48,8 +48,8 @@ class Table extends Component
 
         $contestDay = ContestDay::create([
             'name' => $this->name,
-            'date' => Carbon::createFromTimestampMs($this->date),
-            'registration_deadline' => Carbon::createFromTimestampMs($this->registration_deadline),
+            'date' => Carbon::parse($this->date),
+            'registration_deadline' => $this->registration_deadline ? Carbon::parse($this->registration_deadline) : null,
             'contest_day_theme_id' => ContestDayTheme::default()->id,
         ]);
 
@@ -62,7 +62,7 @@ class Table extends Component
             'deleteId' => 'required|integer|exists:contest_days,id',
         ]);
 
-        ContestDay::find($this->deleteId)->deleteAll();
+        ContestDay::whereId($this->deleteId)->first()->deleteAll();
         $this->deleteId = null;
 
         $this->emit('modal', 'close', 'deleteContestDay');
@@ -73,16 +73,12 @@ class Table extends Component
     {
         return [
             'name' => 'required|string|unique:contest_days,name|between:3,255',
-            'date' => [
-                'required',
-                'integer',
-                function ($attribute, $value, $fail) {
-                    if (ContestDay::where('date', Carbon::createFromTimestampMs($value))->exists()) {
-                        $fail('Datum ist bereits vergeben.');
-                    }
-                },
+            'date' => 'required|date_format:d.m.Y|unique:contest_days,date',
+            'registration_deadline' => [
+                'nullable',
+                'date_format:d.m.Y',
+                'before_or_equal:date',
             ],
-            'registration_deadline' => 'nullable|integer',
         ];
     }
 

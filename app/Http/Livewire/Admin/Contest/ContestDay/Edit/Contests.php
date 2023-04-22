@@ -38,7 +38,7 @@ class Contests extends Component
             'contests' => ($this->search ? Contest::search($this->search) : Contest::query())
                 ->where('contest_day_id', $this->contestDay->id)
                 ->orderBy($this->sortField, $this->sortDirection)
-                ->paginate(5, ['*'], 'contests'),
+                ->paginate(5, ['*'], 'contest'),
         ]);
     }
 

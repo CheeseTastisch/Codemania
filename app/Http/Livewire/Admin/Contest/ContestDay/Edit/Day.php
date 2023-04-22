@@ -52,12 +52,9 @@ class Day extends Component
     {
         $this->validateOnly('date');
 
-        if (ContestDay::whereDate('date', Carbon::parse($this->date))->where('id', '!=', $this->contestDay->id)->exists()) {
-            $this->addError('date', 'Datum ist bereits vergeben.');
-            return;
-        }
+        $date = Carbon::parse($this->date);
 
-        $this->contestDay->update(['date' => $this->date]);
+        $this->contestDay->update(['date' => $date]);
         $this->contestDay->contests->each(function ($contest) {
             $contest->update([
                 'start_time' => $contest->start_time->setDateFrom($this->contestDay->date),
@@ -73,7 +70,7 @@ class Day extends Component
     {
         $this->validateOnly('registration_deadline');
 
-        $this->contestDay->update(['registration_deadline' => $this->registration_deadline == '' ? null : $this->registration_deadline]);
+        $this->contestDay->update(['registration_deadline' => $this->registration_deadline ? Carbon::parse($this->registration_deadline) : null]);
         session()->flash('updated', 'registration_deadline');
     }
 
@@ -81,7 +78,7 @@ class Day extends Component
     {
         $this->validateOnly('allow_training_from');
 
-        $this->contestDay->update(['allow_training_from' => $this->allow_training_from == '' ? null : $this->allow_training_from]);
+        $this->contestDay->update(['allow_training_from' => $this->allow_training_from ? Carbon::parse($this->allow_training_from) : null]);
         session()->flash('updated', 'allow_training_from');
     }
 
@@ -99,9 +96,41 @@ class Day extends Component
     {
         return [
             'name' => 'required|string|between:3,255',
-            'date' => 'required|date',
-            'registration_deadline' => 'nullable|date',
-            'allow_training_from' => 'nullable|date',
+            'date' => [
+                'required',
+                'date_format:d.m.Y',
+                function ($attribute, $value, $fail) {
+                    if (ContestDay::whereDate('date', Carbon::parse($value))->where('id', '!=', $this->contestDay->id)->exists()) {
+                        $fail('Datum ist bereits vergeben.');
+                    }
+                }, function ($attribute, $value, $fail) {
+                    if ($this->registration_deadline != '' && Carbon::parse($this->registration_deadline)->greaterThan(Carbon::parse($value))) {
+                        $fail('Anmeldefrist muss vor dem Wettbewerbsdatum liegen.');
+                    }
+
+                    if ($this->allow_training_from != '' && Carbon::parse($this->allow_training_from)->lessThan(Carbon::parse($value))) {
+                        $fail('Training darf nicht vor dem Wettbewerbsdatum beginnen.');
+                    }
+                },
+            ],
+            'registration_deadline' => [
+                'nullable',
+                'date_format:d.m.Y',
+                function ($attribute, $value, $fail) {
+                    if ($value != '' && Carbon::parse($value)->greaterThan($this->contestDay->date)) {
+                        $fail('Anmeldefrist muss vor dem Wettbewerbsdatum liegen.');
+                    }
+                },
+            ],
+            'allow_training_from' => [
+                'nullable',
+                'date_format:d.m.Y',
+                function ($attribute, $value, $fail) {
+                    if ($value != '' && Carbon::parse($value)->lessThan($this->contestDay->date)) {
+                        $fail('Training darf nicht vor dem Wettbewerbsdatum beginnen.');
+                    }
+                },
+            ],
             'current' => 'required|boolean',
         ];
     }
