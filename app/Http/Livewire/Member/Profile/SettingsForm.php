@@ -8,6 +8,7 @@ use Hash;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 use Livewire\Component;
 
@@ -26,7 +27,7 @@ class SettingsForm extends Component
         $disable_2fa_password,
         $disable_2fa_code;
 
-    public function mount()
+    public function mount(): void
     {
         $this->theme = auth()->user()->theme;
         $this->email = auth()->user()->email;
@@ -41,20 +42,16 @@ class SettingsForm extends Component
     {
         $this->validateOnly('theme');
 
-        if (auth()->user()->theme != $this->theme) {
-            auth()->user()->update(['theme' => $this->theme]);
-            session()->flash('updated', 'theme');
-        }
+        auth()->user()->update(['theme' => $this->theme]);
+        session()->flash('updated', 'theme');
     }
 
     public function updatedEmail(): void
     {
         $this->validateOnly('email');
 
-        if (auth()->user()->email != $this->email) {
-            auth()->user()->update(['email' => $this->email]);
-            session()->flash('updated', 'email');
-        }
+        auth()->user()->update(['email' => $this->email]);
+        session()->flash('updated', 'email');
     }
 
     public function changePassword(): void
@@ -116,7 +113,11 @@ class SettingsForm extends Component
     {
         return [
             'theme' => 'required|in:light,dark',
-            'email' => 'required|email',
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users', 'email')->ignore(auth()->user()->id),
+            ],
             'current_password' => 'required',
             'password' => [
                 'required',
