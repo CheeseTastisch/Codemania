@@ -17,7 +17,7 @@
         <div class="grid grid-cols-1 xl:grid-cols-2 xl:gap-x-4">
             <div class="col-span-1 mb-3">
                 <x-card.x title="Contest" full-height>
-                    @livewire('admin.contest.contest.edit.contest', ['contest' => $contest])
+                    @livewire('admin.contest.contest.edit.general', ['contest' => $contest])
                 </x-card.x>
             </div>
 

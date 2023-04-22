@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin\Contest\ContestDay\Edit;
 
+use App\Concerns\Livewire\ValidatesMultipleInputs;
 use App\Concerns\Livewire\WithSearch;
 use App\Concerns\Livewire\WithSort;
 use App\Models\ContestDay;
@@ -15,12 +16,11 @@ use Livewire\WithPagination;
 class Teams extends Component
 {
 
-    use WithPagination, WithSort, WithSearch;
+    use WithPagination, WithSort, WithSearch, ValidatesMultipleInputs;
 
     public ContestDay $contestDay;
 
-    public $blockTeamId = null,
-        $block_reason = null,
+    public $blockTeamId = null, $block_reason = null,
         $unblockTeamId = null;
 
     public function mount(): void
@@ -41,6 +41,8 @@ class Teams extends Component
 
     public function unblock(): void
     {
+        $this->validateOnly('unblockTeamId');
+
         $team = Team::whereId($this->unblockTeamId)->first();
         $team->update([
             'is_blocked' => false,
@@ -54,7 +56,7 @@ class Teams extends Component
 
     public function block(): void
     {
-        $this->validate();
+        $this->validateMultiple(['blockTeamId', 'block_reason']);
 
         $team = Team::whereId($this->blockTeamId)->first();
 
@@ -71,7 +73,9 @@ class Teams extends Component
     protected function getRules(): array
     {
         return [
-            'block_reason' => 'required|string|between:5,511',
+            'blockTeamId' => 'required|integer|exists:teams,id',
+            'block_reason' => 'required|string|between:5,1023',
+            'unblockTeamId' => 'required|integer|exists:teams,id',
         ];
     }
 

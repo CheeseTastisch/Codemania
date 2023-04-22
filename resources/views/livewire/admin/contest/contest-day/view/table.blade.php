@@ -1,10 +1,6 @@
 <div x-data="{deleteId: @entangle('deleteId').defer, deleteName: null}">
-    <x-table.x
-        searchable
-        :paginator="$contests">
+    <x-table.x :paginator="$contests" searchable>
         <x-slot name="header">
-            <x-table.header.simple name="#" />
-
             <x-table.header.sortable
                 name="name"
                 :current-field="$sortField"
@@ -22,7 +18,6 @@
 
         @foreach($contests as $contest)
             <x-table.body.row :stripe="$loop->even" :border="!$loop->last">
-                <x-table.body.cell header>{{ $contest->id }}</x-table.body.cell>
                 <x-table.body.cell>{{ $contest->name }}</x-table.body.cell>
 
                 <x-table.body.cell>
@@ -35,7 +30,7 @@
 
                 <x-table.body.cell>
                     <div class="flex space-x-2">
-                        <a href="{{ route('admin.contest.contest-day.edit', $contest->id) }}">
+                        <a href="{{ route('admin.contest.contest-day.edit', $contest) }}">
                             <svg class="w-6 h-6 hover:text-accent-400 dark:hover:text-accent-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"></path></svg>
                         </a>
 
@@ -48,7 +43,7 @@
 
     <x-modal.x
         id="createContestDay"
-        title="Neuen Tag erstellen"
+        title="Tag erstellen"
         max-width="2xl">
         <x-form.x>
             <x-form.input.x
@@ -72,8 +67,8 @@
     </x-modal.x>
 
     <div class="flex justify-end mt-3">
-        <x-button.big.modal id="createContestDay" modal="createContestDay" action="open">
-            Neuen Tag erstellen
+        <x-button.big.modal id="openCreateContestDay" modal="createContestDay" action="open">
+            Tag erstellen
         </x-button.big.modal>
     </div>
 
@@ -90,7 +85,7 @@
             </x-button.big.livewire>
 
             <x-button.big.modal
-                id="cancle" modal="delete" action="close"
+                id="cancel" modal="delete" action="close"
                 :style="\App\Models\Components\Styled\OutlinedStyle::OutlinedDanger">
                 Abbrechen
             </x-button.big.modal>

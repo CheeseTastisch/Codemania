@@ -16,7 +16,7 @@
         <div class="grid grid-cols-1 xl:grid-cols-7 xl:gap-x-4">
             <div class="col-span-1 mb-3 xl:col-span-4">
                 <x-card.x title="Tag bearbeiten" full-height>
-                    @livewire('admin.contest.contest-day.edit.day', ['contestDay' => $contestDay])
+                    @livewire('admin.contest.contest-day.edit.general', ['contestDay' => $contestDay])
                 </x-card.x>
             </div>
 

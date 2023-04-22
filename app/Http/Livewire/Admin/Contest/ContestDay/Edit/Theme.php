@@ -35,7 +35,7 @@ class Theme extends Component
         try {
             $this->contestDay->theme->generatePalette(Color::parseRgb($this->color));
         } catch (Exception $e) {
-            $this->addError('color', 'Die Farbe ist keine gültige Farbe.');
+            $this->addError('color', 'Die Farbe muss ein gültiger Farbwert sein.');
             return;
         }
 

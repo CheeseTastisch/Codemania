@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin\Contest\Level\Edit;
 
+use App\Concerns\Livewire\ValidatesMultipleInputs;
 use App\Concerns\Livewire\WithSearch;
 use App\Concerns\Livewire\WithSort;
 use App\Models\Level;
@@ -12,15 +13,13 @@ use Livewire\WithPagination;
 class Files extends Component
 {
 
-    use WithPagination, WithFileUploads;
+    use WithPagination, WithFileUploads, ValidatesMultipleInputs;
 
     public Level $level;
 
-    public $deleteId = null,
-        $updateId = null;
+    public $deleteId = null, $updateId = null;
 
-    public $inputFile,
-        $solutionFile;
+    public $inputFile, $solutionFile;
 
 
     public function render(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
@@ -32,7 +31,7 @@ class Files extends Component
 
     public function create(): void
     {
-        $this->validate();
+        $this->validateMultiple(['inputFile', 'solutionFile']);
 
         $this->level->levelFiles()->create([
             'input_file' => $this->inputFile->store('level-files'),
@@ -48,9 +47,7 @@ class Files extends Component
 
     public function delete(): void
     {
-        $this->validate([
-            'deleteId' => 'required|exists:level_files,id'
-        ]);
+        $this->validateOnly('deleteId');
 
         $this->level->levelFiles()->where('id', $this->deleteId)->delete();
         $this->deleteId = null;
@@ -64,6 +61,7 @@ class Files extends Component
         return [
             'inputFile' => 'required|file|max:1024|mimes:txt',
             'solutionFile' => 'required|file|max:1024|mimes:txt',
+            'deleteId' => 'required|exists:level_files,id',
         ];
     }
 

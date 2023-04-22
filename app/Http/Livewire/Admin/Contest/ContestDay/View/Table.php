@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin\Contest\ContestDay\View;
 
+use App\Concerns\Livewire\ValidatesMultipleInputs;
 use App\Concerns\Livewire\WithSearch;
 use App\Concerns\Livewire\WithSort;
 use App\Models\ContestDay;
@@ -18,14 +19,11 @@ use Livewire\WithPagination;
 class Table extends Component
 {
 
-    use WithPagination, WithSort, WithSearch;
+    use WithPagination, WithSort, WithSearch, ValidatesMultipleInputs;
 
     public $deleteId = null;
 
-    public
-        $name,
-        $date,
-        $registration_deadline;
+    public $name, $date, $registration_deadline;
 
     public function mount(): void
     {
@@ -44,7 +42,7 @@ class Table extends Component
 
     public function create(): RedirectResponse|Redirector
     {
-        $this->validate();
+        $this->validateMultiple(['name', 'date', 'registration_deadline']);
 
         $contestDay = ContestDay::create([
             'name' => $this->name,
@@ -53,14 +51,12 @@ class Table extends Component
             'contest_day_theme_id' => ContestDayTheme::default()->id,
         ]);
 
-        return redirect()->route('admin.contest.contest-day.edit', $contestDay->id);
+        return redirect()->route('admin.contest.contest-day.edit', $contestDay);
     }
 
     public function delete(): void
     {
-        $this->validate([
-            'deleteId' => 'required|integer|exists:contest_days,id',
-        ]);
+        $this->validateOnly('deleteId');
 
         ContestDay::whereId($this->deleteId)->first()->deleteAll();
         $this->deleteId = null;
@@ -74,11 +70,8 @@ class Table extends Component
         return [
             'name' => 'required|string|unique:contest_days,name|between:3,255',
             'date' => 'required|date_format:d.m.Y|unique:contest_days,date',
-            'registration_deadline' => [
-                'nullable',
-                'date_format:d.m.Y',
-                'before_or_equal:date',
-            ],
+            'registration_deadline' => 'nullable|date_format:d.m.Y|before_or_equal:date',
+            'deleteId' => 'required|integer|exists:contest_days,id',
         ];
     }
 

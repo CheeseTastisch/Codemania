@@ -24,8 +24,6 @@
                 <x-table.body.cell>{{ $level->points }}</x-table.body.cell>
                 <x-table.body.cell>{{ $level->instantly_rated ? 'Ja' : 'Nein' }}</x-table.body.cell>
 
-
-
                 <x-table.body.cell>
                     <div class="flex space-x-2">
                         <a href="#">
@@ -40,7 +38,7 @@
     </x-table.x>
 
     <x-modal.x
-        title="Neues Level erstellen"
+        title="Level erstellen"
         id="createLevel">
         <x-form.x>
             <x-form.input.x
@@ -66,7 +64,7 @@
 
     <div class="flex justify-end mt-3">
         <x-button.big.modal id="openCreateLevel" modal="createLevel" action="open">
-            Neues Level erstellen
+            Level erstellen
         </x-button.big.modal>
     </div>
 

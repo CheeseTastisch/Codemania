@@ -2,11 +2,15 @@
 
 namespace App\Http\Livewire\Admin\Contest\Task\Edit;
 
+use App\Concerns\Livewire\ValidatesMultipleInputs;
 use App\Concerns\Livewire\WithSearch;
 use App\Concerns\Livewire\WithSort;
 use App\Models\Level;
 use App\Models\Task;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
+use Livewire\Redirector;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 use StorageFile;
@@ -14,15 +18,13 @@ use StorageFile;
 class Levels extends Component
 {
 
-    use WithPagination, WithSearch, WithSort, WithFileUploads;
+    use WithPagination, WithSearch, WithSort, WithFileUploads, ValidatesMultipleInputs;
 
     public Task $task;
 
     public $deleteId = null;
 
-    public $level,
-        $points,
-        $descriptionFile;
+    public $level, $points, $descriptionFile;
 
     public function mount(): void
     {
@@ -40,33 +42,24 @@ class Levels extends Component
         ]);
     }
 
-    public function create(): void
+    public function create(): RedirectResponse|Redirector
     {
-        $this->validate();
+        $this->validateMultiple(['level', 'points', 'descriptionFile']);
 
-        if (Level::whereTaskId($this->task->id)->whereLevel($this->level)->exists()) {
-            $this->addError('level', 'Dieser Level existiert bereits.');
-            return;
-        }
-
-        $level = Level::create([
+        $level = $this->task->levels()->create([
             'level' => $this->level,
             'points' => $this->points,
             'description_file_id' => StorageFile::uploadFile($this->descriptionFile)->id,
-            'task_id' => $this->task->id,
         ]);
 
-        // TODO: Redirect to edit page
-//        return redirect()->route('admin.contest.task.edit.levels', $level);
+        return redirect()->route('admin.contest.level.edit', $level);
     }
 
     public function delete(): void
     {
-        $this->validate([
-            'deleteId' => 'required|integer|exists:levels,id',
-        ]);
+        $this->validateOnly('deleteId');
 
-        Level::whereId($this->deleteId)->first()->deleteAll();
+        $this->task->levels()->whereId($this->deleteId)->first()->delete();
 
         $this->emit('modal', 'close', 'deleteLevel');
         $this->emit('showToast', 'Du hast das Level erfolgreich gelöscht.');
@@ -75,9 +68,15 @@ class Levels extends Component
     public function getRules(): array
     {
         return [
-            'level' => 'required|integer|min:1',
+            'level' => [
+                'required',
+                'integer',
+                'min:1',
+                Rule::unique('levels', 'level')->where('task_id', $this->task->id),
+            ],
             'points' => 'required|integer|min:1',
             'descriptionFile' => 'required|file|mimes:pdf|max:1024',
+            'deleteId' => 'required|integer|exists:levels,id',
         ];
     }
 

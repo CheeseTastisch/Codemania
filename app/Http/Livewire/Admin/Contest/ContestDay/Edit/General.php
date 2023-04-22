@@ -8,16 +8,12 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
-class Day extends Component
+class General extends Component
 {
 
     public ContestDay $contestDay;
 
-    public $name,
-        $date,
-        $registration_deadline,
-        $allow_training_from,
-        $current;
+    public $name, $date, $registration_deadline, $allow_training_from, $current;
 
     public function mount(): void
     {
@@ -30,21 +26,14 @@ class Day extends Component
 
     public function render(): View|\Illuminate\Foundation\Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        return view('livewire.admin.contest.contest-day.edit.day');
+        return view('livewire.admin.contest.contest-day.edit.general');
     }
 
     public function updatedName(): void
     {
         $this->validateOnly('name');
 
-        $this->name = trim($this->name);
-
-        if (ContestDay::whereName($this->name)->where('id', '!=', $this->contestDay->id)->exists()) {
-            $this->addError('name', 'Name ist bereits vergeben.');
-            return;
-        }
-
-        $this->contestDay->update(['name' => $this->name]);
+        $this->contestDay->update(['name' => trim($this->name)]);
         session()->flash('updated', 'name');
     }
 
@@ -95,7 +84,16 @@ class Day extends Component
     protected function getRules(): array
     {
         return [
-            'name' => 'required|string|between:3,255',
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                function ($attribute, $value, $fail) {
+                    if (ContestDay::whereName($value)->where('id', '!=', $this->contestDay->id)->exists()) {
+                        $fail('Name ist bereits vergeben.');
+                    }
+                },
+            ],
             'date' => [
                 'required',
                 'date_format:d.m.Y',

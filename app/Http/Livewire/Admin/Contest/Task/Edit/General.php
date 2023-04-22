@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Admin\Contest\Task\Edit;
 
 use App\Models\Task;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 
 class General extends Component
@@ -26,24 +27,19 @@ class General extends Component
     {
         $this->validate();
 
-        $name = trim($this->name);
-
-        if (Task::whereContestId($this->task->contest_id)
-            ->whereName($name)
-            ->where('id', '!=', $this->task->id)
-            ->exists()) {
-            $this->addError('name', 'Name ist bereits vergeben.');
-            return;
-        }
-
-        $this->task->update(['name' => $name]);
+        $this->task->update(['name' => trim($this->name)]);
         session()->flash('updated', 'name');
     }
 
     public function getRules(): array
     {
         return [
-            'name' => 'required|string|between:3,255',
+            'name' => [
+                'required',
+                'string',
+                'between:3,255',
+                Rule::unique('tasks', 'name')->ignore($this->task->id)->where('contest_id', $this->task->contest_id)
+            ]
         ];
     }
 

@@ -14,10 +14,7 @@ class General extends Component
 
     public Level $level;
 
-    public $levelNumber,
-        $points,
-        $instantlyRated,
-        $descriptionFile;
+    public $levelNumber, $points, $instantlyRated, $descriptionFile;
 
     public function mount(): void
     {

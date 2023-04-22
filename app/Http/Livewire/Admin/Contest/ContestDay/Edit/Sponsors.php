@@ -33,8 +33,7 @@ class Sponsors extends Component
         'logo' => null,
     ];
 
-    public $deleteId = null,
-        $updateId = null;
+    public $deleteId = null, $updateId = null;
 
     public function mount(): void
     {
@@ -63,14 +62,12 @@ class Sponsors extends Component
             return;
         }
 
-        $file = StorageFile::uploadFile($this->createSponsor['logo']);
-
         ContestDaySponsor::create([
             'contest_day_id' => $this->contestDay->id,
             'name' => $this->createSponsor['name'],
             'url' => $this->createSponsor['url'],
             'background' => $this->createSponsor['background'],
-            'logo_id' => $file->id,
+            'logo_id' => StorageFile::uploadFile($this->createSponsor['logo'])->id,
         ]);
 
         $this->createSponsor = [
@@ -131,9 +128,7 @@ class Sponsors extends Component
 
     public function delete(): void
     {
-        $this->validate([
-            'deleteId' => 'required|integer',
-        ]);
+        $this->validateOnly('deleteId');
 
         $sponsor = ContestDaySponsor::whereId($this->deleteId)->first();
 
@@ -155,6 +150,8 @@ class Sponsors extends Component
             'createSponsor.url' => 'required|url',
             'createSponsor.background' => 'required|in:light,dark',
             'createSponsor.logo' => 'required|image',
+
+            'deleteId' => 'required|integer|exists:contest_day_sponsors,id',
         ];
     }
 

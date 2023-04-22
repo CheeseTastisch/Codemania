@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin\Contest\ContestDay\Edit;
 
+use App\Concerns\Livewire\ValidatesMultipleInputs;
 use App\Concerns\Livewire\WithSearch;
 use App\Concerns\Livewire\WithSort;
 use App\Models\Contest;
@@ -10,21 +11,21 @@ use Carbon\Carbon;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
+use Livewire\Redirector;
 use Livewire\WithPagination;
 
 class Contests extends Component
 {
 
-    use WithPagination, WithSearch, WithSort;
+    use WithPagination, WithSearch, WithSort, ValidatesMultipleInputs;
 
     public ContestDay $contestDay;
 
     public $deleteId = null;
 
-    public $name,
-        $start_time,
-        $end_time;
+    public $name, $start_time, $end_time;
 
     public function mount(): void
     {
@@ -42,15 +43,14 @@ class Contests extends Component
         ]);
     }
 
-    public function create(): RedirectResponse
+    public function create(): RedirectResponse|Redirector
     {
-        $this->validate();
+        $this->validateMultiple(['name', 'start_time', 'end_time']);
 
-        $contest = Contest::create([
+        $contest = $this->contestDay->contests()->create([
             'name' => $this->name,
             'start_time' => Carbon::createFromTimeString($this->start_time)->setDateFrom($this->contestDay->date),
             'end_time' => Carbon::createFromTimeString($this->end_time)->setDateFrom($this->contestDay->date),
-            'contest_day_id' => $this->contestDay->id,
         ]);
 
         return redirect()->route('admin.contest.contest.edit', $contest);
@@ -58,12 +58,9 @@ class Contests extends Component
 
     public function delete(): void
     {
-        $this->validate([
-            'deleteId' => 'required|integer',
-        ]);
+        $this->validateOnly('deleteId');
 
-        $contest = Contest::find($this->deleteId);
-        $contest->deleteAll();
+        $this->contestDay->contests()->where('id', $this->deleteId)->delete();
 
         $this->emit('modal', 'close', 'deleteContest');
         $this->emit('showToast', 'Du hast den Contest erfolgreich gelöscht.');
@@ -72,9 +69,15 @@ class Contests extends Component
     protected function getRules(): array
     {
         return [
-            'name' => 'required|string|between:3,255',
+            'name' => [
+                'required',
+                'string',
+                'between:3,255',
+                Rule::unique('contests', 'name')->where('contest_day_id', $this->contestDay->id),
+            ],
             'start_time' => 'required|time',
             'end_time' => 'required|time',
+            'deleteId' => 'required|exists:contests,id',
         ];
     }
 

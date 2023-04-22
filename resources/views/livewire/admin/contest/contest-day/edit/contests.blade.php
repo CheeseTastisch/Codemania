@@ -43,7 +43,7 @@
 
     <x-modal.x
         id="createContest"
-        title="Neuen Contest erstellen"
+        title="Contest erstellen"
         max-width="xl">
         <x-form.x>
             <x-form.input.x
@@ -67,8 +67,8 @@
     </x-modal.x>
 
     <div class="flex justify-end mt-3">
-        <x-button.big.modal id="createContest" modal="createContest" action="open">
-            Neuen Contest erstellen
+        <x-button.big.modal id="openCreateContest" modal="createContest" action="open">
+            Contest erstellen
         </x-button.big.modal>
     </div>
 

@@ -1,6 +1,4 @@
-<div x-data="{deleteId: @entangle('deleteId').defer, deleteName: null, updateId: @entangle('updateId').defer, updating: null}">
-    {{ Debugbar::log($sponsors) }}
-
+<div x-data="{deleteId: @entangle('deleteId').defer, deleteName: null, updateId: @entangle('updateId').defer}">
     <x-table.x :paginator="$sponsors" searchable>
         <x-slot name="header">
             <x-table.header.sortable
@@ -72,8 +70,8 @@
     </x-modal.x>
 
     <div class="flex justify-end mt-3">
-        <x-button.big.modal id="createSponsor" modal="createSponsor" action="open">
-            Neuen Sponsor erstellen
+        <x-button.big.modal id="openCreateSponsor" modal="createSponsor" action="open">
+            Sponsor erstellen
         </x-button.big.modal>
     </div>
 
