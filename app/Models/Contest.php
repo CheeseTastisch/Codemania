@@ -48,6 +48,11 @@ class Contest extends Model
         return $this->belongsToMany(Team::class);
     }
 
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class);
+    }
+
     public function isLeaderboardFrozenAttribute(): bool
     {
         if ($this->freeze_leaderboard_at === null) return false;
