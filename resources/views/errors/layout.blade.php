@@ -11,16 +11,14 @@
 
         <p class="text-center mt-4">@hasSection('description') @yield('description') @else Es ist ein Fehler aufgetreten. Bitte melde dich bei den Organisatoren. @endif</p>
 
-        <button class="mt-6">
-            <x-button.big.link id="back" :href="url()->previous()"
-                               :style="\App\Models\Components\Styled\OutlinedStyle::OutlinedAccent">
+        <div class="mt-6 space-x-5 flex flex-row">
+            <x-button.big.link id="back" :href="url()->previous()" :style="\App\Models\Components\Styled\OutlinedStyle::OutlinedAccent">
                 Zurück
             </x-button.big.link>
 
-            <x-button.big.link id="home" :href="route('public.home')"
-                               :style="\App\Models\Components\Styled\OutlinedStyle::OutlinedAccent">
+            <x-button.big.link id="home" :href="route('public.home')" :style="\App\Models\Components\Styled\OutlinedStyle::OutlinedAccent">
                 Home
             </x-button.big.link>
-        </button>
+        </div>
     </main>
 @endpush
