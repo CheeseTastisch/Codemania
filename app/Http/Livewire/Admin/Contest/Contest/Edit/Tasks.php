@@ -8,6 +8,7 @@ use App\Models\Contest as ContestModel;
 use App\Models\Task;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -39,7 +40,7 @@ class Tasks extends Component
         ]);
     }
 
-    public function create(): void
+    public function create()
     {
         $this->validate();
 
@@ -56,7 +57,7 @@ class Tasks extends Component
             'contest_id' => $this->contest->id,
         ]);
 
-        // TODO: Redirect to edit page
+        return redirect()->route('admin.contest.task.edit', $task);
     }
 
     public function delete(): void

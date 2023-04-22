@@ -6,10 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Laravel\Scout\Searchable;
 use StorageFile;
 
 class Level extends Model
 {
+
+    use Searchable;
 
     protected $fillable = [
         'level',
@@ -47,6 +50,14 @@ class Level extends Model
         $this->levelSubmissions->each(fn($levelSubmission) => $levelSubmission->deleteAll());
 
         $this->delete();
+    }
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->task->name,
+        ];
     }
 
 }

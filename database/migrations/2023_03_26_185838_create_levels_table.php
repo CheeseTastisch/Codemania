@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('level');
             $table->foreignIdFor(Task::class);
             $table->integer('points');
-            $table->boolean('instantly_rated');
+            $table->boolean('instantly_rated')->default(true);
             $table->foreignIdFor(UploadedFile::class, 'description_file_id');
             $table->timestamps();
         });
