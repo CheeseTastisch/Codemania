@@ -1,4 +1,6 @@
 function updateTheme() {
+    if (document.documentElement.dataset.alwaysDark !== undefined || document.documentElement.dataset.alwaysLight !== undefined) return
+
     document.documentElement.classList.add('change')
 
     if (document.cookie.includes('theme=dark')) document.documentElement.classList.add('dark')

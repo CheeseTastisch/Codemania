@@ -2,7 +2,7 @@
 @php(\Carbon\Carbon::setLocale('de'))
 
 <!doctype html>
-<html lang="de">
+<html lang="de" @if($alwaysDark ?? false) data-always-dark @elseif($alwaysLight ?? false) data-always-light @endif>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -10,9 +10,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <script>
-        if (document.cookie.includes('theme=dark')) document.documentElement.classList.add('dark')
-        else if (document.cookie.includes('theme=light')) document.documentElement.classList.remove('dark')
-        else document.documentElement.classList.remove('dark')
+        if (document.documentElement.dataset.alwaysDark !== undefined) document.documentElement.classList.add('dark')
+        else if (document.documentElement.dataset.alwaysLight !== undefined) document.documentElement.classList.remove('dark')
+        else {
+            if (document.cookie.includes('theme=dark')) document.documentElement.classList.add('dark')
+            else if (document.cookie.includes('theme=light')) document.documentElement.classList.remove('dark')
+            else document.documentElement.classList.remove('dark')
+        }
     </script>
 
     @livewireStyles
@@ -36,9 +40,7 @@
 
     @stack('styles')
 
-    <title>Codemania @hasSection('title')
-            | @yield('title')
-        @endif</title>
+    <title>Codemania @hasSection('title')| @yield('title') @endif</title>
 </head>
 <body class="bg-slate-200 dark:bg-slate-800 h-screen dark:text-white selection:bg-accent-200 dark:selection:bg-accent-800">
 @hasSection('baseContent')
