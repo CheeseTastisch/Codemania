@@ -28,4 +28,10 @@
             </x-table.x>
         </div>
     @endif
+
+    <div class="flex justify-end mt-3">
+        <x-button.big.link id="fullLeader" href="#">
+            Gesamtes Leaderboard anzeigen
+        </x-button.big.link>
+    </div>
 </div>

@@ -30,4 +30,10 @@
         updatable>
         Leaderboard freigeben
     </x-form.input.checkbox>
+
+    <div class="flex justify-end">
+        <x-button.big.link id="canvas" href="#">
+            Leinwand anzeigen
+        </x-button.big.link>
+    </div>
 </x-form.x>
