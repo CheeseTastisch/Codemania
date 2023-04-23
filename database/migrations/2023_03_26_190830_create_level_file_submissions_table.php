@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignIdFor(LevelSubmission::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(LevelFile::class)->constrained()->cascadeOnDelete();
             $table->enum('status', ['checking', 'accepted', 'rejected'])->default('checking');
-            $table->foreignIdFor(UploadedFile::class);
+            $table->foreignIdFor(UploadedFile::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

@@ -20,8 +20,8 @@ return new class extends Migration
             $table->foreignIdFor(Level::class)->constrained()->cascadeOnDelete();
             $table->enum('status', ['pending', 'checking', 'accepted', 'rejected'])->default('pending');
             $table->timestamp('status_changed_at')->useCurrent();
-            $table->foreignIdFor(UploadedFile::class, 'source_file_id')->nullable();
-            $table->foreignIdFor(UploadedFile::class, 'image_file_id');
+            $table->foreignIdFor(UploadedFile::class, 'source_file_id')->nullable()->constrained('uploaded_files')->nullOnDelete();
+            $table->foreignIdFor(UploadedFile::class, 'image_file_id')->nullable()->constrained('uploaded_files')->nullOnDelete();
             $table->timestamps();
         });
     }

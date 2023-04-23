@@ -53,19 +53,15 @@ class LevelSubmission extends Model
     {
         if ($this->status === 'pending' || $this->status === 'checking') return false;
 
-        $level = $this->level;
-        $contest = $level->task->contest;
-        $contestDay = $contest->contestDay;
+        $contest = $this->level->task->contest;
 
-        if ($contestDay->allow_training_from !== null && $this->status_changed_at->isAfter($contest->end_time))
-            return false;
+        if ($ignoreFreeze) return true;
+        if ($contest->freeze_leaderboard_at === null) return true;
+        if ($contest->leaderboard_unfrozen === true) return true;
+        if ($this->status_changed_at->isBefore($contest->freeze_leaderboard_at)) return true;
+        if ($this->level->instantly_rated) return true;
 
-        if (!$ignoreFreeze
-            && $contest->freeze_leaderboard_at !== null
-            && $contest->leaderboard_unfrozen === false
-            && $this->status_changed_at->isAfter($contest->freeze_leaderboard_at)) return false;
-
-        return $level->instantly_rated === true || $contest->end_time->isPast();
+        return false;
     }
 
     public function evaluateStatus(): void

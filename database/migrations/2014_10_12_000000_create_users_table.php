@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('class')->nullable();
             $table->string('school')->nullable();
             $table->longText('about')->nullable();
-            $table->foreignIdFor(UploadedFile::class, 'profile_picture_id')->nullable();
+            $table->foreignIdFor(UploadedFile::class, 'profile_picture_id')->nullable()->constrained('uploaded_files')->nullOnDelete();
 
             $table->string('theme')->default('light');
             $table->boolean('is_admin')->default(false);

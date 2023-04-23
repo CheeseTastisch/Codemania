@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('question');
             $table->string('answer');
             $table->boolean('first')->default(false);
-            $table->foreignIdFor(Faq::class, 'next_id')->nullable();
+            $table->foreignIdFor(Faq::class, 'next_id')->nullable()->constrained('faqs')->nullOnDelete();
             $table->timestamps();
         });
     }

@@ -2,15 +2,11 @@
 
 namespace App\Models;
 
-use Cache;
-use Carbon\Carbon;
 use Carbon\CarbonInterval;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Date;
 use Laravel\Scout\Searchable;
 
 class Contest extends Model
@@ -43,14 +39,9 @@ class Contest extends Model
         return $this->hasMany(Task::class);
     }
 
-    public function teams(): BelongsToMany
+    public function teams(): HasMany
     {
-        return $this->belongsToMany(Team::class);
-    }
-
-    public function users(): BelongsToMany
-    {
-        return $this->belongsToMany(User::class);
+        return $this->hasMany(Team::class);
     }
 
     public function isLeaderboardFrozenAttribute(): bool
@@ -68,27 +59,30 @@ class Contest extends Model
 
     public function getLeaderboard(bool $ignoreFreeze = false): Collection
     {
-        $usedContest = Contest::whereId($this->id)->with(
-            [
-                'tasks',
-                'tasks.levels',
-                'tasks.levels.levelSubmissions',
-                'teams',
-                'teams.contests',
-                'teams.contests.tasks',
-                'teams.contests.tasks.levels',
-                'teams.contests.tasks.levels.levelSubmissions',
-            ])->first();
-
-        return $usedContest->teams->map(function ($team) use ($usedContest, $ignoreFreeze) {
-            $total_resolution_time = $team->getTotalResolutionTime($usedContest, $ignoreFreeze);
-            return [
-                'name' => $team->name,
-                'points' => $team->getPoints($usedContest, $ignoreFreeze),
-                'total_resolution_time' => $total_resolution_time,
-                'human_friendly_total_resolution_time' => $total_resolution_time ? CarbonInterval::seconds($total_resolution_time)->cascade()->format('%H:%I:%S') : null,
-            ];
-        })->filter(fn($team) => $team['points'] !== null && $team['total_resolution_time'] !== null)->sortBy('total_resolution_time')
+        return Contest::whereId($this->id)->with([
+            'teams',
+            'teams.levelSubmissions',
+            'teams.levelSubmissions.level',
+            'teams.levelSubmissions.level.task',
+            'teams.levelSubmissions.level.task.contest',
+        ])
+            ->first()
+            ->teams
+            ->filter(fn($team) => !$team->contest->contestDay->training_only)
+            ->map(fn ($team) => [
+                'team' => $team->name,
+                'team_id' => $team->id,
+                'points' => $team->getPoints($ignoreFreeze),
+                'total_resolution_time' => $team->getTotalResolutionTime($ignoreFreeze),
+            ])
+            ->filter(fn($team) => $team['points'] !== null && $team['total_resolution_time'] !== null)
+            ->map(fn($team) => [
+                'team' => $team['team'],
+                'points' => $team['points'],
+                'total_resolution_time' => $team['total_resolution_time'],
+                'human_friendly_total_resolution_time' => CarbonInterval::seconds($team['total_resolution_time'])->cascade()->format('%H:%I:%S'),
+            ])
+            ->sortBy('total_resolution_time')
             ->sortByDesc('points')
             ->mapWithKeys(fn($team, $index) => [$index + 1 => $team]);
     }

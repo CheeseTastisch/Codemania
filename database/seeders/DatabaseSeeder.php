@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
 
         $trainingTeam = Team::create([
             'name' => "training-{$user->id}",
-            'contest_day_id' => ContestDay::whereTrainingOnly(true)->first()->id
+            'contest_id' => ContestDay::whereTrainingOnly(true)->first()->contests()->first()->id
         ]);
 
         $user->teams()->attach($trainingTeam, ['role' => 'member']);

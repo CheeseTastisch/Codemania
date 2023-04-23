@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignIdFor(ContestDay::class)->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->string('url');
-            $table->foreignIdFor(UploadedFile::class, 'logo_id');
+            $table->foreignIdFor(UploadedFile::class, 'logo_id')->constrained('uploaded_files')->cascadeOnDelete();
             $table->enum('background', ['light', 'dark'])->default('light');
             $table->timestamps();
         });

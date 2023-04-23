@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('level_files', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Level::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(UploadedFile::class, 'input_file_id');
-            $table->foreignIdFor(UploadedFile::class, 'solution_file_id');
+            $table->foreignIdFor(UploadedFile::class, 'input_file_id')->constrained('uploaded_files')->cascadeOnDelete();
+            $table->foreignIdFor(UploadedFile::class, 'solution_file_id')->constrained('uploaded_files')->cascadeOnDelete();
             $table->timestamps();
         });
     }

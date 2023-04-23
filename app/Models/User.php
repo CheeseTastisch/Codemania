@@ -62,24 +62,21 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
 
     public function getTrainingTeamAttribute(): Team
     {
-        if (array_key_exists('training_team', $this->relations)) return $this->getRelation('training_team');
+        if (array_key_exists('team.training', $this->relations)) return $this->getRelation('team.training');
 
-        $trainingTeam =  $this->teams->where('contest_day_id', ContestDay::where('training_only', true)->firstOrFail()->id)->firstOrFail();
-        $this->setRelation('training_team', $trainingTeam);
+        $trainingContest = ContestDay::whereTrainingOnly(true)->firstOrFail();
+        $trainingTeam = $this->teams->where('contest_id', $trainingContest->contests()->first()->id)->firstOrFail();
+        $this->setRelation('team.training', $trainingTeam);
 
         return $trainingTeam;
     }
 
     public function getTeamForContest(Contest $contest, bool|null $training = false): ?Team
     {
-        if (array_key_exists("team_for_contest_$contest->id", $this->relations)) return $this->getRelation("team_for_contest_$contest->id");
+        if (array_key_exists("team.$contest->id", $this->relations)) return $this->getRelation("team.$contest->id");
 
-        $teams = $this->teams
-            ->filter(fn ($team) => $team->contestDay->training_only === $training || $training === null)
-            ->filter(fn ($team) => $team->contests->contains($contest));
-
-        $team = $teams->count() >= 1 ? $teams->filter(fn ($team) => !$team->contest_day->training_only)->first() : $teams->first();
-        $this->setRelation("team_for_contest_$contest->id", $team);
+        $team = $this->teams->where('contest_id', $contest->id)->first();
+        $this->setRelation("team.$contest->id", $team);
 
         return $team;
     }

@@ -14,7 +14,7 @@ class CreateTrainingTeam
     {
         $trainingTeam = Team::create([
             'name' => "training-{$event->user->id}",
-            'contest_day_id' => ContestDay::whereTrainingOnly(true)->first()->id
+            'contest_id' => ContestDay::whereTrainingOnly(true)->first()->contests()->first()->id
         ]);
 
         $event->user->teams()->attach($trainingTeam, ['role' => 'member']);

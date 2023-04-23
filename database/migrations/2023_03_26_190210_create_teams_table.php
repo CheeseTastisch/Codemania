@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\ContestDay;
+use App\Models\Contest;
 use App\Models\UploadedFile;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
@@ -17,11 +17,11 @@ return new class extends Migration
         Schema::create('teams', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignIdFor(ContestDay::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(UploadedFile::class, 'logo_file_id')->nullable();
+            $table->foreignIdFor(Contest::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(UploadedFile::class, 'logo_file_id')->nullable()->constrained('uploaded_files')->nullOnDelete();
             $table->boolean('is_blocked')->default(false);
             $table->string('block_reason')->nullable();
-            $table->foreignIdFor(User::class, 'blocked_by')->nullable();
+            $table->foreignIdFor(User::class, 'blocked_by')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
         });
     }

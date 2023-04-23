@@ -59,38 +59,5 @@ class ContestSeeder extends Seeder
             'freeze_leaderboard_at' => Carbon::create(2023, 6, 21, 12),
             'leaderboard_unfrozen' => false,
         ]);
-
-//
-//        $winter2023Theme = ContestDayTheme::create();
-//        $winter2023Theme->generatePalette(Color::parseRgb('52 163 253'));
-//
-//        $winter2023 = ContestDay::create([
-//            'date' => Carbon::create(2023, 12, 20),
-//            'registration_deadline' => Carbon::create(2023, 12, 18),
-//            'name' => 'Winter 2023',
-//            'allow_training_from' => Carbon::create(2023, 12, 25),
-//            'current' => true,
-//            'contest_day_theme_id' => $winter2023Theme->id,
-//        ]);
-//
-//        Contest::create([
-//            'name' => 'Easy',
-//            'contest_day_id' => $winter2023->id,
-//            'start_time' => Carbon::create(2023, 12, 20, 10),
-//            'end_time' => Carbon::create(2023, 12, 20, 13),
-//            'wrong_solution_penalty' => 5,
-//            'freeze_leaderboard_at' => Carbon::create(2023, 12, 20, 12),
-//            'leaderboard_unfrozen' => false,
-//        ]);
-//
-//        Contest::create([
-//            'name' => 'Hard',
-//            'contest_day_id' => $winter2023->id,
-//            'start_time' => Carbon::create(2023, 12, 20, 10),
-//            'end_time' => Carbon::create(2023, 12, 20, 13),
-//            'wrong_solution_penalty' => 5,
-//            'freeze_leaderboard_at' => Carbon::create(2023, 12, 20, 12),
-//            'leaderboard_unfrozen' => false,
-//        ]);
     }
 }

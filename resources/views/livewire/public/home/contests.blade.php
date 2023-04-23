@@ -13,7 +13,7 @@
                             <p>{{ $contest->tasks->count() }} Aufgaben</p>
                             @auth
                                 <p>
-                                    {{ auth()->user()?->getTeamForContest($contest)?->getPoints($contest, true) ?? 0 }}
+                                    {{ auth()->user()?->getTeamForContest($contest)?->getPoints(true) ?? 0 }}
                                     /
                                     {{ $contest->tasks->flatMap(fn ($task) => $task->levels)->map(fn ($level) => $level->points)->sum() }}
                                     Punkte
@@ -41,7 +41,7 @@
                             <p>{{ $contest->tasks->count() }} Aufgaben</p>
                             @auth
                                 <p>
-                                    {{ auth()->user()?->getTeamForContest($contest)?->getPoints($contest, true) ?? 0 }}
+                                    {{ auth()->user()?->getTeamForContest($contest)?->getPoints(true) ?? 0 }}
                                     /
                                     {{ $contest->tasks->flatMap(fn ($task) => $task->levels)->map(fn ($level) => $level->points)->sum() }}
                                     Punkte
@@ -56,10 +56,10 @@
                             <div class="flex justify-between mt-1">
                                 @if(auth()->user()?->getTeamForContest($contest) !== null)
                                     <p>
-                                        {{ auth()->user()?->getTeamForContest($contest)->getPlace($contest) }}. Platz
+                                        {{ auth()->user()?->getTeamForContest($contest)->getPlace() }}. Platz
                                     </p>
                                     <p>
-                                        {{ auth()->user()?->getTeamForContest($contest)->getPoints($contest) }} Punkte erreicht
+                                        {{ auth()->user()?->getTeamForContest($contest)->getPoints(false) }} Punkte erreicht
                                     </p>
                                 @else
                                     <p>Nicht teilgenommen</p>

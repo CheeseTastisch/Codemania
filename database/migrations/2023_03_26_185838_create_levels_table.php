@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignIdFor(Task::class)->constrained()->cascadeOnDelete();
             $table->integer('points');
             $table->boolean('instantly_rated')->default(true);
-            $table->foreignIdFor(UploadedFile::class, 'description_file_id');
+            $table->foreignIdFor(UploadedFile::class, 'description_file_id')->constrained('uploaded_files')->cascadeOnDelete();
             $table->timestamps();
         });
     }
