@@ -13,10 +13,10 @@
                             <p>{{ $contest->tasks->count() }} Aufgaben</p>
                             @auth
                                 <p>
-                                    {{ auth()->user()?->getTeamForContest($contest)?->getPoints(true) ?? 0 }}
+                                    {{ auth()->user()?->getTeamForContest($contest, true)?->getPoints(true, $contest) ?? 0 }}
                                     /
                                     {{ $contest->tasks->flatMap(fn ($task) => $task->levels)->map(fn ($level) => $level->points)->sum() }}
-                                    Punkte
+                                    Punkte im Training
                                 </p>
                             @else
                                 <p>
@@ -41,10 +41,10 @@
                             <p>{{ $contest->tasks->count() }} Aufgaben</p>
                             @auth
                                 <p>
-                                    {{ auth()->user()?->getTeamForContest($contest)?->getPoints(true) ?? 0 }}
+                                    {{ auth()->user()?->getTeamForContest($contest, true)?->getPoints(true, $contest) ?? 0 }}
                                     /
                                     {{ $contest->tasks->flatMap(fn ($task) => $task->levels)->map(fn ($level) => $level->points)->sum() }}
-                                    Punkte
+                                    Punkte im Training
                                 </p>
                             @else
                                 <p>
@@ -54,12 +54,12 @@
                         </div>
                         @auth
                             <div class="flex justify-between mt-1">
-                                @if(auth()->user()?->getTeamForContest($contest) !== null)
+                                @if(($team = auth()->user()?->getTeamForContest($contest)) !== null)
                                     <p>
-                                        {{ auth()->user()?->getTeamForContest($contest)->getPlace() }}. Platz
+                                        {{ $team->getPlace() }}. Platz
                                     </p>
                                     <p>
-                                        {{ auth()->user()?->getTeamForContest($contest)->getPoints(false) }} Punkte erreicht
+                                        {{ $team->getPoints() }} Punkte erreicht
                                     </p>
                                 @else
                                     <p>Nicht teilgenommen</p>

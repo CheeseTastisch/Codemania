@@ -31,18 +31,10 @@
             @livewire('admin.contest.contest-day.edit.contests', ['contestDay' => $contestDay])
         </x-card.x>
 
-        <div class="grid grid-cols-1 xl:grid-cols-2 xl:gap-x-4 mt-3">
-            <div class="mb-3 xl:mb-0">
-                <x-card.x title="Sponsoren" full-height>
-                    @livewire('admin.contest.contest-day.edit.sponsors', ['contestDay' => $contestDay])
-                </x-card.x>
-            </div>
-
-            <div class="mb-3 xl:mb-0">
-                <x-card.x title="Teams" full-height>
-                    @livewire('admin.contest.contest-day.edit.teams', ['contestDay' => $contestDay])
-                </x-card.x>
-            </div>
+        <div class="mt-3">
+            <x-card.x title="Sponsoren" full-height>
+                @livewire('admin.contest.contest-day.edit.sponsors', ['contestDay' => $contestDay])
+            </x-card.x>
         </div>
     </div>
 @endpush

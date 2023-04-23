@@ -47,29 +47,40 @@ class Team extends Model
         return $this->hasMany(LevelSubmission::class);
     }
 
-    public function getPoints(bool $ignoreFreeze = false): int|null
+    public function getPoints(bool $ignoreFreeze = false, Contest|null $contest = null): int|null
     {
+        if ($this->is_blocked) return null;
+
         return $this->levelSubmissions
-            ->filter(fn($levelSubmission) => $levelSubmission->shouldBetRated($ignoreFreeze) && $levelSubmission->status === 'accepted')
+            ->filter(fn($levelSubmission) => $levelSubmission->shouldBeRated($ignoreFreeze) && $levelSubmission->status === 'accepted')
+            ->unless($contest === null, fn($levelSubmission) => $levelSubmission
+                ->filter(fn($levelSubmission) => $levelSubmission->level->task->contest_id === $contest->id))
             ->map(fn($levelSubmission) => $levelSubmission->level->points)
             ->sum();
     }
 
-    public function getTotalResolutionTime(bool $ignoreFreeze = false): int|null
+
+    public function getTotalResolutionTime(bool $ignoreFreeze = false, Contest|null $contest = null): int|null
     {
+        if ($this->is_blocked) return null;
+
         return $this->levelSubmissions
-            ->filter(fn($levelSubmission) => $levelSubmission->shouldBetRated($ignoreFreeze))
+            ->filter(fn($levelSubmission) => $levelSubmission->shouldBeRated($ignoreFreeze))
+            ->unless($contest === null, fn($levelSubmission) => $levelSubmission
+                ->filter(fn($levelSubmission) => $levelSubmission->level->task->contest_id === $contest->id))
             ->map(fn($levelSubmission) => $levelSubmission->status === 'accepted'
                 ? $levelSubmission->status_changed_at->diffInSeconds($this->contest->start_time)
                 : $this->contest->wrong_solution_penalty * 60)
             ->sum();
     }
 
-    public function getPlace(bool $ignoreFreeze = false): int|null
+    public function getPlace(bool $ignoreFreeze = false, Contest|null $contest = null): int|null
     {
-        return $this->contest->getLeaderboard($ignoreFreeze)
+        return ($contest ?? $this->contest)
+            ->getLeaderboard($ignoreFreeze)
             ->where('team_id', $this->id)
-            ->first();
+            ->first()
+            ?->get('place');
     }
 
     public function toSearchableArray(): array

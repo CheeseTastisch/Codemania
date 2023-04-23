@@ -9,6 +9,7 @@ use App\Models\Level;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
+use StorageFile;
 
 class Files extends Component
 {
@@ -34,8 +35,8 @@ class Files extends Component
         $this->validateMultiple(['input_file', 'solution_file']);
 
         $this->level->levelFiles()->create([
-            'input_file' => $this->input_file->store('level-files'),
-            'solution_file' => $this->solution_file->store('level-files'),
+            'input_file_id' => StorageFile::uploadFile($this->input_file)->id,
+            'solution_file_id' => StorageFile::uploadFile($this->solution_file)->id,
         ]);
 
         $this->input_file = null;

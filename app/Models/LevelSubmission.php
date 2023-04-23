@@ -53,12 +53,15 @@ class LevelSubmission extends Model
     {
         if ($this->status === 'pending' || $this->status === 'checking') return false;
 
+        if ($this->team->contest->contestDay->training_only) return true;
+
         $contest = $this->level->task->contest;
 
-        if ($ignoreFreeze) return true;
+        if ($ignoreFreeze || $contest->leaderboard_unfrozen) return true;
+
+        if ($this->status_changed_at->isAfter($contest->freeze_leaderboard_at)) return false;
+
         if ($contest->freeze_leaderboard_at === null) return true;
-        if ($contest->leaderboard_unfrozen === true) return true;
-        if ($this->status_changed_at->isBefore($contest->freeze_leaderboard_at)) return true;
         if ($this->level->instantly_rated) return true;
 
         return false;
@@ -74,7 +77,10 @@ class LevelSubmission extends Model
             if ($levelFileSubmission === null || $levelFileSubmission->status !== 'accepted') $correct = false;
         });
 
-        $this->status = $correct ? 'accepted' : 'rejected';
+        $this->update([
+            'status' => $correct ? 'accepted' : 'rejected',
+            'status_changed_at' => now()
+        ]);
     }
 
     public function deleteAll(): void

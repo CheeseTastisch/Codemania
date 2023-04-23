@@ -73,6 +73,8 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
 
     public function getTeamForContest(Contest $contest, bool|null $training = false): ?Team
     {
+        if ($training) return $this->training_team;
+
         if (array_key_exists("team.$contest->id", $this->relations)) return $this->getRelation("team.$contest->id");
 
         $team = $this->teams->where('contest_id', $contest->id)->first();

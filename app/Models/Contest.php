@@ -21,6 +21,7 @@ class Contest extends Model
         'end_time',
         'wrong_solution_penalty',
         'freeze_leaderboard_at',
+        'leaderboard_unfrozen',
     ];
 
     protected $casts = [
@@ -59,7 +60,7 @@ class Contest extends Model
 
     public function getLeaderboard(bool $ignoreFreeze = false): Collection
     {
-        return Contest::whereId($this->id)->with([
+        $sortedLeaderboard = Contest::whereId($this->id)->with([
             'teams',
             'teams.levelSubmissions',
             'teams.levelSubmissions.level',
@@ -69,22 +70,40 @@ class Contest extends Model
             ->first()
             ->teams
             ->filter(fn($team) => !$team->contest->contestDay->training_only)
-            ->map(fn ($team) => [
-                'team' => $team->name,
+            ->map(fn ($team) => collect([
+                'name' => $team->name,
                 'team_id' => $team->id,
                 'points' => $team->getPoints($ignoreFreeze),
                 'total_resolution_time' => $team->getTotalResolutionTime($ignoreFreeze),
-            ])
+            ]))
             ->filter(fn($team) => $team['points'] !== null && $team['total_resolution_time'] !== null)
-            ->map(fn($team) => [
-                'team' => $team['team'],
-                'points' => $team['points'],
-                'total_resolution_time' => $team['total_resolution_time'],
-                'human_friendly_total_resolution_time' => CarbonInterval::seconds($team['total_resolution_time'])->cascade()->format('%H:%I:%S'),
-            ])
             ->sortBy('total_resolution_time')
-            ->sortByDesc('points')
-            ->mapWithKeys(fn($team, $index) => [$index + 1 => $team]);
+            ->sortByDesc('points');
+
+        $leaderboard = collect();
+        $place = 1;
+        $previousPoints = $sortedLeaderboard->first()->get('points');
+        $previousTotalResolutionTime = $sortedLeaderboard->first()->get('total_resolution_time');
+
+        foreach ($sortedLeaderboard as $team) {
+            if ($team['points'] !== $previousPoints || $team['total_resolution_time'] !== $previousTotalResolutionTime) {
+                $place++;
+            }
+
+            $leaderboard->push(collect([
+                'place' => $place,
+                'name' => $team->get('name'),
+                'team_id' => $team->get('team_id'),
+                'points' => $team->get('points'),
+                'total_resolution_time' => $team->get('total_resolution_time'),
+                'human_friendly_total_resolution_time' => CarbonInterval::seconds($team->get('total_resolution_time'))->cascade()->format('%H:%I:%S'),
+            ]));
+
+            $previousPoints = $team['points'];
+            $previousTotalResolutionTime = $team['total_resolution_time'];
+        }
+
+        return $leaderboard;
     }
 
     public function deleteAll(): void

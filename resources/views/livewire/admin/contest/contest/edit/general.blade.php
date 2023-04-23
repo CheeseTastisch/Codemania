@@ -28,6 +28,6 @@
         id="leaderboard_unfrozen"
         :model="\App\Models\Components\Modeled\Model::livewire('leaderboard_unfrozen', \App\Models\Components\Modeled\Livewire\LivewireUpdate::Lazy)"
         updatable>
-        Leaderboard aktivieren
+        Leaderboard freigeben
     </x-form.input.checkbox>
 </x-form.x>
