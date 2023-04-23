@@ -12,6 +12,8 @@ use Livewire\Component;
 class Leaderboard extends Component
 {
 
+    use LoadsDataLater;
+
     public ContestModel $contest;
 
     public $ignore_freeze = false;
@@ -19,7 +21,7 @@ class Leaderboard extends Component
     public function render(): View|\Illuminate\Foundation\Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
         return view('livewire.admin.contest.contest.edit.leaderboard', [
-            'leaderboard' => $this->contest->getLeaderboard($this->ignore_freeze)->take(5)
+            'leaderboard' => $this->loadData ? $this->contest->getLeaderboard($this->ignore_freeze)->take(5) : null
         ]);
     }
 

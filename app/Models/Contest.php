@@ -62,7 +62,12 @@ class Contest extends Model
     {
         $sortedLeaderboard = Contest::whereId($this->id)->with([
             'teams',
+            'teams.contest',
+            'teams.contest.contestDay',
             'teams.levelSubmissions',
+            'teams.levelSubmissions.team',
+            'teams.levelSubmissions.team.contest',
+            'teams.levelSubmissions.team.contest.contestDay',
             'teams.levelSubmissions.level',
             'teams.levelSubmissions.level.task',
             'teams.levelSubmissions.level.task.contest',
@@ -77,6 +82,7 @@ class Contest extends Model
                 'total_resolution_time' => $team->getTotalResolutionTime($ignoreFreeze),
             ]))
             ->filter(fn($team) => $team['points'] !== null && $team['total_resolution_time'] !== null)
+            ->sortBy('name')
             ->sortBy('total_resolution_time')
             ->sortByDesc('points');
 
