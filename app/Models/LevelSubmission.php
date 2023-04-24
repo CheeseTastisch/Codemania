@@ -53,6 +53,16 @@ class LevelSubmission extends Model
     {
         if ($this->status === 'pending' || $this->status === 'checking') return false;
 
+        if (!$this->level->instantly_rated && $this->status === 'accepted') {
+            if ($this->team->levelSubmissions()
+                ->where('level_id', $this->level->id)
+                ->where('status', 'accepted')
+                ->where('id', '<>', $this->id)
+                ->get()
+                ->some(fn($levelSubmission) => $levelSubmission->status_changed_at->isAfter($this->status_changed_at)))
+                return false;
+        }
+
         if ($this->team->contest->contestDay->training_only) return true;
 
         $contest = $this->level->task->contest;
@@ -61,7 +71,6 @@ class LevelSubmission extends Model
 
         if ($this->status_changed_at->isAfter($contest->freeze_leaderboard_at)) return false;
 
-        if ($contest->freeze_leaderboard_at === null) return true;
         if ($this->level->instantly_rated) return true;
 
         return false;

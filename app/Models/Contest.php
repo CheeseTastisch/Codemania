@@ -88,12 +88,13 @@ class Contest extends Model
 
         $leaderboard = collect();
         $place = 1;
-        $previousPoints = $sortedLeaderboard->first()->get('points');
-        $previousTotalResolutionTime = $sortedLeaderboard->first()->get('total_resolution_time');
+        $newPlace = 1;
+        $previousPoints = $sortedLeaderboard->first()?->get('points');
+        $previousTotalResolutionTime = $sortedLeaderboard->first()?->get('total_resolution_time');
 
         foreach ($sortedLeaderboard as $team) {
             if ($team['points'] !== $previousPoints || $team['total_resolution_time'] !== $previousTotalResolutionTime) {
-                $place++;
+                $place = $newPlace;
             }
 
             $leaderboard->push(collect([
@@ -107,6 +108,8 @@ class Contest extends Model
 
             $previousPoints = $team['points'];
             $previousTotalResolutionTime = $team['total_resolution_time'];
+
+            $newPlace++;
         }
 
         return $leaderboard;
