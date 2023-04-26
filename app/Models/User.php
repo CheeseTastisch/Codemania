@@ -11,10 +11,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Laravel\Scout\Searchable;
 
 class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
 {
-    use HasApiTokens, Notifiable, TwoFactorAuthenticatable;
+    use HasApiTokens, Notifiable, TwoFactorAuthenticatable, Searchable;
 
     protected $fillable = [
         'email',
@@ -96,6 +97,17 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
             'nickname' => $this->nickname,
             default => $this->full_name,
         };
+    }
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
+            'nickname' => $this->nickname,
+            'email' => $this->email,
+        ];
     }
 
 }

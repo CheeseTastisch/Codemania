@@ -4,6 +4,7 @@ use App\Models\Contest;
 use App\Models\ContestDay;
 use App\Models\Level;
 use App\Models\Task;
+use App\Models\Team;
 
 Route::view('/', 'site.admin.dashboard')->name('admin.dashboard');
 Route::view('/faq', 'site.admin.faq')->name('admin.faq');
@@ -26,6 +27,11 @@ Route::prefix('contest/')->group(function () {
         $contest->contestDay,
         'site.admin.contest.contest.leaderboard', compact('contest'))
     )->name('admin.contest.contest.leaderboard');
+
+    Route::get('/team/{team}', fn(Team $team) => setDayAndView(
+        $team->contest->contestDay,
+        'site.admin.contest.team.edit', compact('team'))
+    )->name('admin.contest.team.edit');
 
     Route::get('/task/{task}', fn(Task $task) => setDayAndView(
         $task->contest->contestDay,
