@@ -22,6 +22,11 @@ Route::prefix('contest/')->group(function () {
         'site.admin.contest.contest.edit', compact('contest'))
     )->name('admin.contest.contest.edit');
 
+    Route::get('/leaderboard/{contest}', fn(Contest $contest) => setDayAndView(
+        $contest->contestDay,
+        'site.admin.contest.contest.leaderboard', compact('contest'))
+    )->name('admin.contest.contest.leaderboard');
+
     Route::get('/task/{task}', fn(Task $task) => setDayAndView(
         $task->contest->contestDay,
         'site.admin.contest.task.edit', compact('task'))

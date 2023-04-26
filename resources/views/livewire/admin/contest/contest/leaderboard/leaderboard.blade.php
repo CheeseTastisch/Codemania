@@ -1,15 +1,15 @@
 <div wire:init="initData">
-    @if($loadData)
-        <div class="mb-3">
-            <x-form.input.checkbox
-                id="ignore_freeze" updatable
-                :model="\App\Models\Components\Modeled\Model::livewire('ignore_freeze', \App\Models\Components\Modeled\Livewire\LivewireUpdate::Lazy)">
-                Eingefrorene Punkte ignorieren
-            </x-form.input.checkbox>
-        </div>
+    <div class="mb-3">
+        <x-form.input.checkbox
+            id="ignore_freeze" updatable
+            :model="\App\Models\Components\Modeled\Model::livewire('ignore_freeze', \App\Models\Components\Modeled\Livewire\LivewireUpdate::Lazy)">
+            Eingefrorene Punkte auch anzeigen
+        </x-form.input.checkbox>
+    </div>
 
+    @if($loadData)
         <div wire:poll.1s>
-            <x-table.x>
+            <x-table.x :paginator="$leaderboard">
                 <x-slot name="header">
                     <x-table.header.simple name="#" />
                     <x-table.header.simple name="Team" />
@@ -28,10 +28,4 @@
             </x-table.x>
         </div>
     @endif
-
-    <div class="flex justify-end mt-3">
-        <x-button.big.link id="fullLeader" href="{{ route('admin.contest.contest.leaderboard', $contest) }}">
-            Gesamtes Leaderboard anzeigen
-        </x-button.big.link>
-    </div>
 </div>
