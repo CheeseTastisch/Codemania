@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
 use Laravel\Scout\Searchable;
 
 class Team extends Model
@@ -21,6 +22,31 @@ class Team extends Model
         'block_reason',
         'blocked_by',
     ];
+
+    public static function fromRandom(Contest $contest, Collection $users, int $number): self
+    {
+        $admin = $users->random();
+        $members = $users->filter(fn($user) => $user->id !== $admin->id);
+
+        $name = 'Glücksteam ' . $number;
+        if ($contest->teams()->whereName($name)->exists()) {
+            $number *= 10;
+            $name = 'Glücksteam ' . $number;
+        }
+
+        $team = static::create([
+            'contest_id' => $contest->id,
+            'name' =>  $name,
+        ]);
+
+        $team->users()->attach($admin, ['role' => 'admin']);
+        if ($members->count() > 0) $team->users()->attach($members, ['role' => 'member']);
+
+        // TODO: Send email to admin and members
+        // Or inform them that they are playing solo
+
+        return $team;
+    }
 
     public function contest(): BelongsTo
     {

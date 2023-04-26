@@ -82,7 +82,7 @@ class Contest extends Model
             ->first()
             ->teams
             ->filter(fn($team) => !$team->contest->contestDay->training_only)
-            ->map(fn ($team) => collect([
+            ->map(fn($team) => collect([
                 'name' => $team->name,
                 'team_id' => $team->id,
                 'points' => $team->getPoints($ignoreFreeze),
@@ -122,52 +122,31 @@ class Contest extends Model
         return $leaderboard;
     }
 
-    public function createTeams() {
-        // Every user that is not in a team that is in this contest
-        $noTeamUsers = $this->users()
+    public function generateTeams(): void
+    {
+        $users = $this->users()
             ->whereDoesntHave('teams', fn($query) => $query->where('contest_id', $this->id))
-            ->get();
-
-        // Every user that is in a team alone that is in this contest
-        $aloneUsers = $this->users()
-            ->whereHas('teams', fn($query) => $query->where('contest_id', $this->id))
             ->get()
-            ->filter(fn(User $user) => $user->getTeamForContest($this)->users->count() === 1)
-            ->each(fn(User $user) => $user->getTeamForContest($this)->delete());
+            ->merge($this->users()
+                ->whereHas('teams', fn($query) => $query->where('contest_id', $this->id))
+                ->get()
+                ->filter(fn(User $user) => $user->getTeamForContest($this)->users->count() === 1)
+                ->each(fn(User $user) => $user->getTeamForContest($this)->delete()))
+            ->shuffle()
+            ->chunk(4);
 
-        $users = $noTeamUsers->merge($aloneUsers);
-
-        $chunked = $users->chunk(4);
-
-        if ($chunked->last()->count() < 2) {
-            $last = $chunked->pop();
-            $secondLast = $chunked->pop();
+        if ($users->last()->count() < 3 && $users->count() > 1) {
+            $last = $users->pop();
+            $secondLast = $users->pop();
 
             $moved = $secondLast->pop();
             $last->push($moved);
 
-            $chunked->push($secondLast);
-            $chunked->push($last);
+            $users->push($secondLast);
+            $users->push($last);
         }
 
-        $chunked
-            ->map(fn(Collection $users) => collect([
-                'admin' => $users->first()->id,
-                'members' => $users->skip(1),
-            ]))
-            ->map(fn(Collection $team) => Team::create([
-                'admin' => $team->get('admin'),
-                'members' => $team->get('members'),
-                'team' => Team::create([
-                    'name' => $team->get('admin')->name,
-                    'contest_id' => $this->id,
-                ])
-            ]))
-            ->each(fn(Collection $team) => $team->get('team')->users()
-                ->sync($team->get('members')
-                    ->pluck('id')
-                    ->mapWithKeys(fn($id) => [$id => ['role' => 'member']])
-                    ->merge([$team->get('admin')->id => ['role' => 'admin']])));
+        $users->each(fn ($team, $index) => Team::fromRandom($this, $team, $index + 1));
     }
 
     public function deleteAll(): void
