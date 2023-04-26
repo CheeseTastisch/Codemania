@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 use Validator;
 
@@ -33,5 +34,10 @@ class AppServiceProvider extends ServiceProvider
         );
 
         Validator::extend('time', fn (string $attribute, mixed $value) => preg_match('/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/', $value));
+
+        Collection::macro('naturalImplode', function () {
+            $last = $this->pop();
+            return collect([$this->implode(', '), $last])->filter()->implode(' und ');
+        });
     }
 }

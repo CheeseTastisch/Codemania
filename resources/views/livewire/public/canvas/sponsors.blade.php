@@ -1,9 +1,8 @@
-<div class="container mx-auto flex justify-center">
-    <div class="flex flex-col space-4">
-        @foreach($contestDay->sponsors as $sponsor)
-            <div>
-                <img src="{{ route('public.file', $sponsor->logo_id) }}">
-            </div>
-        @endforeach
-    </div>
+<div>
+    {{-- TODO: Style --}}
+    @foreach($day->sponsors as $sponsor)
+        <div class="w-12 h-12">
+            <img src="{{ route('public.file', $sponsor->logo_id) }}">
+        </div>
+    @endforeach
 </div>

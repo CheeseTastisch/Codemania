@@ -10,10 +10,11 @@ use Livewire\Component;
 class Sponsors extends Component
 {
 
-    public ContestDay $contestDay;
+    public ContestDay $day;
 
     public function render(): View|\Illuminate\Foundation\Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
         return view('livewire.public.canvas.sponsors');
     }
+
 }
