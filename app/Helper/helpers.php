@@ -73,10 +73,8 @@ if (!function_exists('is_assoc')) {
     }
 }
 
-if (!function_exists('uniqueId')) {
-
-    function uniqueId(array $ids): int
-    {
+if (!function_exists('array_id')) {
+    function array_id(array $ids): int {
         $id = crc32(md5(implode(',', $ids)));
         return $id < 0 ? $id * -1 : $id;
     }
