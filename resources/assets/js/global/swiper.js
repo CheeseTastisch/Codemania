@@ -3,6 +3,11 @@ import Swiper, { Autoplay } from "swiper";
 
 import 'swiper/css/autoplay'
 
+window.swiper = {
+    Swiper: Swiper,
+    Autoplay: Autoplay,
+};
+
 Livewire.on('loadSwiper', (id, data) => {
     const options = {
         modules: [],
