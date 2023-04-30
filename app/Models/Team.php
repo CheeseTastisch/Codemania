@@ -109,6 +109,53 @@ class Team extends Model
             ?->get('place');
     }
 
+    public function getTaskLevelHeaders(Contest|null $contest = null): Collection {
+        return ($contest ?? $this->contest)->tasks
+            ->map(fn (Task $task) => [
+                'task' => $task,
+                'levels' => $task->levels
+            ])
+            ->map(fn (array $task) => collect([
+                'name' => $task['task']->name,
+                'levels' => $task['levels']
+                    ->map(fn (Level $level) => collect([
+                        'level' => $level->level,
+                        'state' => $this->getLevelState($level)
+                    ])->sortBy('level'))
+            ]));
+    }
+
+    private function getLevelState(Level $level): LevelState
+    {
+        $levelSubmission = $this->levelSubmissions()->whereLevelId($level->id)->first();
+
+        if ($levelSubmission === null) {
+            $previousLevel = $level->task->levels()->where('level', '<', $level->level)->orderBy('level', 'desc')->first();
+
+            if ($previousLevel === null) return LevelState::UNLOCKED;
+
+            $previousLevelSubmission = $this->levelSubmissions()->whereLevelId($previousLevel->id)->first();
+            if ($previousLevelSubmission === null) return LevelState::LOCKED;
+
+            if ($previousLevelSubmission->status === 'accepted') return LevelState::UNLOCKED;
+            if (!$previousLevel->instantly_rated && !$previousLevel->task->contest->leaderboard_unfrozen) return LevelState::UNLOCKED;
+
+            return LevelState::LOCKED;
+        }
+
+        if ($levelSubmission->status === 'accepted') {
+            if ($level->instantly_rated || $level->task->contest->leaderboard_unfrozen) return LevelState::ACCEPTED;
+            return LevelState::SECRETLY_ACCEPTED;
+        }
+
+        if ($levelSubmission->status === 'rejected') {
+            if ($level->instantly_rated || $level->task->contest->leaderboard_unfrozen) return LevelState::REJECTED;
+            return LevelState::SECRETLY_REJECTED;
+        }
+
+        return LevelState::UNLOCKED;
+    }
+
     public function toSearchableArray(): array
     {
         return [
