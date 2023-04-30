@@ -13,11 +13,13 @@ use Str;
 class StorageFileProvider
 {
 
-    public function uploadFile(TemporaryUploadedFile|\Illuminate\Http\UploadedFile $file, User|null $from = null): UploadedFile {
+    public function uploadFile(TemporaryUploadedFile|\Illuminate\Http\UploadedFile $file, User|null $from = null): UploadedFile
+    {
         $name = $file->getClientOriginalName();
 
         $name = pathinfo($name, PATHINFO_FILENAME);
         $extension = $file->guessExtension() ?? $file->getClientOriginalExtension();
+        $mimeType = $file->getMimeType();
 
         do {
             $storage_path = Str::random();
@@ -35,17 +37,18 @@ class StorageFileProvider
             'user_id' => $from?->id,
             'name' => $name,
             'extension' => $extension,
+            'mime_type' => $mimeType,
             'storage_path' => $storage_path,
         ]);
     }
 
     public function downloadFile(UploadedFile $file): \Symfony\Component\HttpFoundation\StreamedResponse
     {
-        $content = Storage::get($this->getStoragePath($file->storage_path));
-        $content = base64_decode($content);
-        return response()->streamDownload(function () use ($content) {
-            echo $content;
-        }, $this->getBaseName($file));
+        return response()->streamDownload(
+            fn () => print($this->getFileContent($file)),
+            $this->getBaseName($file),
+            ['Content-Type' => $file->mime_type]
+        );
     }
 
     public function getFileContent(UploadedFile $file): string

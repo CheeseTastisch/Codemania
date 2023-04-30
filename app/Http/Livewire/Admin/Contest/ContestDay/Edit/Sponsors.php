@@ -27,6 +27,7 @@ class Sponsors extends Component
         'url' => '',
         'background' => 'light',
         'logo' => null,
+        'on_canvas' => false,
     ];
 
     public $updateSponsor, $updateId = null;
@@ -51,7 +52,7 @@ class Sponsors extends Component
 
     public function create(): void
     {
-        $this->validateMultiple(['createSponsor.name', 'createSponsor.url', 'createSponsor.background', 'createSponsor.logo']);
+        $this->validateMultiple(['createSponsor.name', 'createSponsor.url', 'createSponsor.background', 'createSponsor.logo', 'createSponsor.on_canvas']);
 
         if (ContestDaySponsor::whereName($this->createSponsor['name'])
             ->whereContestDayId($this->contestDay->id)
@@ -66,6 +67,7 @@ class Sponsors extends Component
             'url' => $this->createSponsor['url'],
             'background' => $this->createSponsor['background'],
             'logo_id' => StorageFile::uploadFile($this->createSponsor['logo'])->id,
+            'on_canvas' => $this->createSponsor['on_canvas'],
         ]);
 
         $this->createSponsor = [
@@ -73,52 +75,22 @@ class Sponsors extends Component
             'url' => '',
             'background' => 'light',
             'logo' => null,
+            'on_canvas' => false,
         ];
 
         $this->emit('modal', 'close', 'createSponsor');
         $this->emit('showToast', 'Du hast den Sponsor erfolgreich erstellt.');
     }
 
-//    public function prepareUpdate(int $id): void
-//    {
-//        $sponsor = ContestDaySponsor::whereId($id)->first();
-//
-//        $this->updateSponsor = [
-//            'id' => $sponsor->id,
-//            'name' => $sponsor->name,
-//            'url' => $sponsor->url,
-//            'background' => $sponsor->background,
-//        ];
-//
-//        $this->emit('modal', 'open', 'updateSponsor');
-//    }
-
     public function update(): void
     {
-        $this->validateMultiple(['updateSponsor.name', 'updateSponsor.url', 'updateSponsor.background', 'updateSponsor.logo']);
-
-//        $sponsor = ContestDaySponsor::whereId($this->updateSponsor['id'])->first();
-//
-//        $sponsor->update([
-//            'name' => $this->updateSponsor['name'],
-//            'url' => $this->updateSponsor['url'],
-//            'background' => $this->updateSponsor['background'],
-//        ]);
-//
-//        if (array_key_exists('logo', $this->updateSponsor) && $this->updateSponsor['logo'] != null) {
-//            $file = StorageFile::uploadFile($this->updateSponsor['logo']);
-//            $sponsor->update(['logo_id' => $file->id]);
-//
-//            $this->updateSponsor['logo'] = null;
-//        }
-//
-//        $this->emit('modal', 'close', 'updateSponsor');
-//        $this->emit('showToast', 'Du hast den Sponsor erfolgreich aktualisiert.');
+        $this->validateMultiple(['updateSponsor.name', 'updateSponsor.url', 'updateSponsor.background', 'updateSponsor.logo', 'updateSponsor.on_canvas']);
 
         $this->contestDay->sponsors()->whereId($this->updateId)->update([
             'name' => $this->updateSponsor['name'],
             'url' => $this->updateSponsor['url'],
             'background' => $this->updateSponsor['background'],
+            'on_canvas' => $this->updateSponsor['on_canvas'],
         ]);
 
         if (array_key_exists('logo', $this->updateSponsor) && $this->updateSponsor['logo'] != null) {
@@ -154,6 +126,7 @@ class Sponsors extends Component
             'createSponsor.url' => 'required|url',
             'createSponsor.background' => 'required|in:light,dark',
             'createSponsor.logo' => 'required|image',
+            'createSponsor.on_canvas' => 'required|boolean',
 
             'updateSponsor.name' => [
                 'required',
@@ -164,6 +137,7 @@ class Sponsors extends Component
             'updateSponsor.url' => 'required|url',
             'updateSponsor.background' => 'required|in:light,dark',
             'updateSponsor.logo' => 'nullable|image',
+            'updateSponsor.on_canvas' => 'required|boolean',
 
             'deleteId' => 'required|integer|exists:contest_day_sponsors,id',
         ];

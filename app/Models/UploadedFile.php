@@ -15,6 +15,7 @@ class UploadedFile extends Model
         'user_id',
         'name',
         'extension',
+        'mime_type',
         'storage_path',
     ];
 

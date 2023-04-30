@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('url');
             $table->foreignIdFor(UploadedFile::class, 'logo_id')->constrained('uploaded_files')->cascadeOnDelete();
             $table->enum('background', ['light', 'dark'])->default('light');
+            $table->boolean('on_canvas')->default(false);
             $table->timestamps();
         });
     }

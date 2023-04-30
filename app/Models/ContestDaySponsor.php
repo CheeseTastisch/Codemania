@@ -18,6 +18,7 @@ class ContestDaySponsor extends Model
         'url',
         'logo_id',
         'background',
+        'on_canvas',
     ];
 
     public function contestDay(): BelongsTo

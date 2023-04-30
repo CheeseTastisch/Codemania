@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignIdFor(User::class)->nullable();
             $table->string('name');
             $table->string('extension');
+            $table->string('mime_type');
             $table->uuid('storage_path')->unique();
             $table->timestamps();
         });
