@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Member\Contests\Home;
+namespace App\Http\Livewire\Member\Contest\Home;
 
 use App\Concerns\Livewire\LoadsDataLater;
 use App\Models\Contest;
@@ -15,12 +15,6 @@ class Container extends Component
 
     use LoadsDataLater;
 
-    /**
-     * @var Collection<Contest> $running
-     * @var Collection<Contest> $upcoming
-     * @var Collection<Contest> $forRegistration
-     * @var Collection<Contest> $past
-     */
     public Collection $running, $upcoming, $forRegistration, $past;
 
     public function render(): View|\Illuminate\Foundation\Application|Factory|\Illuminate\Contracts\Foundation\Application
@@ -47,7 +41,7 @@ class Container extends Component
 
         }
 
-        return view('livewire.member.contests.home.container');
+        return view('livewire.member.contest.home.container');
     }
 
 }

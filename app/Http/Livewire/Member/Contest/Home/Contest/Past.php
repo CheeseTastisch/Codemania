@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Member\Contests\Home\Contest;
+namespace App\Http\Livewire\Member\Contest\Home\Contest;
 
 use App\Models\Contest;
 use Illuminate\Contracts\View\Factory;
@@ -23,6 +23,6 @@ class Past extends Component
             $this->points = $team->getPoints();
         }
 
-        return view('livewire.member.contests.home.contest.past');
+        return view('livewire.member.contest.home.contest.past');
     }
 }
