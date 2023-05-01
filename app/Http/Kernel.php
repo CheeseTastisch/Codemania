@@ -73,8 +73,8 @@ class Kernel extends HttpKernel
         ],
 
         'admin.full' => [
-            '2fa',
-            '2fa_enabled',
+            '2fa.enabled',
+            '2fa.verified',
             'admin.db',
         ],
     ];
@@ -98,9 +98,9 @@ class Kernel extends HttpKernel
         'throttle' => ThrottleRequests::class,
         'verified' => EnsureEmailIsVerified::class,
         'not_verified' => EmailNotVerified::class,
-        '2fa' => TwoFactorAuthenticated::class,
-        'not_2fa' => NotTwoFactorAuthenticated::class,
-        '2fa_enabled' => RequiresTwoFactorEnabled::class,
+        '2fa.verified' => TwoFactorAuthenticated::class,
+        '2fa.not_verified' => NotTwoFactorAuthenticated::class,
+        '2fa.enabled' => RequiresTwoFactorEnabled::class,
         'admin.db' => IsAdmin::class,
     );
 

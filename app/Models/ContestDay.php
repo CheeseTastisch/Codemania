@@ -50,15 +50,6 @@ class ContestDay extends Model
         return $this->date;
     }
 
-    public function deleteAll(): void
-    {
-        $this->theme->delete();
-        $this->sponsors->each(fn($sponsor) => $sponsor->delete());
-        $this->contests->each(fn($contest) => $contest->deleteAll());
-
-        $this->delete();
-    }
-
     public function toSearchableArray(): array
     {
         return [

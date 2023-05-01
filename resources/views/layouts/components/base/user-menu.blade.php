@@ -29,21 +29,15 @@
     </div>
     <ul class="py-2" aria-labelledby="user-menu-button">
         <li>
+            <a href="{{ route('member.contests.home') }}"
+               class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                Meine Contests
+            </a>
+        </li>
+        <li>
             <a href="{{ route('member.profile') }}"
                class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                 Mein Profil
-            </a>
-        </li>
-        <li>
-            <a href="#"
-               class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                Mein Team
-            </a>
-        </li>
-        <li>
-            <a href="#"
-               class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                Meine Challenge
             </a>
         </li>
         @if(auth()->user()->is_admin)

@@ -29,7 +29,8 @@ class ContestDayTheme extends Model
         'seven_hundred',
         'eight_hundred',
         'nine_hundred',
-        'nine_hundred_fifty'
+        'nine_hundred_fifty',
+        'contest_day_id'
     ];
 
     protected $casts = [
@@ -46,7 +47,7 @@ class ContestDayTheme extends Model
         'nine_hundred_fifty' => ColorCast::class,
     ];
 
-    public static function default($contestId): self {
+    public static function default(int $contestId): self {
         $generated = static::create([
             'fifty' => static::getBackup()['fifty'],
             'hundred' => static::getBackup()['hundred'],
