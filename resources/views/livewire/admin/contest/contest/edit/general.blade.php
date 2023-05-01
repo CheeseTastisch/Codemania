@@ -15,6 +15,11 @@
         updatable type="time" />
 
     <x-form.input.x
+        id="participants_limit" label="Teilnehmerlimit"
+        :model="\App\Models\Components\Modeled\Model::livewire('participants_limit', \App\Models\Components\Modeled\Livewire\LivewireUpdate::Lazy)"
+        type="number" updatable />
+
+    <x-form.input.x
         id="wrong_solution_penalty" label="Strafzeit bei falscher Lösung"
         :model="\App\Models\Components\Modeled\Model::livewire('wrong_solution_penalty', \App\Models\Components\Modeled\Livewire\LivewireUpdate::Lazy)"
         updatable type="number" />

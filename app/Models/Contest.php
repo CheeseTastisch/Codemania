@@ -21,6 +21,7 @@ class Contest extends Model
         'contest_day_id',
         'start_time',
         'end_time',
+        'participants_limit',
         'wrong_solution_penalty',
         'freeze_leaderboard_at',
         'leaderboard_unfrozen',

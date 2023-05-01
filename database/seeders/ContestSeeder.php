@@ -53,6 +53,7 @@ class ContestSeeder extends Seeder
         Contest::create([
             'name' => 'HTL Traun',
             'contest_day_id' => $summer2023->id,
+            'participants_limit' => 10,
             'start_time' => Carbon::create(2023, 6, 21, 10),
             'end_time' => Carbon::create(2023, 6, 21, 13),
             'wrong_solution_penalty' => 5,
