@@ -48,8 +48,9 @@ class Table extends Component
             'name' => $this->name,
             'date' => Carbon::parse($this->date),
             'registration_deadline' => $this->registration_deadline ? Carbon::parse($this->registration_deadline) : null,
-            'contest_day_theme_id' => ContestDayTheme::default()->id,
         ]);
+
+        ContestDayTheme::default($contestDay->id);
 
         return redirect()->route('admin.contest.contest-day.edit', $contestDay);
     }
@@ -58,7 +59,7 @@ class Table extends Component
     {
         $this->validateOnly('deleteId');
 
-        ContestDay::whereId($this->deleteId)->first()->deleteAll();
+        ContestDay::whereId($this->deleteId)->first()->delete();
         $this->deleteId = null;
 
         $this->emit('modal', 'close', 'deleteContestDay');
