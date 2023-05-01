@@ -42,8 +42,8 @@ class ContestSeeder extends Seeder
         $summer2023 = ContestDay::create([
             'date' => Carbon::create(2023, 6, 21),
             'registration_deadline' => Carbon::create(2023, 6, 19),
-            'name' => 'First Edition 2023',
-            'allow_training_from' => Carbon::create(2023, 3, 26),
+            'name' => 'First Edition',
+            'allow_training_from' => Carbon::create(2023, 6, 26),
             'current' => true,
         ]);
 
