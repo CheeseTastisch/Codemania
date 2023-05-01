@@ -30,11 +30,13 @@ class Container extends Component
                 ->where('start_time', '>', now());
 
             $this->forRegistration = ContestDay::where('registration_deadline', '>', now())
+                ->orWhere('registration_deadline', null)
                 ->with('contests')
                 ->get()
                 ->flatMap(fn(ContestDay $contestDay) => $contestDay->contests)
                 ->where('start_time', '>', now())
-                ->where(fn (Contest $contest) => $contests->where('id', $contest->id)->isEmpty());
+                ->where(fn (Contest $contest) => $contests->where('id', $contest->id)->isEmpty())
+                ->where(fn (Contest $contest) => $contest->participants_limit === null || $contest->users()->count() < $contest->participants_limit);
 
             $this->past = $contests
                 ->where('end_time', '<', now());
