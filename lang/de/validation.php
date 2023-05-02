@@ -229,6 +229,7 @@ return [
             'url' => 'URL',
         ],
         'wrong_solution_penalty' => 'Strafzeit für falsche Lösung',
+        'members' => 'Mitglieder',
     ],
 
 ];

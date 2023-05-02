@@ -3,14 +3,15 @@
 @section('title', 'Contest beitreten')
 
 @push('content')
-    <div class="flex flex-col items-center max-w-xl gap-5">
+    <div class="flex flex-col items-center max-w-xl gap-5 mt-5">
         <p class="text-center">
             Um dich für {{ $contest->contestDay->name }} ({{ $contest->name }}) anzumelden,
             musst entweder ein Team erstellen, einem Team beitreten oder in ein zufälliges Team eingeteilt werden.
         </p>
 
         <div class="w-full flex flex-col gap-3">
-            <a class="bg-accent-400 dark:bg-accent-600 hover:bg-accent-500 p-5 rounded-lg flex items-center w-full">
+            <a href="{{ route('member.contest.team.create', $contest) }}"
+                class="bg-accent-400 dark:bg-accent-600 hover:bg-accent-500 p-5 rounded-lg flex items-center w-full">
                 <svg class="w-10 mr-5" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5"
                      viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12 4.5v15m7.5-7.5h-15" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -18,7 +19,8 @@
                 <p>Team erstellen</p>
             </a>
 
-            <a class="bg-accent-400 dark:bg-accent-600 hover:bg-accent-500 p-5 rounded-lg flex items-center w-full">
+            <a href="#"
+                class="bg-accent-400 dark:bg-accent-600 hover:bg-accent-500 p-5 rounded-lg flex items-center w-full">
                 <svg class="w-10 mr-5" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5"
                      viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -28,7 +30,8 @@
                 <p>Team beitreten</p>
             </a>
 
-            <a class="bg-accent-400 dark:bg-accent-600 hover:bg-accent-500 p-5 rounded-lg flex items-center w-full">
+            <a  ref="#"
+                class="bg-accent-400 dark:bg-accent-600 hover:bg-accent-500 p-5 rounded-lg flex items-center w-full">
                 <svg class="w-10 mr-5" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5"
                      viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path

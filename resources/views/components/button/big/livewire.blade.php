@@ -1,4 +1,4 @@
-<button type="{{ $type }}" id="{{ $id }}" onclick="{{ $action }}"
+<button type="{{ $type }}" id="{{ $id }}"
         class="{{ $byStyle([
             \App\Models\Components\Styled\OutlinedStyle::OutlinedInfo->value => 'text-blue-400 border-blue-400 hover:bg-blue-400 hover:text-white focus:ring-blue-300 dark:hover:bg-blue-600 dark:border-blue-600 dark:text-blue-600 dark:hover:text-white dark:focus:ring-blue-800',
             \App\Models\Components\Styled\OutlinedStyle::OutlinedDanger->value => 'text-red-400 border-red-400 hover:bg-red-400 hover:text-white focus:ring-red-300 dark:hover:bg-red-600 dark:border-red-600 dark:text-red-600 dark:hover:text-white dark:focus:ring-red-800',
