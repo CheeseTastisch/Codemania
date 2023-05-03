@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Member\Contest\Team\Create;
 
 use App\Concerns\Livewire\WithSearch;
 use App\Models\Contest;
-use http\Client\Curl\User;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Validation\Rule;
@@ -40,6 +39,8 @@ class Form extends Component
             $errors->each(fn ($error) => $this->addError('members', $error));
             return;
         }
+
+        auth()->user()->contests()->attach($this->contest->id);
 
         $team = $this->contest->teams()->create([
             'name' => $this->name,
