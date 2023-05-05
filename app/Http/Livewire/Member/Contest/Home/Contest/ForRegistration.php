@@ -16,4 +16,11 @@ class ForRegistration extends Component
     {
         return view('livewire.member.contest.home.contest.for-registration');
     }
+
+    public function join() {
+        $this->contest->users()->attach(auth()->user()->id);
+
+        // TODO: Redirect to contest page
+    }
+
 }
