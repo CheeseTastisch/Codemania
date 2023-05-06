@@ -2,28 +2,17 @@
     <x-card.x title="{{ $contest->name }}">
         <p class="text-xl font-bold">Vielen Dank für deine Teilnahme am Contest!</p>
 
-        @if($contest->contestDay->registration_deadline?->isPast())
-            <p class="mt-2">Da die Anmeldefrist bereits abgelaufen ist, kannst du dein Team nicht mehr ändern.</p>
-            <p class="mt-1">Du kannst den Contest jedoch noch verlassen.</p>
-            <p class="text-danger-400 dark:text-danger-600">Bitte beachte, dass du nach dem Verlassen des Contests nicht mehr zurückkehren kannst!</p>
-            <p class="mb-3">Des weiteren kann es sein, dass ein Teammitglied dann alleine im Team ist und somit alleine antreten muss.</p>
-        @elseif($contest->contestDay->registration_deadline !== null)
-            <p class="mb-3">Du kannst dein Team noch bis zum Ende der Anmeldefrist ({{ $contest->contestDay->registration_deadline->format('d.m.Y') }}) ändern.</p>
-        @else
-            <p class="mb-3">Du kannst dein Team noch bis zum Start des Contests ({{ $contest->start_time->format('d.m.Y') }}) ändern.</p>
-        @endif
+        <p class="mt-1">Wir wünschen dir viel Erfolg!</p>
 
-        <x-button.big.livewire id="leave-contest" action="leaveContest">
-            Contest verlassen
-        </x-button.big.livewire>
+        <p class="mt-3">Du kannst den Contest jederzeit verlassen.</p>
+        <p>Bitte beachte, dass du den Contest nach Ende der Anmeldefrist nicht mehr betreten kannst, wenn du ihn verlassen hast.</p>
+        <p>Des weiteren kann es sein, dass einer deiner Teammitglieder alleine bleibt und somit alleine am Contest teilnehmen muss.</p>
 
-        <p class="mt-1">Du kannst den Contest jederzeit verlassen, indem du auf den Button klickst.</p>
-
-        <p class="mt-3">
-            Durch die Teilnahme am Contest erklärst du dich mit dem
-            <a href="{{ route('public.rules') }}" class="underline text-accent-400 dark:text-accent-600 hover:text-accent-600 dark:hover:text-accent-400">Regelwerk</a>
-            einverstanden.
-        </p>
+        <div class="flex justify-center mt-3">
+            <x-button.big.livewire id="leave-contest" action="leaveContest">
+                Contest verlassen
+            </x-button.big.livewire>
+        </div>
     </x-card.x>
 
     <x-card.x title="Team">

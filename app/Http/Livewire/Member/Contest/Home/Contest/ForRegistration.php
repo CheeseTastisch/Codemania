@@ -5,7 +5,9 @@ namespace App\Http\Livewire\Member\Contest\Home\Contest;
 use App\Models\Contest;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Livewire\Component;
+use Livewire\Redirector;
 
 class ForRegistration extends Component
 {
@@ -17,10 +19,10 @@ class ForRegistration extends Component
         return view('livewire.member.contest.home.contest.for-registration');
     }
 
-    public function join() {
+    public function join(): RedirectResponse|Redirector
+    {
         $this->contest->users()->attach(auth()->user()->id);
-
-        // TODO: Redirect to contest page
+        return redirect()->route('member.contest.contest', $this->contest);
     }
 
 }
