@@ -1,4 +1,4 @@
-<a href="#"
+<a href="{{ route('member.contest.contest', $contest) }}"
    class="rounded-lg bg-gradient-to-tl from-accent-400 dark:from-accent-600 hover:to-accent-600 hover:dark:to-accent-400 p-4" style="{{ $contest->theme_variables }}">
     <p class="font-bold text-2xl">{{ $contest->contestDay->name }}</p>
     <p class="font-bold text-xl">{{ $contest->name }}</p>

@@ -1,4 +1,4 @@
-<a href="#" wire:poll.5s
+<a href="{{ route('member.contest.contest', $contest) }}" wire:poll.5s
     class="rounded-lg bg-gradient-to-tl from-accent-400 dark:from-accent-600 hover:to-accent-600 hover:dark:to-accent-400 p-4" style="{{ $contest->theme_variables }}"
    x-data="{hours: @entangle('hours').defer, minutes: @entangle('minutes').defer, seconds: @entangle('seconds').defer, interval: null}"
    x-init="

@@ -17,7 +17,7 @@
         </p>
 
         <p class="mt-1 mb-3">
-            Des weiteren akzeptierst du damit automatisch das <a href="{{ route('public.rules') }}" class="underline">Regelwerk</a> des Contests.
+            Des weiteren akzeptierst du damit automatisch das <a href="{{ route('public.rules') }}" class="underline text-accent-400 dark:text-accent-600 hover:text-accent-600 dark:hover:text-accent-400">Regelwerk</a> des Contests.
         </p>
 
         <x-button.big.livewire
