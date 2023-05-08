@@ -15,6 +15,8 @@ class Upcoming extends Component
 
     public Contest $contest;
 
+    public ?Team $team;
+
     public int $days, $hours, $minutes, $seconds;
 
     public function mount(): void
@@ -29,6 +31,8 @@ class Upcoming extends Component
 
     public function render(): View|\Illuminate\Foundation\Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
+        $this->team = auth()->user()->getTeamForContest($this->contest);
+
         return view('livewire.member.contest.contest.upcoming');
     }
 
