@@ -14,9 +14,19 @@
         }, 1000);
      ">
     <p class="text-4xl">Noch</p>
-    <p class="text-9xl">
-        <span x-text="hours.toLocaleString('de-DE', {minimumIntegerDigits: 2})"></span>:<span x-text="minutes.toLocaleString('de-DE', {minimumIntegerDigits: 2})"></span>:<span x-text="seconds.toLocaleString('de-DE', {minimumIntegerDigits: 2})"></span>
-    </p>
+
+    <div class="mx-auto grid grid-cols-2 gap-20 text-center">
+        <div >
+            <div class="text-9xl font-bold" x-text="minutes.toLocaleString('de-DE', {minimumIntegerDigits: 2})"></div>
+            <div class="text-3xl">Minuten</div>
+        </div>
+
+        <div>
+            <div class="text-9xl font-bold" x-text="seconds.toLocaleString('de-DE', {minimumIntegerDigits: 2})"></div>
+            <div class="text-3xl">Sekunden</div>
+        </div>
+    </div>
+
     <p class="text-4xl">bis zum Ende von</p>
     <p class="text-7xl">{{ $names }}</p>
 </div>
