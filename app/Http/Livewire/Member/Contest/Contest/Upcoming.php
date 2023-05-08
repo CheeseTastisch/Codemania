@@ -15,29 +15,22 @@ class Upcoming extends Component
 
     public Contest $contest;
 
-    public ?Team $team;
+    public int $days, $hours, $minutes, $seconds;
+
+    public function mount(): void
+    {
+        $diff = $this->contest->start_time->diff(now());
+
+        $this->days = $diff->d;
+        $this->hours = $diff->h;
+        $this->minutes = $diff->i;
+        $this->seconds = $diff->s;
+    }
 
     public function render(): View|\Illuminate\Foundation\Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        $this->team = auth()->user()->getTeamForContest($this->contest);
         return view('livewire.member.contest.contest.upcoming');
     }
 
-    public function leaveContest(): RedirectResponse|Redirector
-    {
-        if (!isset($this->team)) $this->team = auth()->user()->getTeamForContest($this->contest);
-
-        $this->team?->users()?->detach(auth()->user());
-        $this->contest->users()->detach(auth()->user());
-
-        if ($this->team?->users()?->count() === 0) $this->team->delete();
-        else if ($this->team?->users()->wherePivot('role', 'admin')->count() === 0) {
-            $this->team?->users()->first()?->pivot->update(['role' => 'admin']);
-
-            // TODO: Send e-mail to team members
-        }
-
-        return redirect()->route('member.contest.home');
-    }
 
 }
