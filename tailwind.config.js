@@ -33,6 +33,20 @@ module.exports = {
                     '900': 'rgb(var(--color-accent-900) / <alpha-value>)',
                     '950': 'rgb(var(--color-accent-950) / <alpha-value>)',
                 }
+            },
+            minWidth: {
+                'sm': '24rem',
+                'md': '28rem',
+                'lg': '32rem',
+                'xl': '36rem',
+                '2xl': '42rem',
+                '3xl': '48rem',
+                '4xl': '56rem',
+                '5xl': '64rem',
+                '6xl': '72rem',
+                '7xl': '80rem',
+                '8xl': '88rem',
+                '9xl': '96rem',
             }
         },
   },

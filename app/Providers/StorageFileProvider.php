@@ -13,8 +13,10 @@ use Str;
 class StorageFileProvider
 {
 
-    public function uploadFile(TemporaryUploadedFile|\Illuminate\Http\UploadedFile $file, User|null $from = null): UploadedFile
+    public function uploadFile(TemporaryUploadedFile|\Illuminate\Http\UploadedFile|null $file, User|null $from = null): ?UploadedFile
     {
+        if (!$file) return null;
+
         $name = $file->getClientOriginalName();
 
         $name = pathinfo($name, PATHINFO_FILENAME);
