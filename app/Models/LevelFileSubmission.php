@@ -52,7 +52,7 @@ class LevelFileSubmission extends Model
         if ($submittedLines->last() === '') $submittedLines->pop();
 
         if ($correctLines->count() !== $submittedLines->count()) $status = false;
-        else if ($correctLines->map(fn($line, $index) => $line === $submittedLines[$index])->some(fn($lineStatus) => !$lineStatus)) $status = false;
+        else if ($correctLines->map(fn($line, $index) => trim($line) === trim($submittedLines[$index]))->some(fn($lineStatus) => !$lineStatus)) $status = false;
 
         $this->update(['status' => $status ? 'accepted' : 'rejected']);
     }

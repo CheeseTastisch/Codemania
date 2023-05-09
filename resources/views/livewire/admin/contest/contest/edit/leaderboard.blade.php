@@ -3,12 +3,12 @@
         <div class="mb-3">
             <x-form.input.checkbox
                 id="ignore_freeze" updatable
-                :model="\App\Models\Components\Modeled\Model::livewire('ignore_freeze', \App\Models\Components\Modeled\Livewire\LivewireUpdate::Lazy)">
+                :model="\App\Models\Components\Modeled\Model::livewire('ignore_freeze')">
                 Eingefrorene Punkte ignorieren
             </x-form.input.checkbox>
         </div>
 
-        <div wire:poll.1s>
+        <div wire:poll.10s>
             <x-table.x>
                 <x-slot name="header">
                     <x-table.header.simple name="#" />
