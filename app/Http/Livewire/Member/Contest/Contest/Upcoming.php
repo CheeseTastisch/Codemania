@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Member\Contest\Contest;
 
 use App\Models\Contest;
 use App\Models\Team;
+use App\Models\User;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -26,6 +27,8 @@ class Upcoming extends Component
     public int $days, $hours, $minutes, $seconds;
 
     public $name, $logo;
+
+    public $email;
 
     public function mount(): void
     {
@@ -117,6 +120,41 @@ class Upcoming extends Component
         $this->emit('showToast', 'Das Logo wurde erfolgreich entfernt.');
     }
 
+    public function invite(): void
+    {
+        if ($this->team === null) return;
+        if ($this->team->users()->whereId(auth()->user()->id)->first()?->pivot?->role !== 'admin') return;
+
+        $this->validateOnly('email');
+
+        $user = User::whereEmail($this->email)->first();
+        $role = $this->team?->users()->whereId($user?->id)->first()?->pivot?->role;
+
+        if ($role === 'invited') {
+            $this->addError('email', 'Dieser Benutzer wurde bereits eingeladen.');
+            return;
+        }
+
+        if ($role !== null) {
+            $this->addError('email', 'Dieser Benutzer ist bereits Mitglied deines Teams.');
+            return;
+        }
+
+        if ($user === null) {
+            $this->addError('email', 'Dieser Benutzer existiert nicht.');
+            return;
+        }
+
+        $this->team->users()->attach($user, ['role' => 'invited']);
+
+        // TODO: Send email to user
+
+        $this->email = null;
+
+        $this->emit('modal', 'close', 'inviteModal');
+        $this->emit('showToast', 'Der Benutzer wurde erfolgreich eingeladen.');
+    }
+
     protected function getRules(): array
     {
         return [
@@ -127,6 +165,7 @@ class Upcoming extends Component
                 Rule::unique('teams', 'name')->where('contest_id', $this->contest->id)
             ],
             'logo' => 'nullable|image|max:1024',
+            'email' => 'required|email'
         ];
     }
 

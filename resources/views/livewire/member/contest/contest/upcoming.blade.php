@@ -114,6 +114,73 @@
                 </x-form.x>
             </div>
         @endif
+
+        <div class="mt-4 lg:min-w-md">
+            <x-table.x>
+                <x-slot name="header">
+                    <x-table.header.simple name="Name"/>
+                    <x-table.header.simple name="Rolle"/>
+                    @if($isAdmin)
+                        <x-table.header.sr name="Aktionen"/>
+                    @endif
+                </x-slot>
+
+                @foreach($team->users()->wherePivot('role', '!=', 'invited')->get() as $user)
+                    <x-table.body.row :border="!$loop->last" :stripe="$loop->even">
+                        <x-table.body.cell>{{ $user->display_name }}</x-table.body.cell>
+                        <x-table.body.cell>{{ $user->pivot->role === 'admin' ? 'Administrator' : 'Mitglied' }}</x-table.body.cell>
+
+                        @if($isAdmin)
+                            <x-table.body.cell>
+                                @if($user->id !== auth()->user()->id)
+                                    <div class="flex space-x-2">
+                                        <svg @click="removeMemberId = @js($user->id); removeMemberName = @js($user->display_name); modal.open('removeMember')" data-tooltip-target="tooltip-remove-{{ $user->id }}" class="w-6 h-6 cursor-pointer hover:text-red-400 dark:hover:text-red-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                                        <div id="tooltip-remove-{{ $user->id }}" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-600 text-center">
+                                            Entfernen
+                                            <div class="tooltip-arrow" data-popper-arrow></div>
+                                        </div>
+
+                                        @if($team->users()->where('user_id', $user->id)->first()->pivot->role === 'admin')
+                                            <svg @click="downgradeMemberId = @js($user->id); downgradeMemberName = @js($user->display_name); modal.open('downgradeMember')" data-tooltip-target="tooltip-downgrade-{{ $user->id }}" class="w-6 h-6 cursor-pointer hover:text-red-400 dark:hover:text-red-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9 12.75l3 3m0 0l3-3m-3 3v-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                                            <div data-tooltip id="tooltip-downgrade-{{ $user->id }}" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-600 text-center">
+                                                Zum Benutzer herabstufen
+                                                <div class="tooltip-arrow" data-popper-arrow></div>
+                                            </div>
+                                        @else
+                                            <svg @click="upgradeMemberId = @js($user->id); upgradeMemberName = @js($user->display_name); modal.open('upgradeMember')" data-tooltip-target="tooltip-upgrade-{{ $user->id }}" class="w-6 h-6 cursor-pointer hover:text-green-400 dark:hover:text-green-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M15 11.25l-3-3m0 0l-3 3m3-3v7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                                            <div data-tooltip id="tooltip-upgrade-{{ $user->id }}" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-600 text-center">
+                                                Zum Administrator befördern
+                                                <div class="tooltip-arrow" data-popper-arrow></div>
+                                            </div>
+                                        @endif
+                                    </div>
+                                @endif
+                            </x-table.body.cell>
+                        @endif
+                    </x-table.body.row>
+                @endforeach
+            </x-table.x>
+
+            <div class="flex justify-end mt-2">
+                <x-button.big.modal id="openInviteModal" modal="inviteModal" action="open">
+                    Einladen
+                </x-button.big.modal>
+            </div>
+
+            <x-modal.x id="inviteModal" title="Einladen">
+                <x-form.x>
+                    <x-form.input.x
+                        id="email" name="email" label="E-Mail"
+                        :model="\App\Models\Components\Modeled\Model::livewire('email', \App\Models\Components\Modeled\Livewire\LivewireUpdate::Defer)" />
+
+                    <x-button.big.livewire
+                        id="invite" action="invite"
+                        full-width type="submit">
+                        Einladen
+                    </x-button.big.livewire>
+                </x-form.x>
+            </x-modal.x>
+        </div>
     @endif
 
     <p class="mt-8">Du kannst den Contest jederzeit verlassen.</p>
