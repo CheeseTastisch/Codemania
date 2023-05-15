@@ -53,7 +53,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
 
     public function teams(): BelongsToMany
     {
-        return $this->belongsToMany(Team::class)->withPivot('role');
+        return $this->belongsToMany(Team::class)->withPivot('role', 'invited_at');
     }
 
     public function contests(): BelongsToMany

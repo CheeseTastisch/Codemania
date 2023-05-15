@@ -2,12 +2,14 @@
 
 namespace App\Http\Livewire\Member\Contest\Contest;
 
+use App\Concerns\Livewire\ValidatesMultipleInputs;
 use App\Models\Contest;
 use App\Models\Team;
 use App\Models\User;
 use App\Notifications\Team\Invited;
 use App\Notifications\Team\Leave\Admin;
 use App\Notifications\Team\Leave\Member;
+use Carbon\Carbon;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -20,7 +22,7 @@ use StorageFile;
 class Upcoming extends Component
 {
 
-    use WithFileUploads;
+    use WithFileUploads, ValidatesMultipleInputs;
 
     public Contest $contest;
 
@@ -37,7 +39,7 @@ class Upcoming extends Component
     {
         $diff = $this->contest->start_time->diff(now());
 
-        $this->days = $diff->d;
+        $this->days = $diff->days;
         $this->hours = $diff->h;
         $this->minutes = $diff->i;
         $this->seconds = $diff->s;
@@ -55,17 +57,17 @@ class Upcoming extends Component
 
     public function leaveContest(): RedirectResponse|Redirector
     {
-        $this->team?->users()?->detach(auth()->user());
+        if (isset($team)) {
+            $this->team->users()->detach(auth()->user());
 
-        if ($this->team?->users->count()) $this->team->delete();
-        else if ($this->team?->users()?->wherePivot('role', 'admin')?->count() === 0) {
-            if ($this->team !== null) {
-                $newAdmin = $this->team->users->first();
-                $this->team->users()->updateExistingPivot($newAdmin, ['role' => 'admin']);
+            if ($this->team->users->wherePivot('role', '!=', 'invited')->count()) $this->team->delete();
+            else if ($this->team->users()->wherePivot('role', 'admin')->count() === 0) {
+                    $newAdmin = $this->team->users->first();
+                    $this->team->users()->updateExistingPivot($newAdmin, ['role' => 'admin']);
 
-                $newAdmin->notify(new Admin(auth()->user(), $this->team));
-                $this->team?->users()->wherePivot('role', 'member')
-                    ->each(fn($member) => $member->notify(new Member(auth()->user(), $this->team, $newAdmin)));
+                    $newAdmin->notify(new Admin(auth()->user(), $this->team));
+                    $this->team->users()->wherePivot('role', 'member')
+                        ->each(fn($member) => $member->notify(new Member(auth()->user(), $this->team, $newAdmin)));
             }
         }
 
@@ -76,7 +78,7 @@ class Upcoming extends Component
 
     public function createTeam(): void
     {
-        $this->validate();
+        $this->validateMultiple(['name', 'logo']);
 
         $this->team = $this->contest->teams()->create([
             'name' => $this->name,
@@ -86,13 +88,14 @@ class Upcoming extends Component
         $this->team->users()->attach(auth()->user(), ['role' => 'admin']);
 
         $this->logo = null;
+        $this->isAdmin = true;
 
         $this->emit('showToast', 'Du hast erfolgreich ein Team erstellt.');
     }
 
     public function updatedName(): void
     {
-        if ($this->team === null) return;
+        if (!isset($this->team)) return;
 
         if ($this->team->users()->whereId(auth()->user()->id)->first()?->pivot?->role !== 'admin') return;
 
@@ -105,7 +108,7 @@ class Upcoming extends Component
 
     public function updatedLogo(): void
     {
-        if ($this->team === null) return;
+        if (!isset($this->team)) return;
 
         if ($this->team->users()->whereId(auth()->user()->id)->first()?->pivot?->role !== 'admin') return;
 
@@ -119,7 +122,7 @@ class Upcoming extends Component
 
     public function removeLogo(): void
     {
-        if ($this->team === null) return;
+        if (!isset($this->team)) return;
 
         $this->team->update(['logo' => null]);
 
@@ -128,14 +131,32 @@ class Upcoming extends Component
 
     public function invite(): void
     {
-        if ($this->team === null) return;
+        if (!isset($this->team)) return;
+
         if ($this->team->users()->whereId(auth()->user()->id)->first()?->pivot?->role !== 'admin') return;
 
         $this->validateOnly('email');
 
         $user = User::whereEmail($this->email)->first();
 
-        // TODO: Check if invited or member
+        if ($user === null) {
+            $this->addError('email', 'Der Benutzer konnte nicht gefunden werden.');
+            return;
+        }
+
+        $pivot = $this->team->users()->whereId($user->id)->first()?->pivot;
+        if ($pivot?->role === 'invited' && Carbon::parse($pivot?->invited_at)->addDay()->isFuture()) {
+            $this->addError('email', 'Der Benutzer wurde bereits eingeladen.');
+            return;
+        }
+
+        if ($pivot?->role === 'member' || $pivot?->role === 'admin') {
+            $this->addError('email', 'Der Benutzer ist bereits Mitglied.');
+            return;
+        }
+
+        if ($pivot === null) $this->team->users()->attach($user, ['role' => 'invited', 'invited_at' => now()]);
+        else $this->team->users()->updateExistingPivot($user, ['role' => 'invited', 'invited_at' => now()]);
 
         $user->notify(new Invited($this->team));
 

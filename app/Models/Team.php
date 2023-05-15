@@ -73,7 +73,7 @@ class Team extends Model
 
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class)->withPivot('role');
+        return $this->belongsToMany(User::class)->withPivot('role', 'invited_at');
     }
 
     public function levelSubmissions(): HasMany
