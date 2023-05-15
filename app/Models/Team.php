@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Notifications\Team\Random\Admin;
+use App\Notifications\Team\Random\Member;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -23,6 +25,12 @@ class Team extends Model
         'blocked_by',
     ];
 
+    /**
+     * @param Contest $contest
+     * @param Collection<User> $users
+     * @param int $number
+     * @return self
+     */
     public static function fromRandom(Contest $contest, Collection $users, int $number): self
     {
         $admin = $users->random();
@@ -42,8 +50,8 @@ class Team extends Model
         $team->users()->attach($admin, ['role' => 'admin']);
         if ($members->count() > 0) $team->users()->attach($members, ['role' => 'member']);
 
-        // TODO: Send email to admin and members
-        // Or inform them that they are playing solo
+        $admin->notify(new Admin($team));
+        $members->each(fn($member) => $member->notify(new Member($team, $admin)));
 
         return $team;
     }

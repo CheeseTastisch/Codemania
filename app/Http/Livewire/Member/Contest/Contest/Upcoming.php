@@ -5,6 +5,9 @@ namespace App\Http\Livewire\Member\Contest\Contest;
 use App\Models\Contest;
 use App\Models\Team;
 use App\Models\User;
+use App\Notifications\Team\Invited;
+use App\Notifications\Team\Leave\Admin;
+use App\Notifications\Team\Leave\Member;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -56,11 +59,14 @@ class Upcoming extends Component
 
         if ($this->team?->users->count()) $this->team->delete();
         else if ($this->team?->users()?->wherePivot('role', 'admin')?->count() === 0) {
-            $newAdmin = $this->team?->users->first();
+            if ($this->team !== null) {
+                $newAdmin = $this->team->users->first();
+                $this->team->users()->updateExistingPivot($newAdmin, ['role' => 'admin']);
 
-            $this->team?->users()?->updateExistingPivot($newAdmin, ['role' => 'admin']);
-
-            // TODO: Send email to new admin and team
+                $newAdmin->notify(new Admin(auth()->user(), $this->team));
+                $this->team?->users()->wherePivot('role', 'member')
+                    ->each(fn($member) => $member->notify(new Member(auth()->user(), $this->team, $newAdmin)));
+            }
         }
 
         $this->contest->users()->detach(auth()->user());
@@ -128,26 +134,10 @@ class Upcoming extends Component
         $this->validateOnly('email');
 
         $user = User::whereEmail($this->email)->first();
-        $role = $this->team?->users()->whereId($user?->id)->first()?->pivot?->role;
 
-        if ($role === 'invited') {
-            $this->addError('email', 'Dieser Benutzer wurde bereits eingeladen.');
-            return;
-        }
+        // TODO: Check if invited or member
 
-        if ($role !== null) {
-            $this->addError('email', 'Dieser Benutzer ist bereits Mitglied deines Teams.');
-            return;
-        }
-
-        if ($user === null) {
-            $this->addError('email', 'Dieser Benutzer existiert nicht.');
-            return;
-        }
-
-        $this->team->users()->attach($user, ['role' => 'invited']);
-
-        // TODO: Send email to user
+        $user->notify(new Invited($this->team));
 
         $this->email = null;
 
