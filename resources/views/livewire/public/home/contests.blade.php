@@ -2,7 +2,8 @@
     @if($loadData)
         <div class="swiper-wrapper">
             @foreach($contests as $contest)
-                <a class="swiper-slide box rounded-lg bg-gradient-to-tl from-accent-400 dark:from-accent-600 hover:to-accent-600 hover:dark:to-accent-400 p-4" style="{{ $contest->theme_variables }}" href="#">
+                <a class="swiper-slide box rounded-lg bg-gradient-to-tl from-accent-400 dark:from-accent-600 hover:to-accent-600 hover:dark:to-accent-400 p-4" style="{{ $contest->theme_variables }}"
+                   href="{{ route('member.contest.training', $contest) }}">
                     @if($contest->contestDay->training_only)
                         <p class="font-bold text-2xl">
                             {{ $contest->name }}

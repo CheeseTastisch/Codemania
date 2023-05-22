@@ -19,3 +19,8 @@ Route::get('/contest/{contest}', function (Contest $contest) {
         'site.member.contest.contest', compact('contest')
     );
 })->name('member.contest.contest');
+
+Route::get('/training/{contest}', fn (Contest $contest) => setDayAndView(
+    $contest->contestDay,
+    'site.member.contest.training', compact('contest')
+))->name('member.contest.training');

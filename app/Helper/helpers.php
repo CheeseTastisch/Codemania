@@ -79,3 +79,9 @@ if (!function_exists('array_id')) {
         return $id < 0 ? $id * -1 : $id;
     }
 }
+
+if (!function_exists('discord_link')) {
+    function discord_link(): string {
+        return 'https://discord.gg/XSv86kMDCF';
+    }
+}
