@@ -47,6 +47,12 @@ module.exports = {
                 '7xl': '80rem',
                 '8xl': '88rem',
                 '9xl': '96rem',
+            },
+            gridTemplateRows: {
+                'variable': 'repeat(var(--rows), minmax(0, 1fr))',
+            },
+            gridTemplateColumns: {
+                'variable': 'repeat(var(--columns), minmax(0, 1fr))',
             }
         },
   },

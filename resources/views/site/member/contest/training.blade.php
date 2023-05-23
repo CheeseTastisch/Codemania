@@ -53,9 +53,7 @@
         <p class="text-center mt-8">
             Solltest du noch Fragen zum Training oder zu den Aufgaben haben, melde dich bitte auf unserem
             <a class="text-accent-400 dark:text-accent-600 hover:text-accent-600 dark:hover:text-accent-400 underline"
-               href="{{ discord_link() }}" target="_blank">
-                Discord-Server
-            </a>
+               href="{{ discord_link() }}" target="_blank">Discord-Server</a>
             im TRAINING bereich.
         </p>
 
