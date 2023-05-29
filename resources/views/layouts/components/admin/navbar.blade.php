@@ -44,6 +44,11 @@
                         Benutzer
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('admin.memes') }}" class="nav-link @if(str(Route::currentRouteName())->startsWith('admin.memes')) !text-accent-400 dark:!text-accent-600 @endif">
+                        Memes
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

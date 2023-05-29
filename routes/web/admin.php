@@ -43,3 +43,5 @@ Route::prefix('contest/')->group(function () {
         'site.admin.contest.level.edit', compact('level'))
     )->name('admin.contest.level.edit');
 });
+
+Route::view('/memes', 'site.admin.memes')->name('admin.memes');
