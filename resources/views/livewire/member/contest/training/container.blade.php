@@ -86,15 +86,11 @@
             @php($level = \App\Models\Level::whereId($selectedLevel)->first())
 
             <div class="w-full flex items-center justify-center p-4">
-                @if($levelSubmission = $level->levelSubmissions->where('team_id', $team->id)->sortByDesc('status_changed_at')->first())
+                @if($levelSubmission = $team->levelSubmissions
+                        ->sortByDesc('status_changed_at')
+                        ->sortBy(fn($levelSubmission) => $levelSubmission->status === 'checking' || $levelSubmission->status === 'pending' ? 1 : 0)
+                        ->first())
                     @switch($levelSubmission->status)
-                        @case('checking')
-                            @livewire('member.contest.training.checking', [
-                                    'level' => $level,
-                                    'levelSubmission' => $levelSubmission,
-                                    'team' => $team,
-                                ], key(array_id([$level->id, 'checking'])))
-                            @break
                         @case('accepted')
                             @livewire('member.contest.training.accepted', [
                                     'level' => $level,
