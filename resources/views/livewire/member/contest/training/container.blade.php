@@ -40,7 +40,11 @@
                      @click="selectedLevel = {{ $level->id }}"
                      :class="{'bg-accent-100 dark:bg-accent-900': selectedLevel === {{ $level->id }}}">
                     <div class="flex justify-center grow">Level {{ $level->level }}</div>
-                    @if($levelSubmission = $level->levelSubmissions->where('team_id', $team->id)->sortByDesc('status_changed_at')->first())
+                    @if($levelSubmission = $level->levelSubmissions
+                            ->where('team_id', $team->id)
+                            ->sortByDesc('status_changed_at')
+                            ->sortBy(fn($levelSubmission) => $levelSubmission->status === 'checking' || $levelSubmission->status === 'pending' ? 1 : 0)
+                            ->first())
                         @switch($levelSubmission->status)
                             @case('checking')
                                 <div class="justify-self-end">
@@ -86,7 +90,8 @@
             @php($level = \App\Models\Level::whereId($selectedLevel)->first())
 
             <div class="w-full flex items-center justify-center p-4">
-                @if($levelSubmission = $team->levelSubmissions
+                @if($levelSubmission = $level->levelSubmissions
+                        ->where('team_id', $team->id)
                         ->sortByDesc('status_changed_at')
                         ->sortBy(fn($levelSubmission) => $levelSubmission->status === 'checking' || $levelSubmission->status === 'pending' ? 1 : 0)
                         ->first())
@@ -96,21 +101,21 @@
                                     'level' => $level,
                                     'levelSubmission' => $levelSubmission,
                                     'team' => $team,
-                                ], key(array_id([$level->id, 'accepted'])))
+                                ], key(now()->timestamp))
                             @break
                         @case('rejected')
                             @livewire('member.contest.training.rejected', [
                                     'level' => $level,
                                     'levelSubmission' => $levelSubmission,
                                     'team' => $team,
-                                ], key(array_id([$level->id, 'rejected'])))
+                                ], key(now()->timestamp))
                             @break
                         @default
                             @livewire('member.contest.training.pending', [
                                     'level' => $level,
                                     'levelSubmission' => $levelSubmission,
                                     'team' => $team,
-                                ], key(array_id([$level->id, 'pending'])))
+                                ], key(now()->timestamp))
                             @break
                     @endswitch
                 @else
@@ -118,7 +123,7 @@
                             'level' => $level,
                             'levelSubmission' => null,
                             'team' => $team,
-                        ], key(array_id([$level->id, 'pending'])))
+                                ], key(now()->timestamp))
                 @endif
             </div>
         </div>

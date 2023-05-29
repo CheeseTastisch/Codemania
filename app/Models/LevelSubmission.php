@@ -62,15 +62,14 @@ class LevelSubmission extends Model
     {
         if ($this->status === 'pending' || $this->status === 'checking') return false;
 
-        if (!$this->level->instantly_rated && $this->status === 'accepted') {
-            if ($this->team->levelSubmissions()
-                ->where('level_id', $this->level->id)
-                ->where('status', 'accepted')
-                ->where('id', '<>', $this->id)
-                ->get()
-                ->some(fn($levelSubmission) => $levelSubmission->status_changed_at->isAfter($this->status_changed_at)))
-                return false;
-        }
+        if ($this->team->levelSubmissions()
+            ->where('level_id', $this->level->id)
+            ->where('id', '<>', $this->id)
+            ->where('status', '<>', 'pending')
+            ->where('status', '<>', 'checking')
+            ->get()
+            ->some(fn($levelSubmission) => $levelSubmission->status_changed_at->isAfter($this->status_changed_at)))
+            return false;
 
         if ($this->team->contest->contestDay->training_only) return true;
 
@@ -101,7 +100,7 @@ class LevelSubmission extends Model
         $this->update([
             'status' => $correct ? 'accepted' : 'rejected',
             'status_changed_at' => now(),
-            'image_file_id' => $image->id
+            'image_file_id' => $image->uploaded_file_id
         ]);
     }
 

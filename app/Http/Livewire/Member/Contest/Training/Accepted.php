@@ -13,16 +13,9 @@ use Livewire\WithFileUploads;
 class Accepted extends Component
 {
 
-    use WithFileUploads;
-
-
     public Level $level;
     public ?LevelSubmission $levelSubmission;
     public Team $team;
-
-    public $file;
-
-    public $sourceFile;
 
     public function render(): View|\Illuminate\Foundation\Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
