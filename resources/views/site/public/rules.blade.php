@@ -8,8 +8,20 @@
             </div>
 
             <section id="toc" class="my-8 dark:text-white">
-                <div class="md:text-3xl text-2xl mb-1">Inhaltsverzeichnis</div>
-                <ol class="pl-6 list-decimal marker:text-accent-400 dark:marker:text-accent-600">
+                <div class="md:text-3xl text-2xl font-bold mb-1">A. Inhalt</div>
+                <ul class="pl-6 list-disc marker:text-accent-400 dark:marker:text-accent-600">
+                    <li>
+                        <a href="#toc"
+                           class="underline text-accent-400 dark:text-accent-600 hover:text-accent-600 dark:hover:text-accent-400 visited:text-accent-700 dark:visited:text-accent-300">
+                            Inhalt
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#preface"
+                           class="underline text-accent-400 dark:text-accent-600 hover:text-accent-600 dark:hover:text-accent-400 visited:text-accent-700 dark:visited:text-accent-300">
+                            Vorwort
+                        </a>
+                    </li>
                     <li>
                         <a href="#participants"
                            class="underline text-accent-400 dark:text-accent-600 hover:text-accent-600 dark:hover:text-accent-400 visited:text-accent-700 dark:visited:text-accent-300">
@@ -23,7 +35,7 @@
                         </a>
 
 
-                        <ol class="pl-6 list-[lower-alpha]">
+                        <ul class="pl-6 list-disc">
                             <li>
                                 <a href="#team_building"
                                    class="underline text-accent-400 dark:text-accent-600 hover:text-accent-600 dark:hover:text-accent-400 visited:text-accent-700 dark:visited:text-accent-300">
@@ -58,7 +70,7 @@
                                     alleine antreten
                                 </a>
                             </li>
-                        </ol>
+                        </ul>
                     </li>
 
                     <li>
@@ -67,7 +79,7 @@
                             Wertung
                         </a>
 
-                        <ol class="pl-6 list-[lower-alpha]">
+                        <ul class="pl-6 list-disc">
                             <li>
                                 <a href="#rating_points"
                                    class="underline text-accent-400 dark:text-accent-600 hover:text-accent-600 dark:hover:text-accent-400 visited:text-accent-700 dark:visited:text-accent-300">
@@ -102,7 +114,7 @@
                                     einfrieren des Leaderboards
                                 </a>
                             </li>
-                        </ol>
+                        </ul>
                     </li>
 
                     <li>
@@ -111,7 +123,7 @@
                             Abgabe
                         </a>
 
-                        <ol class="pl-6 list-[lower-alpha]">
+                        <ul class="pl-6 list-disc">
                             <li>
                                 <a href="#submission_complete"
                                    class="underline text-accent-400 dark:text-accent-600 hover:text-accent-600 dark:hover:text-accent-400 visited:text-accent-700 dark:visited:text-accent-300">
@@ -132,7 +144,7 @@
                                     Hilfen
                                 </a>
                             </li>
-                        </ol>
+                        </ul>
                     </li>
 
                     <li>
@@ -155,7 +167,26 @@
                             Änderungen
                         </a>
                     </li>
-                </ol>
+                </ul>
+            </section>
+
+            <section id="preface" class="mb-8 dark:text-white">
+                <div class="md:text-3xl text-2xl font-bold mb-1">B. Vorwort</div>
+                <p>
+                    Dieses Regelwerk beschreibt die Regeln, welche für die Codemania gelten. Die Codemania ist ein
+                    Programmierwettbewerb und wird als solcher in der HTL Traun veranstaltet.
+                </p>
+
+                <p class="mt-2">Durch die Teilnahme am Wettbewerb erklärt sich der Teilnehmer mit den Regeln einverstanden.</p>
+
+                <p class="mt-2">
+                    Grundsätzlich sollte jeder Teilnehmer nach den Prinzipien von "Fair Play" handeln.
+                    Nur weil etwas nicht explizit verboten ist, heißt das nicht, dass es fair ist.
+                </p>
+                <p class="mt-1">
+                    Versucht nicht, die Regeln zu umgehen. Wenn ihr euch nicht sicher seid, ob etwas erlaubt ist,
+                    fragt bei der Organisation nach.
+                </p>
             </section>
 
             <section id="participants" class="mb-8 dark:text-white">
@@ -169,17 +200,17 @@
             <section id="teams" class="mb-8 dark:text-white">
                 <div class="md:text-3xl text-2xl font-bold mb-1">2. Teams</div>
 
-                <div id="team_building" class="md:text-2xl text-xl mb-1">2a. Teambildung</div>
+                <div id="team_building" class="md:text-2xl text-xl mb-1">(1) Teambildung</div>
                 <p>
                     Teilnehmer können ab dem Zeitpunkt der Registrierung bis zur Anmeldefrist ein Team bilden.
                 </p>
 
-                <div id="team_size" class="md:text-2xl text-xl mt-3 mb-1">2b. Teamgröße</div>
+                <div id="team_size" class="md:text-2xl text-xl mt-3 mb-1">(2) Teamgröße</div>
                 <p>
                     Ein Team besteht aus mindestens 2 und maximal 4 Teilnehmern.
                 </p>
 
-                <div id="team_random" class="md:text-2xl text-xl mt-3 mb-1">2c. zufällige Teams</div>
+                <div id="team_random" class="md:text-2xl text-xl mt-3 mb-1">(3) zufällige Teams</div>
                 <p>
                     Teilnehmer, welche bis zum Ende der Anmeldefrist kein Team gebildet haben oder alleine in einem
                     Team sind, werden zufällig einem Team zugeteilt.
@@ -189,13 +220,13 @@
                     Die Teams können danach nicht mehr verändert werden.
                 </p>
 
-                <div id="team_not_starting" class="md:text-2xl text-xl mt-3 mb-1">2d. nicht antreten</div>
+                <div id="team_not_starting" class="md:text-2xl text-xl mt-3 mb-1">(4) nicht antreten</div>
                 <p>
                     Ein Team oder ein Teilnehmer kann sich jederzeit dazu entscheiden nicht anzutreten.
                     Eine Abmeldung ist nicht notwendig.
                 </p>
 
-                <div id="team_starting_alone" class="md:text-2xl text-xl mt-3 mb-1">2e. alleine antreten</div>
+                <div id="team_starting_alone" class="md:text-2xl text-xl mt-3 mb-1">(5) alleine antreten</div>
                 <p>
                     Entscheiden sich alle Teilnehmer, außer einem dazu nicht anzutreten, so kann der verbleibende
                     Teilnehmer alleine antreten.
@@ -205,7 +236,7 @@
             <section id="rating" class="mb-8 dark:text-white">
                 <div class="md:text-3xl text-2xl font-bold mb-1">3. Wertung</div>
 
-                <div id="rating_points" class="md:text-2xl text-xl mt-3 mb-1">3a. Punkte</div>
+                <div id="rating_points" class="md:text-2xl text-xl mt-3 mb-1">(1) Punkte</div>
                 <p>
                     Für die eine korrekte,
                     <a href="#submission_complete" class="underline text-accent-400 dark:text-accent-600 hover:text-accent-600 dark:hover:text-accent-400 visited:text-accent-700 dark:visited:text-accent-300">
@@ -226,13 +257,13 @@
                     </li>
                 </ul>
 
-                <div id="rating_level_three" class="md:text-2xl text-xl mt-3 mb-1">3b. Level 3</div>
+                <div id="rating_level_three" class="md:text-2xl text-xl mt-3 mb-1">(2) Level 3</div>
                 <p>
                     Das dritte Level jeder Aufgabe wird erst nach dem Contest gewertet,
                     dementsprechend werden auch erst nach dem Contest die Punkte vergeben.
                 </p>
 
-                <div id="rating_places" class="md:text-2xl text-xl mt-3 mb-1">3c. Platzierung</div>
+                <div id="rating_places" class="md:text-2xl text-xl mt-3 mb-1">(3) Platzierung</div>
                 <p>
                     Teams werden nach ihren Punkten bewertet. Je mehr Punkte ein Team erreicht, desto höher ist die Platzierung.
                 </p>
@@ -242,13 +273,13 @@
                     Diese ist die Summe aller Zeiten, zu denen ein Level korrekt abgegeben wurde.
                 </p>
 
-                <div id="rating_leaderboard" class="md:text-2xl text-xl mt-3 mb-1">3d. Leaderboard</div>
+                <div id="rating_leaderboard" class="md:text-2xl text-xl mt-3 mb-1">(4) Leaderboard</div>
                 <p>
                     Während des Contests kann jeder das Leaderboard mit der Platzierung,
                     den derzeitigen Punkten und der Gesamtlösungszeit einsehen.
                 </p>
 
-                <div id="rating_leaderboard_freeze" class="md:text-2xl text-xl mt-3 mb-1">3e. einfrieren des Leaderboards</div>
+                <div id="rating_leaderboard_freeze" class="md:text-2xl text-xl mt-3 mb-1">(5) einfrieren des Leaderboards</div>
                 <p>
                     Das Leaderboard wird eine Stunde vor Ende des Contests eingefroren.
                     Ab diesem Zeitpunkt wird es nicht mehr aktualisiert.
@@ -258,13 +289,13 @@
             <section id="submission" class="mb-8 dark:text-white">
                 <div class="md:text-3xl text-2xl font-bold mb-1">4. Abgabe</div>
 
-                <div id="submission_complete" class="md:text-2xl text-xl mt-3 mb-1">4a. vollständige Abgabe</div>
+                <div id="submission_complete" class="md:text-2xl text-xl mt-3 mb-1">(1) vollständige Abgabe</div>
                 <p>
                     Um eine Abgabe als vollständig werten zu können, muss für jede Eingabe-Datei eine Ausgabe-Datei
                     sowie der Source-Code abgegeben werden.
                 </p>
 
-                <div id="submission_multiple" class="md:text-2xl text-xl mt-3 mb-1">4b. mehrfache Abgaben</div>
+                <div id="submission_multiple" class="md:text-2xl text-xl mt-3 mb-1">(2) mehrfache Abgaben</div>
                 <p>
                     Jedes Level kann mehrfach abgegeben werden.
                     Für eine falsche Abgabe werden fünf Minuten zur Gesamtlösungszeit addiert.
@@ -280,7 +311,7 @@
                     Ist die letzte Abgabe falsch und eine Abgabe zuvor korrekt, wird das Level als falsch gewertet.
                 </p>
 
-                <div id="submission_help" class="md:text-2xl text-xl mt-3 mb-1">4c. Hilfe</div>
+                <div id="submission_help" class="md:text-2xl text-xl mt-3 mb-1">(3) Hilfe</div>
                 <p>
                     Das Level muss von dem Teilnehmer selbst gelöst werden.
                     Der Code hierfür muss von den Teilnehmern selbst geschrieben sein.
@@ -320,7 +351,7 @@
             </section>
 
             <section id="changes" class="mb-8 dark:text-white">
-                <div class="md:text-3xl text-2xl font-bold mb-1">6. Regeländerungen</div>
+                <div class="md:text-3xl text-2xl font-bold mb-1">7. Regeländerungen</div>
 
                 <p>
                     Die Organisatoren behalten sich vor, dass Regelwerk jederzeit zu ändern.
