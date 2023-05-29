@@ -18,9 +18,19 @@
                 <div class="md:text-3xl text-xl mt-6 md:max-w-2xl font-bold">
                     {{ day()?->date?->translatedFormat('d. F Y') ?? 'Noch nicht bekannt' }}
                 </div>
+
                 <a type="button" href="#"
                    class="inline-block md:text-2xl mt-6 bg-accent-400 dark:bg-accent-600 hover:bg-accent-600 dark:hover:bg-accent-400 focus:ring-4 focus:ring-accent-300 dark:focus:ring-accent-700 font-medium rounded-lg text px-5 py-2.5 mr-2 mb-2 focus:outline-none">
                     Jetzt Teilnehmen
+                </a>
+
+                <p class="mt-8">
+                    Bei Fragen kannst du dich jederzeit an uns wenden. Tritt hierzu unserem Discord bei!
+                </p>
+
+                <a href="{{ discord_link() }}" target="_blank"
+                   class="inline-block md:text-2xl mt-4 bg-accent-400 dark:bg-accent-600 hover:bg-accent-600 dark:hover:bg-accent-400 focus:ring-4 focus:ring-accent-300 dark:focus:ring-accent-700 font-medium rounded-lg text px-5 py-2.5 mr-2 mb-2 focus:outline-none">
+                    Discord
                 </a>
             </div>
         </div>

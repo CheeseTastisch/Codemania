@@ -150,13 +150,13 @@ class Contest extends Model
         $users->each(fn ($team, $index) => Team::fromRandom($this, $team, $index + 1));
     }
 
-    public function deleteAll(): void
-    {
-        $this->tasks->each(fn($task) => $task->deleteAll());
-        $this->teams->each(fn($team) => $team->contests()->detach($this->id));
-
-        $this->delete();
+    public function getMaxPoints(): int {
+        return $this->tasks
+            ->flatMap(fn (Task $task) => $task->levels)
+            ->map(fn (Level $level) => $level->points)
+            ->sum();
     }
+
 
     public function toSearchableArray(): array
     {
