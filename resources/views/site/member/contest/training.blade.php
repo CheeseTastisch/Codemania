@@ -57,6 +57,6 @@
             im TRAINING bereich.
         </p>
 
-        @livewire('member.contest.contest.training', ['contest' => $contest])
+        @livewire('member.contest.training.container', ['contest' => $contest])
     </div>
 @endpush

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Livewire\Admin\Memes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -49,6 +50,14 @@ class LevelSubmission extends Model
         return $this->hasMany(LevelFileSubmission::class);
     }
 
+    public function getFileSubmission(LevelFile $levelFile): ?LevelFileSubmission
+    {
+        return $this->levelFileSubmissions
+            ->where('level_file_id', $levelFile->id)
+            ->sortByDesc('created_at')
+            ->first();
+    }
+
     public function shouldBeRated(bool $ignoreFreeze = false): bool
     {
         if ($this->status === 'pending' || $this->status === 'checking') return false;
@@ -81,14 +90,18 @@ class LevelSubmission extends Model
         $correct = true;
 
         collect($this->level->levelFiles)->each(function ($levelFile) use (&$correct) {
-            $levelFileSubmission = $this->levelFileSubmissions->firstWhere('level_file_id', $levelFile->id);
+            $levelFileSubmission = $this->getFileSubmission($levelFile);
             $levelFileSubmission?->evaluateStatus();
             if ($levelFileSubmission === null || $levelFileSubmission->status !== 'accepted') $correct = false;
         });
 
+        if ($this->level->instantly_rated) $image = Meme::whereFor($correct ? 'accepted' : 'rejected')->get()->random();
+        else $image = Meme::whereFor('unknown')->get()->random();
+
         $this->update([
             'status' => $correct ? 'accepted' : 'rejected',
-            'status_changed_at' => now()
+            'status_changed_at' => now(),
+            'image_file_id' => $image->id
         ]);
     }
 

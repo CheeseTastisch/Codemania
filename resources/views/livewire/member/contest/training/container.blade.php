@@ -2,6 +2,7 @@
     class="grid gap-4 sm:px-4 px-2 pt-10
         lg:grid-rows-1 lg:grid-cols-[1fr,4fr]
         grid-rows-[auto,auto] grid-cols-1">
+
     <div class="overflow-hidden p-4 rounded-lg border-2 shadow-lg border-accent-400 dark:border-accent-600 h-full">
         <div class="px-4 py-3 grid grid-cols-2 grid-rows-1 lg:grid-cols-1 lg:grid-rows-2 gap-5 h-full">
             <div class="flex flex-col justify-center items-center">
@@ -21,7 +22,7 @@
              style="--rows: {{ $contest->tasks->count() }}; --columns: var(--rows)">
             @foreach($contest->tasks->sortBy('order') as $task)
                 <div
-                    class="flex lg:flex-col justify-center items-center p-4 lg:border-b-0 border-b @if(!$loop->last) lg:border-r @endif border-accent-200 dark:border-accent-800 hover:bg-accent-300 dark:hover:bg-accent-700 cursor-pointer"
+                    class="flex lg:flex-col justify-center items-center p-4 lg:border-b-0 border-b @if($loop->last) !border-b-0 @else lg:border-r @endif border-accent-200 dark:border-accent-800 hover:bg-accent-300 dark:hover:bg-accent-700 cursor-pointer"
                     @click="selectedTask = {{ $task->id }}"
                     :class="{'bg-accent-100 dark:bg-accent-900': selectedTask === {{ $task->id }}}">
                     <div>{{ $task->name }}</div>
@@ -32,10 +33,10 @@
             @endforeach
         </div>
 
-        <div class="grid lg:grid-cols-variable lg:grid-rows-1 grid-rows-variable border-t-2 border-accent-400"
+        <div class="grid lg:grid-cols-variable lg:grid-rows-1 grid-rows-variable border-y-2 border-accent-400"
              style="--rows: {{ \App\Models\Task::whereId($selectedTask)->first()->levels->count() }}; --columns: var(--rows)">
             @foreach(\App\Models\Task::whereId($selectedTask)->first()->levels->sortBy('level') as $level)
-                <div class="flex items-center p-4 border-b @if(!$loop->last) lg:border-r @endif border-accent-200 dark:border-accent-800 hover:bg-accent-300 dark:hover:bg-accent-700 cursor-pointer"
+                <div class="flex items-center p-4 lg:border-b-0 border-b @if($loop->last) !border-b-0 @else lg:border-r @endif border-accent-200 dark:border-accent-800 hover:bg-accent-300 dark:hover:bg-accent-700 cursor-pointer"
                      @click="selectedLevel = {{ $level->id }}"
                      :class="{'bg-accent-100 dark:bg-accent-900': selectedLevel === {{ $level->id }}}">
                     <div class="flex justify-center grow">Level {{ $level->level }}</div>
@@ -80,8 +81,50 @@
                 </div>
             @endforeach
         </div>
-        <div>
 
+        <div>
+            @php($level = \App\Models\Level::whereId($selectedLevel)->first())
+
+            <div class="w-full flex items-center justify-center p-4">
+                @if($levelSubmission = $level->levelSubmissions->where('team_id', $team->id)->sortByDesc('status_changed_at')->first())
+                    @switch($levelSubmission->status)
+                        @case('checking')
+                            @livewire('member.contest.training.checking', [
+                                    'level' => $level,
+                                    'levelSubmission' => $levelSubmission,
+                                    'team' => $team,
+                                ], key(array_id([$level->id, 'checking'])))
+                            @break
+                        @case('accepted')
+                            @livewire('member.contest.training.accepted', [
+                                    'level' => $level,
+                                    'levelSubmission' => $levelSubmission,
+                                    'team' => $team,
+                                ], key(array_id([$level->id, 'accepted'])))
+                            @break
+                        @case('rejected')
+                            @livewire('member.contest.training.rejected', [
+                                    'level' => $level,
+                                    'levelSubmission' => $levelSubmission,
+                                    'team' => $team,
+                                ], key(array_id([$level->id, 'rejected'])))
+                            @break
+                        @default
+                            @livewire('member.contest.training.pending', [
+                                    'level' => $level,
+                                    'levelSubmission' => $levelSubmission,
+                                    'team' => $team,
+                                ], key(array_id([$level->id, 'pending'])))
+                            @break
+                    @endswitch
+                @else
+                    @livewire('member.contest.training.pending', [
+                            'level' => $level,
+                            'levelSubmission' => null,
+                            'team' => $team,
+                        ], key(array_id([$level->id, 'pending'])))
+                @endif
+            </div>
         </div>
     </div>
 </div>

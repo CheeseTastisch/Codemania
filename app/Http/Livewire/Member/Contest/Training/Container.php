@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Member\Contest\Contest;
+namespace App\Http\Livewire\Member\Contest\Training;
 
 use App\Models\Contest;
 use App\Models\Task;
@@ -9,7 +9,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
-class Training extends Component
+class Container extends Component
 {
 
     public Contest $contest;
@@ -17,6 +17,10 @@ class Training extends Component
 
     public ?int $selectedTask;
     public ?int $selectedLevel;
+
+    protected $listeners = [
+        'refresh' => '$refresh',
+    ];
 
     public function mount()
     {
@@ -28,10 +32,10 @@ class Training extends Component
 
     public function render(): View|\Illuminate\Foundation\Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        return view('livewire.member.contest.contest.training');
+        return view('livewire.member.contest.training.container');
     }
 
-    public function updatedSelectedTask()
+    public function updatedSelectedTask(): void
     {
         $this->selectedLevel = Task::whereId($this->selectedTask)
             ->first()

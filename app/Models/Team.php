@@ -117,21 +117,6 @@ class Team extends Model
             ?->get('place');
     }
 
-    public function getTaskLevelHeaders(Contest|null $contest = null): Collection {
-        return ($contest ?? $this->contest)->tasks
-            ->map(fn (Task $task) => [
-                'task' => $task,
-                'levels' => $task->levels
-            ])
-            ->map(fn (array $task) => collect([
-                'name' => $task['task']->name,
-                'levels' => $task['levels']
-                    ->map(fn (Level $level) => collect([
-                        'level' => $level->level,
-                        'state' => $this->getLevelState($level)
-                    ])->sortBy('level'))
-            ]));
-    }
 
     private function getLevelState(Level $level): LevelState
     {
