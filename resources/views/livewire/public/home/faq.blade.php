@@ -17,7 +17,7 @@
                         </svg>
                     </button>
                     <div aria-describedby="faq-{{ $faq->id }}-question" id="faq-{{ $faq->id }}-answer"
-                        class="px-4 max-h-0 transition-all duration-700 ease-in-out overflow-hidden"
+                        class="px-4 max-h-0 transition-all duration-700 ease-in-out overflow-hidden" x-data
                         x-ref="content" x-bind:style="selected === '{{ $faq->id }}' ? 'max-height: ' + $refs.content.scrollHeight + 'px' : ''">
                         <div class="text-sm py-4 font-light">
                             {!! $faq->answer !!}

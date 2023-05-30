@@ -1,7 +1,5 @@
 <div class="rounded-lg border border-gray-800 dark:border-gray-200 overflow-hidden mt-2">
     @if($faq?->id)
-        @dump($answer)
-
         <button id="faq-{{ $faq->id }}-question" aria-controls="faq-{{ $faq->id }}-answer" :aria-expanded="selected === {{ $faq->id }}"
                 class="flex items-center justify-between w-full px-4 py-4 font-medium text-lg text-left bg-accent-300 dark:bg-accent-700"
                 @click="selected = selected === {{ $faq->id }} ? null : {{ $faq->id }}">
