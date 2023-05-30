@@ -176,7 +176,11 @@
 
             <div class="mt-6 px-2">
                 <div class="flex flex-wrap items-center">
-                    @livewire('public.home.contests')
+                    <div class="mt-1 text-center text-2xl font-bold">
+                        Leider sind noch keine Contests verfügbar.
+                        Bitte schau in ein paar Tagen nochmal vorbei!
+                    </div>
+{{--                    @livewire('public.home.contests')--}}
                 </div>
             </div>
         </div>
