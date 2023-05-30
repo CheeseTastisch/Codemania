@@ -20,7 +20,7 @@
                 <x-table.body.cell>
                     <div class="flex items-center whitespace-nowrap dark:text-white">
                         <div class="w-12 h-12 rounded-lg flex items-center justify-center
-                            @if($sponsor->background == 'light') bg-slate-200 @elseif($sponsor->background == 'dark') bg-slate-800 @endif">
+                            @if($sponsor->background == 'light') bg-white @elseif($sponsor->background == 'dark') bg-slate-800 @endif">
                             <img class="w-10" src="{{ route('public.file', $sponsor->logo_id) }}" alt="Logo">
                         </div>
                         <div class="pl-3">
