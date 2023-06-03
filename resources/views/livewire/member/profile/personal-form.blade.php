@@ -44,7 +44,7 @@
         :options="[
               ['value' => 'null', 'name' => 'Keine angabe'],
               ['value' => 'm', 'name' => 'Männlich'],
-              ['value' => 'w', 'name' => 'Weiblich'],
+              ['value' => 'f', 'name' => 'Weiblich'],
               ['value' => 'o', 'name' => 'Divers'],
         ]"
         updatable />

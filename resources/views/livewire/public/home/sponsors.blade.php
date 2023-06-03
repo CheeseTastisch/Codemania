@@ -6,7 +6,7 @@
                     <div class="flex justify-center">
                         <div class="relative w-[12.5rem] h-[12.5rem]">
                             <div class="inset-0 z-0 p-3 rounded-lg flex items-center justify-center  w-[12.5rem] h-[12.5rem]
-                                                    @if($sponsor->background == 'light') bg-slate-200 @elseif($sponsor->background == 'dark') bg-slate-800 @endif">
+                                                    @if($sponsor->background == 'light') bg-white @elseif($sponsor->background == 'dark') bg-slate-800 @endif">
                                 <img src="{{ route('public.file', $sponsor->logo_id) }}"
                                      alt="{{ $sponsor->name }}">
                             </div>

@@ -19,12 +19,12 @@
                     {{ day()?->date?->translatedFormat('d. F Y') ?? 'Noch nicht bekannt' }}
                 </div>
 
-                <a type="button" href="#"
-                   class="inline-block md:text-2xl mt-6 bg-accent-400 dark:bg-accent-600 hover:bg-accent-600 dark:hover:bg-accent-400 focus:ring-4 focus:ring-accent-300 dark:focus:ring-accent-700 font-medium rounded-lg text px-5 py-2.5 mr-2 mb-2 focus:outline-none">
-                    Jetzt Teilnehmen
-                </a>
+{{--                <a type="button" href="#"--}}
+{{--                   class="inline-block md:text-2xl mt-6 bg-accent-400 dark:bg-accent-600 hover:bg-accent-600 dark:hover:bg-accent-400 focus:ring-4 focus:ring-accent-300 dark:focus:ring-accent-700 font-medium rounded-lg text px-5 py-2.5 mr-2 mb-2 focus:outline-none">--}}
+{{--                    Jetzt Teilnehmen--}}
+{{--                </a>--}}
 
-                <p class="mt-8">
+                <p class="mt-2 text-xl">
                     Bei Fragen kannst du dich jederzeit an uns wenden. Tritt hierzu unserem Discord bei!
                 </p>
 
@@ -174,14 +174,10 @@
                 </div>
             </div>
 
-            <div class="mt-6 px-2">
-                <div class="flex flex-wrap items-center">
-                    <div class="mt-1 text-center text-2xl font-bold">
-                        Leider sind noch keine Contests verfügbar.
-                        Bitte schau in ein paar Tagen nochmal vorbei!
-                    </div>
+            <div class="mt-6 px-2 text-center md:text-2xl text-xl font-bold">
+                Leider sind noch keine Contests verfügbar.
+                Bitte schau in ein paar Tagen nochmal vorbei!
 {{--                    @livewire('public.home.contests')--}}
-                </div>
             </div>
         </div>
     </section>

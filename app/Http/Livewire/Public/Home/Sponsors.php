@@ -24,6 +24,7 @@ class Sponsors extends Component
         $this->emit('loadSwiper', '#sponsors-swiper', [
             'loop' => true,
             'grabCursor' => true,
+            'autoplay' => [],
             'breakpoints' => [
                 640 => [
                     'slidesPerView' => min($max, 2),
