@@ -178,8 +178,8 @@
                 Leider sind noch keine Trainings-Aufgaben verfügbar.
                 Wir versuchen schnellstmöglich Trainings-Aufgaben bereitzustellen.
                 Bitte schau in ein paar Tagen nochmal vorbei!
-{{--                    @livewire('public.home.contests')--}}
             </div>
+{{--            @livewire('public.home.contests')--}}
         </div>
     </section>
 @endpush

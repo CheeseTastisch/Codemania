@@ -27,5 +27,6 @@ class GenerateThemes extends Command
     public function handle(): void
     {
         ContestDayTheme::all()->each(fn (ContestDayTheme $theme) => $theme->generateImages());
+        $this->info('All images for all themes are generated.');
     }
 }

@@ -16,6 +16,8 @@ class Contests extends Component
 
     public $contests;
 
+    public int $count = 0;
+
     public function render(): View|\Illuminate\Foundation\Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
         return view('livewire.public.home.contests');
@@ -29,22 +31,7 @@ class Contests extends Component
             ->get()
             ->flatMap(fn ($contestDay) => $contestDay->contests);
 
-        $this->emit('loadSwiper', '#contests-swiper', [
-            'breakpoints' => [
-                640 => [
-                    'slidesPerView' => min(1, $this->contests->count()),
-                ],
-                1024 => [
-                    'slidesPerView' => min(2, $this->contests->count()),
-                ],
-                1280 => [
-                    'slidesPerView' => min(3, $this->contests->count()),
-                ],
-                1536 => [
-                    'slidesPerView' => min(4, $this->contests->count()),
-                ],
-            ]
-        ]);
+        $this->count = $this->contests->count();
     }
 
 }
