@@ -28,7 +28,7 @@ class NotTwoFactorAuthenticated
 
             return $request->expectsJson()
                 ? abort(403, 'You have completed the two-factor authentication.')
-                : redirect()->route('member.dashboard');
+                : redirect()->route('public.home');
         }
 
         return $next($request);

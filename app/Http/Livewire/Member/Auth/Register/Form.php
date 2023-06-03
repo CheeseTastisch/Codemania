@@ -83,7 +83,7 @@ class Form extends Component
             'type' => 'success'
         ]);
 
-        return redirect()->route('member.dashboard');
+        return redirect()->route('public.home');
     }
 
 }

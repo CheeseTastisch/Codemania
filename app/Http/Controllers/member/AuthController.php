@@ -17,7 +17,7 @@ class AuthController extends Controller
             'type' => 'success'
         ]);
 
-        return redirect()->route('member.dashboard');
+        return redirect()->route('public.home');
     }
 
     public function resendVerificationEmail(Request $request) {

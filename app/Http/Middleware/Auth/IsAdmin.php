@@ -29,7 +29,7 @@ class IsAdmin
                 'type' => 'error'
             ]);
 
-            return redirect()->route('member.dashboard');
+            return redirect()->route('public.home');
         }
 
         return $next($request);

@@ -73,6 +73,8 @@ class Kernel extends HttpKernel
         ],
 
         'admin.full' => [
+            'auth',
+            'verified',
             '2fa.enabled',
             '2fa.verified',
             'admin.db',

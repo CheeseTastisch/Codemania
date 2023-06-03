@@ -50,8 +50,14 @@ class SettingsForm extends Component
     {
         $this->validateOnly('email');
 
-        auth()->user()->update(['email' => $this->email]);
+        auth()->user()->update([
+            'email' => $this->email,
+            'email_verified_at' => null,
+        ]);
         session()->flash('updated', 'email');
+        $this->emit('showToast', 'Da du deine E-Mail Adresse geändert hast, muss du diese neu bestätigen.', 2500, false, 'warning');
+
+        auth()->user()->sendEmailVerificationNotification();
     }
 
     public function changePassword(): void

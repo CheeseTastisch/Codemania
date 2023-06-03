@@ -43,7 +43,7 @@
                 Bitte bewahre diese Codes sicher auf, du kannst auf sie nicht erneut zugreifen.
             </p>
 
-            <a href="{{ session()->has('url.intended') ? session()->pull('url.intended') : route('member.dashboard') }}"
+            <a href="{{ session()->has('url.intended') ? session()->pull('url.intended') : route('public.home') }}"
                class="text-accent-400 dark:text-accent-600 hover:underline">
                 Ich habe die Codes gespeichert
             </a>
@@ -53,14 +53,14 @@
                 Deshalb können sie nicht erneut angezeigt werden.
             </p>
 
-            <a href="{{ session()->has('url.intended') ? session()->pull('url.intended') : route('member.dashboard') }}"
+            <a href="{{ session()->has('url.intended') ? session()->pull('url.intended') : route('public.home') }}"
                class="text-accent-400 dark:text-accent-600 hover:underline">
                 Weiter
             </a>
 
 {{--            <x-button.big.js--}}
 {{--                name="Weiter"--}}
-{{--                :href="session()->has('url.intended') ? session()->pull('url.intended') : route('member.dashboard')" />--}}
+{{--                :href="session()->has('url.intended') ? session()->pull('url.intended') : route('public.home')" />--}}
         @endif
     </x-card.x>
 @endpush

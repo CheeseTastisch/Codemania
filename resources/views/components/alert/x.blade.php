@@ -29,7 +29,7 @@
     </div>
 
     @if(($actions ?? false) !== false)
-        <div class="flex mt-4">
+        <div class="flex mt-4 gap-2">
             {{ $actions }}
         </div>
     @endif
