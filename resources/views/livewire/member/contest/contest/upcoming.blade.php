@@ -1,4 +1,7 @@
-<div class="flex flex-col items-center">
+<div class="flex flex-col items-center" x-data="{
+    removeMemberId: @entangle('remove_member_id').defer, removeMemberName: null,
+    upgradeMemberId: @entangle('upgrade_member_id').defer, upgradeMemberName: null,
+    downgradeMemberId: @entangle('downgrade_member_id').defer, downgradeMemberName: null }">
     <p class="text-xl md:text-2xl font-bold">Vielen Dank für deine Teilnahme am Contest!</p>
 
     <p class="md:text-xl mt-5">Der Contest beginnt in</p>
@@ -174,6 +177,54 @@
                     </x-button.big.livewire>
                 </x-form.x>
             </x-modal.x>
+
+            <x-modal.confirm id="removeMember">
+                <h3 class="text-lg font-medium">Möchtest du <span x-text="removeMemberName"></span> wirklich entfernen?</h3>
+
+                <div class="flex justify-center mt-5 space-x-2">
+                    <x-button.big.livewire id="removeMember" action="removeMember"
+                        :style="\App\Models\Components\Styled\OutlinedStyle::FilledDanger">
+                        Entfernen
+                    </x-button.big.livewire>
+
+                    <x-button.big.modal id="cancel" modal="removeMember" action="close"
+                        :style="\App\Models\Components\Styled\OutlinedStyle::OutlinedDanger">
+                        Abbrechen
+                    </x-button.big.modal>
+                </div>
+            </x-modal.confirm>
+
+            <x-modal.confirm id="upgradeMember">
+                <h3 class="text-lg font-medium">Möchtest du <span x-text="upgradeMemberName"></span> wirklich zum Administrator machen?</h3>
+
+                <div class="flex justify-center mt-5 space-x-2">
+                    <x-button.big.livewire id="upgradeMember" action="upgradeMember"
+                        :style="\App\Models\Components\Styled\OutlinedStyle::FilledSuccess">
+                        Befördern
+                    </x-button.big.livewire>
+
+                    <x-button.big.modal id="cancel" modal="upgradeMember" action="close"
+                        :style="\App\Models\Components\Styled\OutlinedStyle::OutlinedSuccess">
+                        Abbrechen
+                    </x-button.big.modal>
+                </div>
+            </x-modal.confirm>
+
+            <x-modal.confirm id="downgradeMember">
+                <h3 class="text-lg font-medium">Möchtest du <span x-text="downgradeMemberName"></span> wirklich zum Mitglied machen?</h3>
+
+                <div class="flex justify-center mt-5 space-x-2">
+                    <x-button.big.livewire id="downgradeMember" action="downgradeMember"
+                        :style="\App\Models\Components\Styled\OutlinedStyle::FilledDanger">
+                        Degradieren
+                    </x-button.big.livewire>
+
+                    <x-button.big.modal id="cancel" modal="downgradeMember" action="close"
+                        :style="\App\Models\Components\Styled\OutlinedStyle::OutlinedDanger">
+                        Abbrechen
+                    </x-button.big.modal>
+                </div>
+            </x-modal.confirm>
         </div>
     @endif
 

@@ -35,6 +35,9 @@ class Upcoming extends Component
 
     public $email;
 
+    public $remove_member_id = null,
+        $upgrade_member_id = null, $downgrade_member_id = null;
+
     public function mount(): void
     {
         $diff = $this->contest->start_time->diff(now());
@@ -166,6 +169,40 @@ class Upcoming extends Component
         $this->emit('showToast', 'Der Benutzer wurde erfolgreich eingeladen.');
     }
 
+    public function removeMember(): void
+    {
+        $this->validateOnly('remove_member_id');
+
+        $this->team->users()->detach($this->remove_member_id);
+
+        $this->emit('showToast', 'Du hast den Benutzer erfolgreich entfernt.');
+        $this->emit('modal', 'close', 'removeMember');
+    }
+
+    public function upgradeMember(): void
+    {
+        $this->validateOnly('upgrade_member_id');
+
+        $this->team->users()->updateExistingPivot($this->upgrade_member_id, [
+            'role' => 'admin',
+        ]);
+
+        $this->emit('showToast', 'Du hast den Benutzer erfolgreich zum Admin ernannt.');
+        $this->emit('modal', 'close', 'upgradeMember');
+    }
+
+    public function downgradeMember(): void
+    {
+        $this->validateOnly('downgrade_member_id');
+
+        $this->team->users()->updateExistingPivot($this->downgrade_member_id, [
+            'role' => 'member',
+        ]);
+
+        $this->emit('showToast', 'Du hast den Benutzer erfolgreich zum Mitglied herabgestuft.');
+        $this->emit('modal', 'close', 'downgradeMember');
+    }
+
     protected function getRules(): array
     {
         return [
@@ -176,7 +213,10 @@ class Upcoming extends Component
                 Rule::unique('teams', 'name')->where('contest_id', $this->contest->id)
             ],
             'logo' => 'nullable|image|max:1024',
-            'email' => 'required|email'
+            'email' => 'required|email',
+            'remove_member_id' => 'required|exists:users,id',
+            'upgrade_member_id' => 'required|exists:users,id',
+            'downgrade_member_id' => 'required|exists:users,id',
         ];
     }
 
