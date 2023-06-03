@@ -1,6 +1,16 @@
-<div class="swiper" id="contests-swiper" wire:init="initData">
+<div class="swiper mt-6" id="contests-swiper" wire:init="initData" x-data="{swiper: null, count: @entangle('count')}" wire:ignore.self>
     @if($loadData)
-        <div class="swiper-wrapper">
+        <div class="swiper-wrapper" x-init="swiper.params.breakpoints = {
+            1024: {
+                slidesPerView: Math.min(2, count)
+            },
+            1280: {
+                slidesPerView: Math.min(3, count)
+            },
+            1536: {
+                slidesPerView: Math.min(4, count)
+            }
+        }">
             @foreach($contests as $contest)
                 <a class="swiper-slide box rounded-lg bg-gradient-to-tl from-accent-400 dark:from-accent-600 hover:to-accent-600 hover:dark:to-accent-400 p-4" style="{{ $contest->theme_variables }}"
                    href="{{ route('member.contest.training', $contest) }}">
@@ -70,6 +80,24 @@
                     @endif
                 </a>
             @endforeach
+        </div>
+    @else
+        <div class="swiper-wrapper" x-init="swiper = new window.swiper.Swiper('#contests-swiper', {
+            grabCursor: true,
+            spaceBetween: 50,
+            slidesPerView: 1,
+            breakpoints: {
+                640: {
+                    slidesPerView: 2
+                }
+            }
+        })">
+            <div class="swiper-slide box rounded-lg bg-gray-400 dark:bg-gray-600 animate-pulse !h-[148px]">
+            </div>
+
+            <div class="swiper-slide box rounded-lg bg-gray-400 dark:bg-gray-600 animate-pulse !h-[148px]">
+            </div>
+
         </div>
     @endif
 </div>
