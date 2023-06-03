@@ -50,9 +50,7 @@
                 id="order" label="Reihenfolge"
                 :model="\App\Models\Components\Modeled\Model::livewire('order', \App\Models\Components\Modeled\Livewire\LivewireUpdate::Defer)" />
 
-            <x-button.big.livewire
-                id="create" action="create" type="submit"
-                prevent loading full-width>
+            <x-button.big.livewire id="create" action="create" type="submit" full-width>
                 Erstellen
             </x-button.big.livewire>
         </x-form.x>

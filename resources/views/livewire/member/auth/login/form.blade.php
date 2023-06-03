@@ -25,9 +25,7 @@
             </a>
         </div>
 
-        <x-button.big.livewire
-            id="login" action="login"
-            prevent loading full-width>
+        <x-button.big.livewire id="login" action="login" type="submit" full-width>
             Anmelden
         </x-button.big.livewire>
 

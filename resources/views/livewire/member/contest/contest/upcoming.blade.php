@@ -69,9 +69,7 @@
                     id="logo" label="Logo" accept="image/*"
                     :model="\App\Models\Components\Modeled\Model::livewire('logo', \App\Models\Components\Modeled\Livewire\LivewireUpdate::Defer)" />
 
-                <x-button.big.livewire
-                    id="createTeam" action="createTeam"
-                    full-width>
+                <x-button.big.livewire id="createTeam" action="createTeam" type="submit" full-width>
                     Team erstellen
                 </x-button.big.livewire>
             </x-form.x>
@@ -105,9 +103,7 @@
                                 :model="\App\Models\Components\Modeled\Model::livewire('logo', \App\Models\Components\Modeled\Livewire\LivewireUpdate::Lazy)"
                                 updatable />
 
-                            <x-button.big.livewire
-                                id="removeLogo" action="removeLogo"
-                                full-width>
+                            <x-button.big.livewire id="removeLogo" action="removeLogo" full-width>
                                 Logo entfernen
                             </x-button.big.livewire>
                         </x-form.x>
@@ -173,9 +169,7 @@
                         id="email" name="email" label="E-Mail"
                         :model="\App\Models\Components\Modeled\Model::livewire('email', \App\Models\Components\Modeled\Livewire\LivewireUpdate::Defer)" />
 
-                    <x-button.big.livewire
-                        id="invite" action="invite"
-                        full-width type="submit">
+                    <x-button.big.livewire id="invite" action="invite" type="submit" full-width>
                         Einladen
                     </x-button.big.livewire>
                 </x-form.x>

@@ -25,9 +25,7 @@
             id="password_confirmation" label="Passwort wiederholen"
             :model="\App\Models\Components\Modeled\Model::livewire('password_confirmation', \App\Models\Components\Modeled\Livewire\LivewireUpdate::Defer)" />
 
-        <x-button.big.livewire
-            id="resetPassword" action="resetPassword"
-            prevent loading full-width>
+        <x-button.big.livewire id="resetPassword" action="resetPassword" type="submit" full-width>
             Passwort zurücksetzen
         </x-button.big.livewire>
     @endif

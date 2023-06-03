@@ -32,9 +32,7 @@
             label="Neues Passwort bestätigen"
             :model="\App\Models\Components\Modeled\Model::livewire('password_confirmation', \App\Models\Components\Modeled\Livewire\LivewireUpdate::Defer)" />
 
-        <x-button.big.livewire
-            id="changePassword" action="changePassword" type="submit"
-            full-width prevent loading>
+        <x-button.big.livewire id="changePassword" action="changePassword" type="submit" loading>
             Passwort ändern
         </x-button.big.livewire>
     </x-form.x>
@@ -51,9 +49,7 @@
                 label="2FA Code"
                 :model="\App\Models\Components\Modeled\Model::livewire('disable_2fa_code', \App\Models\Components\Modeled\Livewire\LivewireUpdate::Defer)" />
 
-            <x-button.big.livewire
-                id="disable2Fa" action="disable2Fa" type="submit"
-                full-width prevent loading>
+            <x-button.big.livewire id="disable2Fa" action="disable2Fa" type="submit" loading>
                 Zwei-Faktor-Authentifizierung deaktivieren
             </x-button.big.livewire>
         @elseif(auth()->user()->hasEnabled2Fa())
@@ -81,9 +77,7 @@
                 @endforeach
             </div>
 
-            <x-button.big.livewire
-                id="confirm2Fa" action="confirm2Fa" type="submit"
-                full-width prevent loading>
+            <x-button.big.livewire id="confirm2Fa" action="confirm2Fa" type="submit" loading>
                 Zwei-Faktor-Authentifizierung Aktivierung abschließen
             </x-button.big.livewire>
         @else
@@ -92,9 +86,7 @@
                 label="Derzeitiges Passwort"
                 :model="\App\Models\Components\Modeled\Model::livewire('enable_2fa_password', \App\Models\Components\Modeled\Livewire\LivewireUpdate::Defer)" />
 
-            <x-button.big.livewire
-                id="enable2Fa" action="enable2Fa" type="submit"
-                full-width prevent loading>
+            <x-button.big.livewire id="enable2Fa" action="enable2Fa" type="submit" loading>
                 Zwei-Faktor-Authentifizierung aktivieren
             </x-button.big.livewire>
         @endif

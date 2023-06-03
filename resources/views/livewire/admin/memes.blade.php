@@ -58,9 +58,7 @@
                     ['value' => 'unknown', 'name' => 'Unbekannt'],
                 ]" />
 
-            <x-button.big.livewire
-                id="create" action="create"
-                full-width>
+            <x-button.big.livewire id="create" action="create" type="submit" full-width>
                 Erstellen
             </x-button.big.livewire>
         </x-form.x>

@@ -61,9 +61,7 @@
                     id="block_reason" label="Grund"
                     :model="\App\Models\Components\Modeled\Model::alpineJs('blockReason')"/>
 
-                <x-button.big.livewire
-                    id="block" action="block"
-                    prevent loading
+                <x-button.big.livewire id="block" action="block" type="submit"
                     :style="\App\Models\Components\Styled\OutlinedStyle::FilledDanger">
                     Team blockieren
                 </x-button.big.livewire>

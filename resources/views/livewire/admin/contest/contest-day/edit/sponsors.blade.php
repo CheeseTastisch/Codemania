@@ -72,9 +72,7 @@
                 Auf Leinwand anzeigen
             </x-form.input.checkbox>
 
-            <x-button.big.livewire
-                id="create" action="create"
-                prevent loading full-width>
+            <x-button.big.livewire id="create" action="create" type="submit" full-width>
                 Erstellen
             </x-button.big.livewire>
         </x-form.x>
@@ -118,9 +116,7 @@
                 Auf Leinwand anzeigen
             </x-form.input.checkbox>
 
-            <x-button.big.livewire
-                id="update" action="update"
-                prevent loading full-width>
+            <x-button.big.livewire id="update" action="update" type="submit" full-width>
                 Speichern
             </x-button.big.livewire>
         </x-form.x>
