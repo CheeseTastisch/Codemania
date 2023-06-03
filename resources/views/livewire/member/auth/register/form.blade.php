@@ -41,9 +41,7 @@
             gelesen und akzeptiere diese.
         </x-form.input.checkbox>
 
-        <x-button.big.livewire
-            id="register" action="register"
-            prevent loading full-width>
+        <x-button.big.livewire id="register" action="register" type="submit" full-width>
             Registrieren
         </x-button.big.livewire>
     @endif

@@ -69,9 +69,7 @@
             :model="\App\Models\Components\Modeled\Model::livewire('profile_picture', \App\Models\Components\Modeled\Livewire\LivewireUpdate::Lazy)"
             updatable />
 
-        <x-button.big.livewire
-            id="remove_profile_picture" action="removeProfilePicture"
-            prevent loading full-width>
+        <x-button.big.livewire id="remove_profile_picture" action="removeProfilePicture" full-width>
             Profilbild entfernen
         </x-button.big.livewire>
     </x-form.x>

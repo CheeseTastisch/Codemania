@@ -35,9 +35,7 @@
                         :model="\App\Models\Components\Modeled\Model::livewire('answer')"
                         updatable wyiswyg />
 
-                    <x-button.big.livewire
-                        id="delete-{{ $faq->id }}" action="delete"
-                        prevent loading full-width>
+                    <x-button.big.livewire id="delete-{{ $faq->id }}" action="delete" full-width>
                         Löschen
                     </x-button.big.livewire>
                 </x-form.x>

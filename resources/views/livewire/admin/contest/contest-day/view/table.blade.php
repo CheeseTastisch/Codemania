@@ -58,9 +58,7 @@
                 id="registration_deadline" label="Anmeldefrist"
                 :model="\App\Models\Components\Modeled\Model::livewire('registration_deadline', \App\Models\Components\Modeled\Livewire\LivewireUpdate::Defer)" />
 
-            <x-button.big.livewire
-                id="create" action="create"
-                prevent loading full-width>
+            <x-button.big.livewire id="create" action="create" type="submit" full-width>
                 Erstellen
             </x-button.big.livewire>
         </x-form.x>

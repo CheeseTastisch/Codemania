@@ -42,9 +42,7 @@
                 :model="\App\Models\Components\Modeled\Model::livewire('solution_file', \App\Models\Components\Modeled\Livewire\LivewireUpdate::Defer)"
                 accept="text/plain" />
 
-            <x-button.big.livewire
-                id="createFile" action="create"
-                prevent loading full-width>
+            <x-button.big.livewire id="createFile" action="create" type="submit" full-width>
                 Neue Abgabe erstellen
             </x-button.big.livewire>
         </x-form.x>
