@@ -58,8 +58,16 @@ class Upcoming extends Component
         return view('livewire.member.contest.contest.upcoming');
     }
 
-    public function leaveContest(): RedirectResponse|Redirector
+    public function leaveContest(): RedirectResponse|Redirector|null
     {
+        if ($this->contest->contestDay->registration_deadline?->isPast()) {
+            $this->emit('showToast', [
+                'text' => 'Du kannst den Contest nicht mehr verlassen.',
+                'type' => 'danger'
+            ]);
+            return null;
+        }
+
         if (isset($team)) {
             $this->team->users()->detach(auth()->user());
 
@@ -98,6 +106,14 @@ class Upcoming extends Component
 
     public function updatedName(): void
     {
+        if ($this->contest->contestDay->registration_deadline?->isPast()) {
+            $this->emit('showToast', [
+                'text' => 'Du kannst den Namen des Teams nicht mehr ändern.',
+                'type' => 'danger'
+            ]);
+            return;
+        }
+
         if (!isset($this->team)) return;
 
         if ($this->team->users()->whereId(auth()->user()->id)->first()?->pivot?->role !== 'admin') return;
@@ -134,6 +150,14 @@ class Upcoming extends Component
 
     public function invite(): void
     {
+        if ($this->contest->contestDay->registration_deadline?->isPast()) {
+            $this->emit('showToast', [
+                'text' => 'Du kannst keine Benutzer mehr einladen.',
+                'type' => 'danger'
+            ]);
+            return;
+        }
+
         if (!isset($this->team)) return;
 
         if ($this->team->users()->whereId(auth()->user()->id)->first()?->pivot?->role !== 'admin') return;
@@ -171,6 +195,14 @@ class Upcoming extends Component
 
     public function removeMember(): void
     {
+        if ($this->contest->contestDay->registration_deadline?->isPast()) {
+            $this->emit('showToast', [
+                'text' => 'Du kannst keine Benutzer mehr entfernen.',
+                'type' => 'danger'
+            ]);
+            return;
+        }
+
         $this->validateOnly('remove_member_id');
 
         $this->team->users()->detach($this->remove_member_id);
@@ -181,6 +213,14 @@ class Upcoming extends Component
 
     public function upgradeMember(): void
     {
+        if ($this->contest->contestDay->registration_deadline?->isPast()) {
+            $this->emit('showToast', [
+                'text' => 'Du kannst keine Benutzer mehr zum Admin ernennen.',
+                'type' => 'danger'
+            ]);
+            return;
+        }
+
         $this->validateOnly('upgrade_member_id');
 
         $this->team->users()->updateExistingPivot($this->upgrade_member_id, [
@@ -193,6 +233,14 @@ class Upcoming extends Component
 
     public function downgradeMember(): void
     {
+        if ($this->contest->contestDay->registration_deadline?->isPast()) {
+            $this->emit('showToast', [
+                'text' => 'Du kannst keine Admins mehr zu Mitgliedern herabstufen.',
+                'type' => 'danger'
+            ]);
+            return;
+        }
+
         $this->validateOnly('downgrade_member_id');
 
         $this->team->users()->updateExistingPivot($this->downgrade_member_id, [

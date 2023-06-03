@@ -95,21 +95,23 @@
         @if($isAdmin)
             <div class="mt-6 lg:min-w-md">
                 <x-form.x type="container">
-                    <x-form.input.x
-                        id="name" label="Name"
-                        :model="\App\Models\Components\Modeled\Model::livewire('name', \App\Models\Components\Modeled\Livewire\LivewireUpdate::Lazy)"
-                        updatable />
+                    @if($contest->contestDay->registration_deadline?->isFuture() ?? true)
+                        <x-form.input.x
+                            id="name" label="Name"
+                            :model="\App\Models\Components\Modeled\Model::livewire('name', \App\Models\Components\Modeled\Livewire\LivewireUpdate::Lazy)"
+                            updatable />
+                    @endif
 
-                        <x-form.x type="container" y-space="space-y-3">
-                            <x-form.input.file
-                                id="logo" label="Logo" accept="image/*"
-                                :model="\App\Models\Components\Modeled\Model::livewire('logo', \App\Models\Components\Modeled\Livewire\LivewireUpdate::Lazy)"
-                                updatable />
+                    <x-form.x type="container" y-space="space-y-3">
+                        <x-form.input.file
+                            id="logo" label="Logo" accept="image/*"
+                            :model="\App\Models\Components\Modeled\Model::livewire('logo', \App\Models\Components\Modeled\Livewire\LivewireUpdate::Lazy)"
+                            updatable />
 
-                            <x-button.big.livewire id="removeLogo" action="removeLogo" full-width>
-                                Logo entfernen
-                            </x-button.big.livewire>
-                        </x-form.x>
+                        <x-button.big.livewire id="removeLogo" action="removeLogo" full-width>
+                            Logo entfernen
+                        </x-button.big.livewire>
+                    </x-form.x>
                 </x-form.x>
             </div>
         @endif
@@ -119,7 +121,7 @@
                 <x-slot name="header">
                     <x-table.header.simple name="Name"/>
                     <x-table.header.simple name="Rolle"/>
-                    @if($isAdmin)
+                    @if($isAdmin && $contest->contestDay->registration_deadline?->isFuture() ?? true)
                         <x-table.header.sr name="Aktionen"/>
                     @endif
                 </x-slot>
@@ -129,7 +131,7 @@
                         <x-table.body.cell>{{ $user->display_name }}</x-table.body.cell>
                         <x-table.body.cell>{{ $user->pivot->role === 'admin' ? 'Administrator' : 'Mitglied' }}</x-table.body.cell>
 
-                        @if($isAdmin)
+                        @if($isAdmin && $contest->contestDay->registration_deadline?->isFuture() ?? true)
                             <x-table.body.cell>
                                 @if($user->id !== auth()->user()->id)
                                     <div class="flex space-x-2">
@@ -160,11 +162,13 @@
                 @endforeach
             </x-table.x>
 
-            <div class="flex justify-end mt-2">
-                <x-button.big.modal id="openInviteModal" modal="inviteModal" action="open">
-                    Einladen
-                </x-button.big.modal>
-            </div>
+            @if($contest->contestDay->registration_deadline?->isFuture() ?? true)
+                <div class="flex justify-end mt-2">
+                    <x-button.big.modal id="openInviteModal" modal="inviteModal" action="open">
+                        Einladen
+                    </x-button.big.modal>
+                </div>
+            @endif
 
             <x-modal.x id="inviteModal" title="Einladen">
                 <x-form.x>
@@ -228,12 +232,19 @@
         </div>
     @endif
 
-    <p class="mt-8">Du kannst den Contest jederzeit verlassen.</p>
+    @if($isAdmin && $contest->contestDay->registration_deadline?->isPast())
+        <p class="mt-8">Du kannst an deinem Team (Name, Mitglieder) nichts mehr ändern.</p>
+        <p class="mt-1">Grund hierfür ist, dass die Anmeldefrist ({{ $contest->contestDay->registration_deadline->format('d.m.Y') }}) bereits abgelaufen ist.</p>
+    @endif
+
     @if($contest->contestDay->registration_deadline !== null)
+        <p class="mt-8">Du kannst den Contest bis zum Ende der Anmeldefrist ({{ $contest->contestDay->registration_deadline->format('d.m.Y') }}) verlassen.</p>
         <p class="mt-1">
             Beachte jedoch, dass du den Contest nach der Anmeldefrist
             ({{ $contest->contestDay->registration_deadline->format('d.m.Y') }}) nicht mehr betreten kannst.
         </p>
+    @else
+        <p class="mt-8">Du kannst den Contest jederzeit verlassen.</p>
     @endif
 
     <p class="mt-1">Es kann sein, das hierdurch ein Team, mit nur einer Person entsteht.</p>
@@ -243,7 +254,9 @@
         in ein zufälliges Team eingeteilt.
     </p>
 
-    <x-button.big.livewire id="leave-contest" action="leaveContest">
-        Contest verlassen
-    </x-button.big.livewire>
+    @if($contest->contestDay->registration_deadline?->isFuture())
+        <x-button.big.livewire id="leave-contest" action="leaveContest">
+            Contest verlassen
+        </x-button.big.livewire>
+    @endif
 </div>
