@@ -20,23 +20,23 @@
             <div class="m-4">
                 <x-form.x type="container">
                     <x-form.input.x
-                        id="question" label="Frage"
+                        id="question-{{ $faq->id }}" label="Frage"
                         :model="\App\Models\Components\Modeled\Model::livewire('question', \App\Models\Components\Modeled\Livewire\LivewireUpdate::Lazy)"
                         updatable />
 
                     <x-form.input.select
-                        id="after" label="Nach"
+                        id="after-{{ $faq->id }}" label="Nach"
                         :model="\App\Models\Components\Modeled\Model::livewire('after', \App\Models\Components\Modeled\Livewire\LivewireUpdate::Lazy)"
                         :options="$options"
                         updatable />
 
                     <x-form.input.textarea
-                        id="answer" label="Antwort"
+                        id="answer-{{ $faq->id }}" label="Antwort"
                         :model="\App\Models\Components\Modeled\Model::livewire('answer')"
                         updatable wyiswyg />
 
                     <x-button.big.livewire
-                        id="delete" action="delete"
+                        id="delete-{{ $faq->id }}" action="delete"
                         prevent loading full-width>
                         Löschen
                     </x-button.big.livewire>

@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('faqs', function (Blueprint $table) {
             $table->id();
             $table->string('question');
-            $table->string('answer');
+            $table->longText('answer');
             $table->boolean('first')->default(false);
             $table->foreignIdFor(Faq::class, 'next_id')->nullable()->constrained('faqs')->nullOnDelete();
             $table->timestamps();
