@@ -35,6 +35,9 @@ class Upcoming extends Component
 
     public $email;
 
+    public $remove_member_id = null,
+        $upgrade_member_id = null, $downgrade_member_id = null;
+
     public function mount(): void
     {
         $diff = $this->contest->start_time->diff(now());
@@ -55,8 +58,16 @@ class Upcoming extends Component
         return view('livewire.member.contest.contest.upcoming');
     }
 
-    public function leaveContest(): RedirectResponse|Redirector
+    public function leaveContest(): RedirectResponse|Redirector|null
     {
+        if ($this->contest->contestDay->registration_deadline?->isPast()) {
+            $this->emit('showToast', [
+                'text' => 'Du kannst den Contest nicht mehr verlassen.',
+                'type' => 'danger'
+            ]);
+            return null;
+        }
+
         if (isset($team)) {
             $this->team->users()->detach(auth()->user());
 
@@ -95,6 +106,14 @@ class Upcoming extends Component
 
     public function updatedName(): void
     {
+        if ($this->contest->contestDay->registration_deadline?->isPast()) {
+            $this->emit('showToast', [
+                'text' => 'Du kannst den Namen des Teams nicht mehr ändern.',
+                'type' => 'danger'
+            ]);
+            return;
+        }
+
         if (!isset($this->team)) return;
 
         if ($this->team->users()->whereId(auth()->user()->id)->first()?->pivot?->role !== 'admin') return;
@@ -131,6 +150,14 @@ class Upcoming extends Component
 
     public function invite(): void
     {
+        if ($this->contest->contestDay->registration_deadline?->isPast()) {
+            $this->emit('showToast', [
+                'text' => 'Du kannst keine Benutzer mehr einladen.',
+                'type' => 'danger'
+            ]);
+            return;
+        }
+
         if (!isset($this->team)) return;
 
         if ($this->team->users()->whereId(auth()->user()->id)->first()?->pivot?->role !== 'admin') return;
@@ -166,6 +193,64 @@ class Upcoming extends Component
         $this->emit('showToast', 'Der Benutzer wurde erfolgreich eingeladen.');
     }
 
+    public function removeMember(): void
+    {
+        if ($this->contest->contestDay->registration_deadline?->isPast()) {
+            $this->emit('showToast', [
+                'text' => 'Du kannst keine Benutzer mehr entfernen.',
+                'type' => 'danger'
+            ]);
+            return;
+        }
+
+        $this->validateOnly('remove_member_id');
+
+        $this->team->users()->detach($this->remove_member_id);
+
+        $this->emit('showToast', 'Du hast den Benutzer erfolgreich entfernt.');
+        $this->emit('modal', 'close', 'removeMember');
+    }
+
+    public function upgradeMember(): void
+    {
+        if ($this->contest->contestDay->registration_deadline?->isPast()) {
+            $this->emit('showToast', [
+                'text' => 'Du kannst keine Benutzer mehr zum Admin ernennen.',
+                'type' => 'danger'
+            ]);
+            return;
+        }
+
+        $this->validateOnly('upgrade_member_id');
+
+        $this->team->users()->updateExistingPivot($this->upgrade_member_id, [
+            'role' => 'admin',
+        ]);
+
+        $this->emit('showToast', 'Du hast den Benutzer erfolgreich zum Admin ernannt.');
+        $this->emit('modal', 'close', 'upgradeMember');
+    }
+
+    public function downgradeMember(): void
+    {
+        if ($this->contest->contestDay->registration_deadline?->isPast()) {
+            $this->emit('showToast', [
+                'text' => 'Du kannst keine Admins mehr zu Mitgliedern herabstufen.',
+                'type' => 'danger'
+            ]);
+            return;
+        }
+
+        $this->validateOnly('downgrade_member_id');
+
+        $this->team->users()->updateExistingPivot($this->downgrade_member_id, [
+            'role' => 'member',
+        ]);
+
+        $this->emit('showToast', 'Du hast den Benutzer erfolgreich zum Mitglied herabgestuft.');
+        $this->emit('modal', 'close', 'downgradeMember');
+    }
+
     protected function getRules(): array
     {
         return [
@@ -176,7 +261,10 @@ class Upcoming extends Component
                 Rule::unique('teams', 'name')->where('contest_id', $this->contest->id)
             ],
             'logo' => 'nullable|image|max:1024',
-            'email' => 'required|email'
+            'email' => 'required|email',
+            'remove_member_id' => 'required|exists:users,id',
+            'upgrade_member_id' => 'required|exists:users,id',
+            'downgrade_member_id' => 'required|exists:users,id',
         ];
     }
 

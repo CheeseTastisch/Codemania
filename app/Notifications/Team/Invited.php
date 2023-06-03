@@ -40,7 +40,8 @@ class Invited extends Notification
             ->subject('Team einladung')
             ->greeting('Hallo' . ($notifiable->display_name ? " $notifiable->display_name" : '') . ',')
             ->line('Du wurdest in das Team ' . $this->team->name . ' eingeladen.')
-            ->action('Team beitreten', '#') // TODO: Add route
+            ->action('Team beitreten', route('member.contest.join', $this->team))
+            ->line('Du akzeptierst durch das beitreten des Teams das Regelwerk!')
             ->line('Solltest du die Einladung innerhalb von 24 Stunden nicht annehmen, wird sie ungültig.')
             ->line('Bitte beachte auch, dass du dein derzeitiges Team verlassen musst, um dem neuen beizutreten.')
             ->salutation('Dein Codemania-Team');
