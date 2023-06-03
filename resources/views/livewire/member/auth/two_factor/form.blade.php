@@ -10,7 +10,7 @@
             label="Zwei-Faktor-Authentifizierungscode"
             :model="\App\Models\Components\Modeled\Model::livewire('two_factor')" />
 
-        <x-button.big.livewire id="check" action="check" type="submit" loading>
+        <x-button.big.livewire id="check" action="check" type="submit" full-width>
             Überprüfen
         </x-button.big.livewire>
     @endif
