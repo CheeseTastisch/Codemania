@@ -174,7 +174,12 @@
                 </div>
             </div>
 
-            @livewire('public.home.contests')
+            <div class="mt-6 px-2 text-center md:text-2xl text-xl font-bold">
+                Leider sind noch keine Trainings-Aufgaben verfügbar.
+                Wir versuchen schnellstmöglich Trainings-Aufgaben bereitzustellen.
+                Bitte schau in ein paar Tagen nochmal vorbei!
+            </div>
+{{--            @livewire('public.home.contests')--}}
         </div>
     </section>
 @endpush
