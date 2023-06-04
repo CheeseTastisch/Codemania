@@ -47,5 +47,13 @@
                 @endforeach
             </div>
         @endif
+    @else
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
+            <div class="swiper-slide box rounded-lg bg-gray-400 dark:bg-gray-600 animate-pulse !h-[148px]">
+            </div>
+
+            <div class="swiper-slide box rounded-lg bg-gray-400 dark:bg-gray-600 animate-pulse !h-[148px]">
+            </div>
+        </div>
     @endif
 </div>

@@ -19,10 +19,10 @@
                     {{ day()?->date?->translatedFormat('d. F Y') ?? 'Noch nicht bekannt' }}
                 </div>
 
-{{--                <a type="button" href="#"--}}
-{{--                   class="inline-block md:text-2xl mt-6 bg-accent-400 dark:bg-accent-600 hover:bg-accent-600 dark:hover:bg-accent-400 focus:ring-4 focus:ring-accent-300 dark:focus:ring-accent-700 font-medium rounded-lg text px-5 py-2.5 mr-2 mb-2 focus:outline-none">--}}
-{{--                    Jetzt Teilnehmen--}}
-{{--                </a>--}}
+                <a type="button" href="{{ route('member.contest.home') }}"
+                   class="inline-block md:text-2xl mt-6 bg-accent-400 dark:bg-accent-600 hover:bg-accent-600 dark:hover:bg-accent-400 focus:ring-4 focus:ring-accent-300 dark:focus:ring-accent-700 font-medium rounded-lg text px-5 py-2.5 mr-2 mb-2 focus:outline-none">
+                    Jetzt Teilnehmen
+                </a>
 
                 <p class="mt-2 text-xl">
                     Bei Fragen kannst du dich jederzeit an uns wenden. Tritt hierzu unserem Discord bei!
