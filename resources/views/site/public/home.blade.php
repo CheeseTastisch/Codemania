@@ -106,7 +106,7 @@
 
                 <div class="mt-6">
                     Die Idee dazu kam uns, als wir selbst bei mehreren Programmierwettbewerben teilnahmen.
-                    Zuerst witzelten wir das wir selbst einmal einen Coding Contest veranstalten könnten.
+                    Zuerst witzelten wir, dass wir selbst einmal einen Coding Contest veranstalten könnten.
                     Nach einiger Zeit fanden wir den Witz aber sehr spannend und entschieden uns dazu, die
                     <span class="font-bold underline text-accent-400 dark:text-accent-600">Codemania</span>
                     tatsächlich zu organisieren.
@@ -169,7 +169,7 @@
                     Du kannst dir die Ergebnisse und Gewinner anschauen.
                 </div>
                 <div class="mt-1">
-                    Du kannst dich auf komente Contests vorbereiten, indem du die Aufgaben der vorherigen Contests
+                    Du kannst dich auf kommende Contests vorbereiten, indem du die Aufgaben der vorherigen Contests
                     löst.
                 </div>
             </div>
