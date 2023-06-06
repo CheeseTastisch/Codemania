@@ -23,7 +23,7 @@
                  minutes = 59;
                  hours = 23;
                  days--;
-             } else $wire.refresh();
+             } else location.reload();
          }, 1000);
          ">
         <div>
