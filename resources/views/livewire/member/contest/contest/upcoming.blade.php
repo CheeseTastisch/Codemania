@@ -162,7 +162,7 @@
                 @endforeach
             </x-table.x>
 
-            @if($contest->contestDay->registration_deadline?->isFuture() ?? true)
+            @if($isAdmin && $contest->contestDay->registration_deadline?->isFuture() ?? true)
                 <div class="flex justify-end mt-2">
                     <x-button.big.modal id="openInviteModal" modal="inviteModal" action="open">
                         Einladen
