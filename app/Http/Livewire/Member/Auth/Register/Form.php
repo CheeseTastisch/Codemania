@@ -51,22 +51,7 @@ class Form extends Component
             return;
         }
 
-        $this->validate([
-            'email' => 'required|email|unique:users,email',
-            'firstname' => 'required|string',
-            'lastname' => 'required|string',
-            'password' => [
-                'required',
-                Password::min(8)
-                    ->letters()
-                    ->mixedCase()
-                    ->numbers()
-                    ->symbols()
-                    ->uncompromised(),
-            ],
-            'password_confirmation' => 'required|same:password',
-            'privacy_policy' => 'accepted',
-        ]);
+        $this->validate();
 
         $user = User::forceCreate([
             'email' => $this->email,
@@ -84,6 +69,26 @@ class Form extends Component
         ]);
 
         return redirect()->route('public.home');
+    }
+
+    protected function getRules(): array
+    {
+        return [
+            'email' => 'required|email:rfc,dns,spoof|indisposable|unique:users,email',
+            'firstname' => 'required|string',
+            'lastname' => 'required|string',
+            'password' => [
+                'required',
+                Password::min(8)
+                    ->letters()
+                    ->mixedCase()
+                    ->numbers()
+                    ->symbols()
+                    ->uncompromised(),
+            ],
+            'password_confirmation' => 'required|same:password',
+            'privacy_policy' => 'accepted',
+        ];
     }
 
 }

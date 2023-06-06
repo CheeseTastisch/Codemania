@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('auth:clear-resets')->everyFifteenMinutes();
         $schedule->command('teams:generate')->dailyAt('01:00');
+        $schedule->command('disposable:update')->weekly();
 
     }
 
