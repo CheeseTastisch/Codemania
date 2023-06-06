@@ -11,6 +11,7 @@ use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use StorageFile;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class Pending extends Component
 {
@@ -37,6 +38,12 @@ class Pending extends Component
         }
 
         return view('livewire.member.contest.training.pending');
+    }
+
+    public function downloadInputs(): BinaryFileResponse
+    {
+        return response()->download($this->level->downloadInputs(),
+            $this->level->task->name . '-' . $this->level->level . '.zip')->deleteFileAfterSend(true);
     }
 
     public function updatedFile($value, $key): void

@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "ext-zip": "*",
         "bacon/bacon-qr-code": "^2.0",
         "danharrin/livewire-rate-limiting": "^1.1",
         "doctrine/dbal": "^3.6",
@@ -16,8 +17,8 @@
         "laravel/tinker": "^2.8",
         "livewire/livewire": "^2.12",
         "pragmarx/google2fa": "^8.0",
-        "teamtnt/laravel-scout-tntsearch-driver": "^12.4",
-        "ext-zip": "*"
+        "propaganistas/laravel-disposable-email": "^2.2",
+        "teamtnt/laravel-scout-tntsearch-driver": "^12.4"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.8",
