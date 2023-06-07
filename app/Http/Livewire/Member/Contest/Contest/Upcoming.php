@@ -58,6 +58,34 @@ class Upcoming extends Component
         return view('livewire.member.contest.contest.upcoming');
     }
 
+    public function leaveTeam()
+    {
+        if ($this->contest->contestDay->registration_deadline?->isPast()) {
+            $this->emit('showToast', [
+                'text' => 'Du kannst das Team nicht mehr verlassen.',
+                'type' => 'danger'
+            ]);
+
+            return;
+        }
+
+        if (!isset($this->team)) return;
+
+        $this->team->users()->detach(auth()->user());
+
+        if ($this->team->users()->wherePivot('role', '!=', 'invited')->count() == 0) $this->team->delete();
+        else if ($this->team->users()->wherePivot('role', 'admin')->count() == 0) {
+            $newAdmin = $this->team->users->first();
+            $this->team->users()->updateExistingPivot($newAdmin, ['role' => 'admin']);
+
+            $newAdmin->notify(new Admin(auth()->user(), $this->team));
+            $this->team->users()->wherePivot('role', 'member')
+                ->each(fn($member) => $member->notify(new Member(auth()->user(), $this->team, $newAdmin)));
+        }
+
+        $this->emit('showToast', 'Du hast das Team erfolgreich verlassen.');
+    }
+
     public function leaveContest(): RedirectResponse|Redirector|null
     {
         if ($this->contest->contestDay->registration_deadline?->isPast()) {
@@ -68,17 +96,17 @@ class Upcoming extends Component
             return null;
         }
 
-        if (isset($team)) {
+        if (isset($this->team)) {
             $this->team->users()->detach(auth()->user());
 
-            if ($this->team->users->wherePivot('role', '!=', 'invited')->count()) $this->team->delete();
-            else if ($this->team->users()->wherePivot('role', 'admin')->count() === 0) {
-                    $newAdmin = $this->team->users->first();
-                    $this->team->users()->updateExistingPivot($newAdmin, ['role' => 'admin']);
+            if ($this->team->users()->wherePivot('role', '!=', 'invited')->count() == 0) $this->team->delete();
+            else if ($this->team->users()->wherePivot('role', 'admin')->count() == 0) {
+                $newAdmin = $this->team->users->first();
+                $this->team->users()->updateExistingPivot($newAdmin, ['role' => 'admin']);
 
-                    $newAdmin->notify(new Admin(auth()->user(), $this->team));
-                    $this->team->users()->wherePivot('role', 'member')
-                        ->each(fn($member) => $member->notify(new Member(auth()->user(), $this->team, $newAdmin)));
+                $newAdmin->notify(new Admin(auth()->user(), $this->team));
+                $this->team->users()->wherePivot('role', 'member')
+                    ->each(fn($member) => $member->notify(new Member(auth()->user(), $this->team, $newAdmin)));
             }
         }
 
