@@ -14,9 +14,11 @@
         if (document.documentElement.dataset.alwaysDark !== undefined) document.documentElement.classList.add('dark')
         else if (document.documentElement.dataset.alwaysLight !== undefined) document.documentElement.classList.remove('dark')
         else {
+            document.documentElement.classList.remove('dark')
+            document.documentElement.classList.remove('party')
+
             if (document.cookie.includes('theme=dark')) document.documentElement.classList.add('dark')
-            else if (document.cookie.includes('theme=light')) document.documentElement.classList.remove('dark')
-            else document.documentElement.classList.remove('dark')
+            else if (document.cookie.includes('theme=party')) document.documentElement.classList.add('party')
         }
     </script>
 
@@ -52,6 +54,14 @@
 @vite('resources/assets/js/app.js')
 
 @include('layouts.components.base.toast')
+
+<script defer>
+    if (document.documentElement.classList.contains('party')) {
+        document.querySelectorAll('*').forEach(element => {
+            for (let i = 1; i <= 5; i++) element.style.setProperty(`--random-${i}`, Math.random().toString())
+        })
+    }
+</script>
 
 @stack('scripts')
 </body>
