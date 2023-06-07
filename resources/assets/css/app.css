@@ -24,3 +24,41 @@ html {
     display: none;
 }
 
+html.party {
+    overflow-x: hidden;
+}
+
+html.party * {
+    --random-1: 0;
+    --random-2: 0;
+    --random-3: 0;
+    --random-4: 0;
+    --random-5: 0;
+
+    filter: hue-rotate(calc(var(--random-1) * 360deg));
+
+    animation: shake calc(var(--random-2) * 2s + 2s) infinite;
+    animation-delay: calc(var(--random-3) * 10s);
+}
+
+@keyframes shake {
+    0% {
+        rotate: 0deg;
+    }
+
+    25% {
+        rotate: calc(var(--random-4) * 5deg);
+    }
+
+    50% {
+        rotate: 0deg;
+    }
+
+    75% {
+        rotate: calc(var(--random-5) * -5deg);
+    }
+
+    100% {
+        rotate: 0deg;
+    }
+}
