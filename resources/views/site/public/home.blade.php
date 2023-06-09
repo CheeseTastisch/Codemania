@@ -24,7 +24,7 @@
                     Jetzt Teilnehmen
                 </a>
 
-                <p class="mt-2 text-xl text-pink-400">
+                <p class="mt-2 text-xl">
                     Bei Fragen kannst du dich jederzeit an uns wenden. Tritt hierzu unserem Discord bei!
                 </p>
 
