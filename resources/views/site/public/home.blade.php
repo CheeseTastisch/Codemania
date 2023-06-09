@@ -9,7 +9,7 @@
 @endpush
 
 @push('content')
-    <section id="home bg-pink-50">
+    <section id="home">
         <div class="container mx-auto sm:px-4 px-2 pt-10">
             <div>
                 <div class="md:text-5xl text-3xl font-bold mt-8">
@@ -24,7 +24,7 @@
                     Jetzt Teilnehmen
                 </a>
 
-                <p class="mt-2 text-xl">
+                <p class="mt-2 text-xl text-pink-500">
                     Bei Fragen kannst du dich jederzeit an uns wenden. Tritt hierzu unserem Discord bei!
                 </p>
 
