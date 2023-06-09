@@ -4,6 +4,8 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Concerns\TwoFactorAuthenticatable\TwoFactorAuthenticatable;
+use App\Notifications\Password\Reset;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -83,6 +85,11 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         $this->setRelation("team.$contest->id", $team);
 
         return $team;
+    }
+
+    public function sendPasswordResetNotification($token): void
+    {
+        $this->notify(new Reset(route('member.auth.password.reset', $this, $token)));
     }
 
     public function getFullNameAttribute(): string
