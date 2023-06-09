@@ -9,7 +9,7 @@
 @endpush
 
 @push('content')
-    <section id="home">
+    <section id="home bg-pink-50">
         <div class="container mx-auto sm:px-4 px-2 pt-10">
             <div>
                 <div class="md:text-5xl text-3xl font-bold mt-8">
