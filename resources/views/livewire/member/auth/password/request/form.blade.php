@@ -11,7 +11,7 @@
             id="email" label="E-Mail"
             :model="\App\Models\Components\Modeled\Model::livewire('email', \App\Models\Components\Modeled\Livewire\LivewireUpdate::Defer)" />
 
-        <x-button.big.livewire id="send" action="send" full-width>
+        <x-button.big.livewire id="send" type="submit" action="send" full-width>
             Link senden
         </x-button.big.livewire>
     @endif
