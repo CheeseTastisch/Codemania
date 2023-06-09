@@ -89,7 +89,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
 
     public function sendPasswordResetNotification($token): void
     {
-        $this->notify(new Reset(route('member.auth.password.reset', $this, $token)));
+        $this->notify(new Reset(route('member.auth.password.reset', [$this, $token])));
     }
 
     public function getFullNameAttribute(): string
