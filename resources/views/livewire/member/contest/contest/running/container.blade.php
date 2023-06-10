@@ -23,7 +23,7 @@
                 </div>
 
                 <div class="flex flex-col justify-center items-center">
-                    <x-button.big.link id="leaderboard" href="#">
+                    <x-button.big.link id="leaderboard" href="{{ route('member.contest.leaderboard', $contest) }}">
                         Leaderboard
                     </x-button.big.link>
                 </div>

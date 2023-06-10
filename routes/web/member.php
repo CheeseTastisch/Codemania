@@ -7,6 +7,11 @@ use App\Models\Team;
 Route::view('/contests', 'site.member.contest.home')->name('member.contest.home');
 
 Route::get('/contest/{contest}', [ContestController::class, 'view'])->name('member.contest.contest');
+Route::get('/contest/{contest}/leaderboard', fn (Contest $contest) => setDayAndView(
+    $contest->contestDay,
+    'site.member.contest.leaderboard', compact('contest')
+))->name('member.contest.leaderboard');
+
 Route::get('/join/{team}', [ContestController::class, 'join'])->name('member.contest.join');
 
 Route::get('/training/{contest}', fn (Contest $contest) => setDayAndView(
