@@ -10,7 +10,7 @@
         '5xl' => 'w-full max-w-5xl',
         '6xl' => 'w-full max-w-6xl',
         '7xl' => 'w-full max-w-7xl',
-        default => '',
+        default => 'w-full',
     }
 }} {{ $byStyle([
     \App\Models\Components\Styled\Style::Info->value => 'border-info-400 dark:border-info-600',
