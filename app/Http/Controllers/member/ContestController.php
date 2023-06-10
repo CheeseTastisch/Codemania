@@ -24,6 +24,20 @@ class ContestController extends Controller
         );
     }
 
+    public function leaderboard(Contest $contest) {
+        if ($contest->start_time->isFuture()) {
+            return redirect()->route('member.contest.contest', $contest)->with('toast', [
+                'text' => 'Der Wettbewerb hat noch nicht begonnen.',
+                'type' => 'danger',
+            ]);
+        }
+
+        return setDayAndView(
+            $contest->contestDay,
+            'site.member.contest.leaderboard', compact('contest')
+        );
+    }
+
     public function join(Team $team) {
         $pivot = $team->users->where('id', '=', auth()->user()->id)->first()?->pivot;
 
