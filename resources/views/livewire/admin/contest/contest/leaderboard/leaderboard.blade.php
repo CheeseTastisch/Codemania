@@ -8,7 +8,7 @@
     </div>
 
     @if($loadData)
-        <div wire:poll.1s>
+        <div wire:poll.10s>
             <x-table.x :paginator="$leaderboard">
                 <x-slot name="header">
                     <x-table.header.simple name="#" />
