@@ -18,7 +18,7 @@
                 </div>
 
                 <div class="flex flex-col justify-center items-center">
-                    <div class="lg:text-2xl text-xl font-bold">{{ \Carbon\CarbonInterval::seconds($team->getTotalResolutionTime())->cascade()->format('%H:%I:%S') }}</div>
+                    <div class="lg:text-2xl text-xl font-bold">{{ $team->getHumanFriendlyResolutionTime() }}</div>
                     <div>Gesamtlösungszeit</div>
                 </div>
 

@@ -108,6 +108,14 @@ class Team extends Model
             ->sum();
     }
 
+    public function getHumanFriendlyResolutionTime(bool $ignoreFreeze = false, Contest|null $contest = null): string|null
+    {
+        $totalResolutionTime = $this->getTotalResolutionTime($ignoreFreeze, $contest);
+        if ($totalResolutionTime === null) return null;
+
+        return human_friendly_seconds($totalResolutionTime);
+    }
+
     public function getPlace(bool $ignoreFreeze = false, Contest|null $contest = null): int|null
     {
         return ($contest ?? $this->contest)
