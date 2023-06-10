@@ -98,6 +98,7 @@ class Pending extends Component
     {
         return [
             'file' => 'required|array',
+            'file.*' => 'required|file',
             'sourceFile' => 'required|file',
         ];
     }

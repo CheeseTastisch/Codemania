@@ -118,9 +118,13 @@ class Team extends Model
     }
 
 
-    private function getLevelState(Level $level): LevelState
+    public function getLevelState(Level $level): LevelState
     {
-        $levelSubmission = $this->levelSubmissions()->whereLevelId($level->id)->first();
+        $levelSubmission = $this->levelSubmissions
+            ->where('level_id', $level->id)
+            ->sortByDesc('status_changed_at')
+            ->sortBy(fn($levelSubmission) => $levelSubmission->status === 'checking' || $levelSubmission->status === 'pending' ? 1 : 0)
+            ->first();
 
         if ($levelSubmission === null) {
             $previousLevel = $level->task->levels()->where('level', '<', $level->level)->orderBy('level', 'desc')->first();
