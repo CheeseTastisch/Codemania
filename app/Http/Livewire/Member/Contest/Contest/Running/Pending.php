@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Livewire\Member\Contest\Training;
+namespace App\Http\Livewire\Member\Contest\Contest\Running;
 
+use App\Concerns\Livewire\LoadsDataLater;
 use App\Models\Level;
-use App\Models\LevelFileSubmission;
 use App\Models\LevelSubmission;
 use App\Models\Team;
 use Illuminate\Contracts\View\Factory;
@@ -11,13 +11,10 @@ use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use StorageFile;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class Pending extends Component
 {
-
     use WithFileUploads;
-
 
     public Level $level;
     public ?LevelSubmission $levelSubmission;
@@ -37,10 +34,9 @@ class Pending extends Component
                 ]);
         }
 
-        return view('livewire.member.contest.training.pending');
+        return view('livewire.member.contest.contest.running.pending');
     }
-
-    public function downloadInputs(): BinaryFileResponse
+    public function downloadInputs(): \Symfony\Component\HttpFoundation\BinaryFileResponse
     {
         return response()->download($this->level->downloadInputs(),
             $this->level->task->name . '-' . $this->level->level . '.zip')->deleteFileAfterSend(true);
@@ -56,10 +52,7 @@ class Pending extends Component
                 'uploaded_file_id' => StorageFile::uploadFile($this->file[$key], auth()->user(), '$submission = \App\Models\LevelFileSubmission::whereUploadedFileId($this->id)->first();return auth()->user()?->is_admin || $submission->levelSubmission->level->task->contest->end_time->isPast() || auth()->user()?->getTeamForContest($submission->levelSubmission->level->task->contest)?->id === $submission->levelSubmission->team_id;')->id,
             ]);
 
-        $levelFileSubmission->evaluateStatus();
-
         session()->flash('uploaded', $key);
-
         $this->file = null;
     }
 
@@ -71,12 +64,12 @@ class Pending extends Component
             'source_file_id' => StorageFile::uploadFile($this->sourceFile, auth()->user(), '$submission = \App\Models\LevelSubmission::whereSourceFileId($this->id)->first();return auth()->user()?->is_admin || $submission->level->task->contest->end_time->isPast() || auth()->user()?->getTeamForContest($submission->level->task->contest)?->id === $submission->team_id;')->id,
         ]);
 
-        session()->flash('uploaded', 'sourceFile');
-
+        session()->flash('uploaded', 'source');
         $this->sourceFile = null;
     }
 
-    public function submit() {
+    public function submit(): void
+    {
         if (collect($this->level->levelFiles)
                 ->map(fn ($levelFile) => $this->levelSubmission->getFileSubmission($levelFile))
                 ->filter(fn ($levelFile) => $levelFile === null)
@@ -91,7 +84,7 @@ class Pending extends Component
         }
 
         $this->levelSubmission->evaluateStatus();
-        $this->emitUp('refresh');
+        $this->emitUp('$refresh');
     }
 
     protected function getRules(): array

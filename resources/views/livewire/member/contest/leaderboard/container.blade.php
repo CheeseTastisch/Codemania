@@ -1,12 +1,4 @@
 <div wire:init="initData">
-    <div class="mb-3">
-        <x-form.input.checkbox
-            id="ignore_freeze" updatable
-            :model="\App\Models\Components\Modeled\Model::livewire('ignore_freeze', \App\Models\Components\Modeled\Livewire\LivewireUpdate::Lazy)">
-            Eingefrorene Punkte auch anzeigen
-        </x-form.input.checkbox>
-    </div>
-
     @if($loadData)
         <div wire:poll.10s>
             <x-table.x :paginator="$leaderboard">
@@ -26,6 +18,9 @@
                     </x-table.body.row>
                 @endforeach
             </x-table.x>
+        </div>
+    @else
+        <div class="rounded-lg bg-gray-400 dark:bg-gray-600 animate-pulse h-[200px]">
         </div>
     @endif
 </div>

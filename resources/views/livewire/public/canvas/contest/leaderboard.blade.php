@@ -1,4 +1,4 @@
-<div class="container mx-auto h-screen flex flex-col gap-5 justify-center items-center">
+<div class="container mx-auto h-screen flex flex-col gap-5 justify-center items-center" wire:poll.10s>
     <p class="text-8xl font-bold">{{ $target->name }}</p>
 
     <table class="w-full text-left rounded-3xl overflow-hidden">

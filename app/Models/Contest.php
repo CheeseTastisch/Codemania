@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Carbon\CarbonInterval;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -111,7 +110,7 @@ class Contest extends Model
                 'team_id' => $team->get('team_id'),
                 'points' => $team->get('points'),
                 'total_resolution_time' => $team->get('total_resolution_time'),
-                'human_friendly_total_resolution_time' => CarbonInterval::seconds($team->get('total_resolution_time'))->cascade()->format('%H:%I:%S'),
+                'human_friendly_total_resolution_time' => human_friendly_seconds($team->get('total_resolution_time')),
             ]));
 
             $previousPoints = $team['points'];

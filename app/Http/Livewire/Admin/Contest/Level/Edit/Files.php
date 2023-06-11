@@ -35,8 +35,8 @@ class Files extends Component
         $this->validateMultiple(['input_file', 'solution_file']);
 
         $this->level->levelFiles()->create([
-            'input_file_id' => StorageFile::uploadFile($this->input_file)->id,
-            'solution_file_id' => StorageFile::uploadFile($this->solution_file)->id,
+            'input_file_id' => StorageFile::uploadFile($this->input_file, null, '$level = \App\Models\LevelFile::whereInputFileId($this->id)->first()->level;return auth()->user()?->is_admin || $level->task->contest->end_time->isPast() || auth()->user()?->getTeamForContest($level->task->contest)?->getLevelState($level) !== \App\Models\LevelState::LOCKED;')->id,
+            'solution_file_id' => StorageFile::uploadFile($this->solution_file, null, 'return auth()->user()?->is_admin;')->id,
         ]);
 
         $this->input_file = null;

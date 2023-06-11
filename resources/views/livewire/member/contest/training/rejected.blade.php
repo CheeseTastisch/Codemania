@@ -5,6 +5,7 @@
     @livewire('member.contest.training.pending', [
             'level' => $level,
             'levelSubmission' => $team->levelSubmissions
+                        ->where('level_id', $level->id)
                         ->filter(fn($levelSubmission) => $levelSubmission->status === 'pending')
                         ->sortByDesc('status_changed_at')
                         ->first(),

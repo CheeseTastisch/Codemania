@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('extension');
             $table->string('mime_type');
             $table->uuid('storage_path')->unique();
+            $table->longText('permission')->nullable();
             $table->timestamps();
         });
     }

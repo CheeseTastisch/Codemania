@@ -13,7 +13,7 @@ use Str;
 class StorageFileProvider
 {
 
-    public function uploadFile(TemporaryUploadedFile|\Illuminate\Http\UploadedFile|null $file, User|null $from = null): ?UploadedFile
+    public function uploadFile(TemporaryUploadedFile|\Illuminate\Http\UploadedFile|null $file, User|null $from = null, string|null $permission = null): ?UploadedFile
     {
         if (!$file) return null;
 
@@ -41,11 +41,14 @@ class StorageFileProvider
             'extension' => $extension,
             'mime_type' => $mimeType,
             'storage_path' => $storage_path,
+            'permission' => $permission,
         ]);
     }
 
     public function downloadFile(UploadedFile $file): \Symfony\Component\HttpFoundation\StreamedResponse
     {
+        if (!$file->hasPermission()) abort(403);
+
         return response()->streamDownload(
             fn () => print($this->getFileContent($file)),
             $this->getBaseName($file),

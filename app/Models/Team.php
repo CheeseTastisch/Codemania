@@ -108,6 +108,14 @@ class Team extends Model
             ->sum();
     }
 
+    public function getHumanFriendlyResolutionTime(bool $ignoreFreeze = false, Contest|null $contest = null): string|null
+    {
+        $totalResolutionTime = $this->getTotalResolutionTime($ignoreFreeze, $contest);
+        if ($totalResolutionTime === null) return null;
+
+        return human_friendly_seconds($totalResolutionTime);
+    }
+
     public function getPlace(bool $ignoreFreeze = false, Contest|null $contest = null): int|null
     {
         return ($contest ?? $this->contest)
@@ -118,16 +126,27 @@ class Team extends Model
     }
 
 
-    private function getLevelState(Level $level): LevelState
+    public function getLevelState(Level $level): LevelState
     {
-        $levelSubmission = $this->levelSubmissions()->whereLevelId($level->id)->first();
+        $levelSubmission = $this->levelSubmissions
+            ->where('level_id', $level->id)
+            ->sortByDesc('status_changed_at')
+            ->sortBy(fn($levelSubmission) => $levelSubmission->status === 'checking' || $levelSubmission->status === 'pending' ? 1 : 0)
+            ->first();
 
         if ($levelSubmission === null) {
-            $previousLevel = $level->task->levels()->where('level', '<', $level->level)->orderBy('level', 'desc')->first();
+            $previousLevel = $level->task->levels
+                ->where('level', '<', $level->level)
+                ->sortByDesc('level')
+                ->first();
 
             if ($previousLevel === null) return LevelState::UNLOCKED;
 
-            $previousLevelSubmission = $this->levelSubmissions()->whereLevelId($previousLevel->id)->first();
+            $previousLevelSubmission = $this->levelSubmissions
+                ->where('level_id', $previousLevel->id)
+                ->sortByDesc('status_changed_at')
+                ->sortBy(fn($levelSubmission) => $levelSubmission->status === 'checking' || $levelSubmission->status === 'pending' ? 1 : 0)
+                ->first();
             if ($previousLevelSubmission === null) return LevelState::LOCKED;
 
             if ($previousLevelSubmission->status === 'accepted') return LevelState::UNLOCKED;
