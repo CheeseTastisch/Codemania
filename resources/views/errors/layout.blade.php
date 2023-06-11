@@ -9,7 +9,14 @@
             </div>
         </div>
 
-        <p class="text-center mt-4">@hasSection('description') @yield('description') @else Es ist ein Fehler aufgetreten. Bitte melde dich bei den Organisatoren. @endif</p>
+        <div class="text-center mt-4">
+            @hasSection('description')
+                @yield('description')
+            @else
+                <p>Es ist ein Fehler aufgetreten.</p>
+                <p>Bitte melde dich bei den Organisatoren.</p>
+            @endif
+        </div>
 
         <div class="mt-6 space-x-5 flex flex-row">
             <x-button.big.link id="back" :href="url()->previous()" :style="\App\Models\Components\Styled\OutlinedStyle::OutlinedAccent">
