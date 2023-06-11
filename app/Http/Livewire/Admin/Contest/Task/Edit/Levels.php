@@ -49,7 +49,7 @@ class Levels extends Component
         $level = $this->task->levels()->create([
             'level' => $this->level,
             'points' => $this->points,
-            'description_file_id' => StorageFile::uploadFile($this->description_file)->id,
+            'description_file_id' => StorageFile::uploadFile($this->description_file, null, '$level = \App\Models\Level::whereDescriptionFileId($this->id)->first();return auth()->user()?->is_admin || $level->task->contest->end_time->isPast() || auth()->user()?->getTeamForContest($level->task->contest)?->getLevelState($level) !== \App\Models\LevelState::LOCKED;')->id,
         ]);
 
         return redirect()->route('admin.contest.level.edit', $level);

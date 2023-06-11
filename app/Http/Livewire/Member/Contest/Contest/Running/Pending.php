@@ -49,7 +49,7 @@ class Pending extends Component
         $levelFileSubmission = $this->levelSubmission->levelFileSubmissions()
             ->create([
                 'level_file_id' => $key,
-                'uploaded_file_id' => StorageFile::uploadFile($this->file[$key], auth()->user())->id,
+                'uploaded_file_id' => StorageFile::uploadFile($this->file[$key], auth()->user(), '$submission = \App\Models\LevelFileSubmission::whereUploadedFileId($this->id)->first();return auth()->user()?->is_admin || $submission->levelSubmission->level->task->contest->end_time->isPast() || auth()->user()?->getTeamForContest($submission->levelSubmission->level->task->contest)?->id === $submission->levelSubmission->team_id;')->id,
             ]);
 
         session()->flash('uploaded', $key);
@@ -61,7 +61,7 @@ class Pending extends Component
         $this->validateOnly('sourceFile');
 
         $this->levelSubmission->update([
-            'source_file_id' => StorageFile::uploadFile($this->sourceFile, auth()->user())->id,
+            'source_file_id' => StorageFile::uploadFile($this->sourceFile, auth()->user(), '$submission = \App\Models\LevelSubmission::whereSourceFileId($this->id)->first();return auth()->user()?->is_admin || $submission->level->task->contest->end_time->isPast() || auth()->user()?->getTeamForContest($submission->level->task->contest)?->id === $submission->team_id;')->id,
         ]);
 
         session()->flash('uploaded', 'source');

@@ -61,7 +61,7 @@ class General extends Component
     {
         $this->validateOnly('descriptionFile');
 
-        $this->level->update(['description_file_id' => StorageFile::uploadFile($this->descriptionFile)->id]);
+        $this->level->update(['description_file_id' => StorageFile::uploadFile($this->descriptionFile, null, '$level = \App\Models\Level::whereDescriptionFileId($this->id)->first();return auth()->user()?->is_admin || $level->task->contest->end_time->isPast() || auth()->user()?->getTeamForContest($level->task->contest)?->getLevelState($level) !== \App\Models\LevelState::LOCKED;')->id]);
         $this->descriptionFile = null;
 
         session()->flash('updated', 'descriptionFile');
