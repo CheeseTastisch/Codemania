@@ -19,5 +19,3 @@ Route::middleware('guest')->group(fn() => require_once __DIR__ . '/web/guest.php
 Route::middleware('auth')->group(fn() => require_once __DIR__ . '/web/auth.php');
 Route::middleware(['auth', '2fa.verified', 'verified'])->group(fn() => require_once __DIR__ . '/web/member.php');
 Route::middleware('admin.full')->prefix('admin/')->group(fn() => require_once __DIR__ . '/web/admin.php');
-
-Route::get('/503', fn () => abort(503));
