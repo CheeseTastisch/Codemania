@@ -266,7 +266,6 @@
                 <x-table.header.simple name="Team" />
                 <x-table.header.simple name="Punkte" />
                 <x-table.header.simple name="Lösungszeit" />
-                <x-table.header.sr name="Ansehen" />
             </x-slot>
 
             @if($loadData)
@@ -276,11 +275,6 @@
                         <x-table.body.cell>{{ $targetTeam->get('name') }}</x-table.body.cell>
                         <x-table.body.cell>{{ $targetTeam->get('points') }}</x-table.body.cell>
                         <x-table.body.cell>{{ $targetTeam->get('human_friendly_total_resolution_time') }}</x-table.body.cell>
-                        <x-table.body.cell>
-                            <a href="#">
-                                <svg class="w-6 h-6 hover:text-accent-400 dark:hover:text-accent-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round"></path> </svg>
-                            </a>
-                        </x-table.body.cell>
                     </x-table.body.row>
                 @endforeach
             @else
@@ -300,10 +294,6 @@
                         </x-table.body.cell>
                         <x-table.body.cell>
                             <div class="rounded-lg bg-gray-400 dark:bg-gray-600 animate-pulse h-[30px] w-[100px]">
-                            </div>
-                        </x-table.body.cell>
-                        <x-table.body.cell>
-                            <div class="rounded-lg bg-gray-400 dark:bg-gray-600 animate-pulse h-[30px] w-[50px]">
                             </div>
                         </x-table.body.cell>
                     </x-table.body.row>
