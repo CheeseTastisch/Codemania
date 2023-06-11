@@ -3,6 +3,8 @@
 namespace App\Http\Livewire\Admin\Contest\Contest\Edit;
 
 use App\Models\Contest;
+use App\Models\LevelSubmission;
+use App\Models\Team;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -90,6 +92,12 @@ class General extends Component
         $this->validateOnly('leaderboard_unfrozen');
 
         $this->contest->update(['leaderboard_unfrozen' => $this->leaderboard_unfrozen]);
+
+        $this->contest->teams
+            ->flatMap(fn (Team $team) => $team->levelSubmissions)
+            ->filter(fn (LevelSubmission $levelSubmission) => !$levelSubmission->level->instantly_rated)
+            ->each(fn (LevelSubmission $levelSubmission) => $levelSubmission->updateImage());
+
         session()->flash('updated', 'leaderboard_unfrozen');
     }
 

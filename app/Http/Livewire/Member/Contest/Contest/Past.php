@@ -24,6 +24,11 @@ class Past extends Component
         $totalSubmissions, $totalAccepted, $totalRejected, $totalRatedLater, $totalSubmittedFiles, $totalSolvedTasks,
         $teams;
 
+    public ?Team $team;
+
+    public ?int $selectedTask;
+    public ?int $selectedLevel;
+
     public function render(): View|\Illuminate\Foundation\Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
         return view('livewire.member.contest.contest.past');
@@ -31,23 +36,23 @@ class Past extends Component
 
     protected function dataLoaded(): void
     {
-        /**
-         * @var Team $team
-         */
-        $team = auth()->user()->getTeamForContest($this->contest);
-        if (!$team) return;
+        $this->team = auth()->user()?->getTeamForContest($this->contest);
+        if ($this->team == null) return;
 
-        $this->points = $team->getPoints();
-        $this->place = $team->getPlace();
-        $this->resolutionTime = $team->getHumanFriendlyResolutionTime();
-        $this->submissions = $team->levelSubmissions->count();
-        $this->accepted = $team->levelSubmissions->where('status', 'accepted')->count();
-        $this->rejected = $team->levelSubmissions->where('status', 'rejected')->count();
-        $this->ratedLater = $team->levelSubmissions->filter(fn (LevelSubmission $levelSubmission) => !$levelSubmission->level->instantly_rated)->count();
-        $this->submittedFiles = $team->levelSubmissions->map(fn (LevelSubmission $levelSubmission) => $levelSubmission->levelFileSubmissions->count() + 1)->sum();
+        $this->selectedTask = $this->contest->tasks->sortBy('order')->first()?->id;
+        $this->selectedLevel = $this->contest->tasks->sortBy('order')->first()?->levels->sortBy('level')->first()?->id;
+
+        $this->points = $this->team->getPoints();
+        $this->place = $this->team->getPlace();
+        $this->resolutionTime = $this->team->getHumanFriendlyResolutionTime();
+        $this->submissions = $this->team->levelSubmissions->count();
+        $this->accepted = $this->team->levelSubmissions->where('status', 'accepted')->count();
+        $this->rejected = $this->team->levelSubmissions->where('status', 'rejected')->count();
+        $this->ratedLater = $this->team->levelSubmissions->filter(fn (LevelSubmission $levelSubmission) => !$levelSubmission->level->instantly_rated)->count();
+        $this->submittedFiles = $this->team->levelSubmissions->map(fn (LevelSubmission $levelSubmission) => $levelSubmission->levelFileSubmissions->count() + 1)->sum();
         $this->solvedTasks = $this->contest->tasks
             ->filter(fn ($task) => $task->levels
-                ->every(fn ($level) => $team->levelSubmissions
+                ->every(fn ($level) => $this->team->levelSubmissions
                         ->where('level_id', $level->id)
                         ->where('status', 'accepted')
                         ->count() > 0))
