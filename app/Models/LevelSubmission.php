@@ -94,13 +94,20 @@ class LevelSubmission extends Model
             if ($levelFileSubmission === null || $levelFileSubmission->status !== 'accepted') $correct = false;
         });
 
-        if ($this->level->instantly_rated) $image = Meme::whereFor($correct ? 'accepted' : 'rejected')->get()->random();
+        if ($this->level->instantly_rated || $this->level->task->contest->leaderboard_unfrozen) $image = Meme::whereFor($correct ? 'accepted' : 'rejected')->get()->random();
         else $image = Meme::whereFor('unknown')->get()->random();
 
         $this->update([
             'status' => $correct ? 'accepted' : 'rejected',
             'status_changed_at' => now(),
             'image_file_id' => $image->uploaded_file_id
+        ]);
+    }
+
+    public function updateImage(): void
+    {
+        $this->update([
+            'image_file_id' => $image = Meme::whereFor($this->level->instantly_rated || $this->level->task->contest->leaderboard_unfrozen ? $this->status : 'unknown')->get()->random()->uploaded_file_id
         ]);
     }
 
