@@ -17,7 +17,8 @@
             document.documentElement.classList.remove('dark')
             document.documentElement.classList.remove('party')
 
-            if (document.cookie.includes('theme=dark')) document.documentElement.classList.add('dark')
+            if (document.cookie.includes('theme=dark-party')) document.documentElement.classList.add('dark', 'party')
+            else if (document.cookie.includes('theme=dark')) document.documentElement.classList.add('dark')
             else if (document.cookie.includes('theme=party')) document.documentElement.classList.add('party')
         }
     </script>
