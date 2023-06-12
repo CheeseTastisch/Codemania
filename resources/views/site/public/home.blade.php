@@ -84,7 +84,9 @@
                 <div class="mt-6">
                     Die Teams sammeln in einem Zeitraum von <span class="font-bold underline">3 Stunden</span> Punkte.
                     Um Punkte zu sammeln, können bis zu <span class="font-bold underline">5 Aufgaben</span> mit jeweils
-                    3 Level gelöst werden. Gewinner ist, wer am Ende die meisten Punkte gesammelt hat.
+                    3 Level gelöst werden.
+                    <span x-data @click="setTheme(document.cookie.includes('theme=party') || document.cookie.includes('theme=dark-party') ? '{{ auth()->user()?->theme ?? 'light' }}' : '{{ auth()->user()?->theme === 'dark' ? 'dark-party' : 'party' }}')">Gewinner</span>
+                    ist, wer am Ende die meisten Punkte gesammelt hat.
                 </div>
 
                 <div class="mt-6">

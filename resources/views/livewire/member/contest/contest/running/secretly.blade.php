@@ -25,7 +25,7 @@
 
         <div class="flex flex-col">
             @foreach($level->levelFiles->sortBy('id') as $levelFile)
-                <div class="flex justify-between items-center p-1 rounded-md @if($loop->even) bg-accent-100 @endif">
+                <div class="flex justify-between items-center p-1 rounded-md @if($loop->even) bg-accent-100 dark:bg-accent-900 @endif">
                     <div class="items-center">
                         <a class="flex items-center gap-2 hover:text-accent-400 dark:hover:text-accent-600" href="{{ route('public.file', $levelFile->input_file_id) }}">
                             <svg class="h-4" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

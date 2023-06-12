@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Member\Contest\Training;
 
+use App\Concerns\Livewire\LoadsDataLater;
 use App\Models\Contest;
 use App\Models\Task;
 use App\Models\Team;
@@ -11,6 +12,8 @@ use Livewire\Component;
 
 class Container extends Component
 {
+
+    use LoadsDataLater;
 
     public Contest $contest;
     public Team $team;
@@ -22,17 +25,18 @@ class Container extends Component
         'refresh' => '$refresh',
     ];
 
-    public function mount()
+    public function render(): View|\Illuminate\Foundation\Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
+        return view('livewire.member.contest.training.container');
+    }
+
+    protected function dataLoaded(): void
+    {
+
         $this->team = auth()->user()->getTeamForContest($this->contest, true);
 
         $this->selectedTask = $this->contest->tasks->sortBy('order')->first()?->id;
         $this->selectedLevel = Task::whereId($this->selectedTask)->first()?->levels?->sortBy('level')?->first()?->id;
-    }
-
-    public function render(): View|\Illuminate\Foundation\Application|Factory|\Illuminate\Contracts\Foundation\Application
-    {
-        return view('livewire.member.contest.training.container');
     }
 
     public function updatedSelectedTask(): void
