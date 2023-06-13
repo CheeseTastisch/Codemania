@@ -15,7 +15,7 @@ public class FileScanner {
             String line;
 
             while ((line = reader.readLine()) != null) {
-                String[] lineData = line.split(",");
+                String[] lineData = line.split(" ");
                 fileData.add(Arrays.asList(lineData));
             }
 
