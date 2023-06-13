@@ -336,8 +336,8 @@
                      class="grid lg:grid-cols-variable lg:grid-rows-1 grid-rows-variable border-y-2 border-accent-400"
                      style="--rows: {{ $task->levels->count() }}; --columns: var(--rows)">
                     @foreach($task->levels->sortBy('level') as $level)
-                        <div class="flex items-center p-4 lg:border-b-0 border-b @if($loop->last) !border-b-0 @else lg:border-r @endif border-accent-200 dark:border-accent-800 @if($team->getLevelState($level) != \App\Models\LevelState::LOCKED) cursor-pointer hover:bg-accent-300 dark:hover:bg-accent-700 @endif"
-                             @if($team->getLevelState($level) != \App\Models\LevelState::LOCKED) @click="selectedLevel = {{ $level->id }}" @endif
+                        <div class="flex items-center p-4 lg:border-b-0 border-b @if($loop->last) !border-b-0 @else lg:border-r @endif border-accent-200 dark:border-accent-800 cursor-pointer hover:bg-accent-300 dark:hover:bg-accent-700"
+                             @click="selectedLevel = {{ $level->id }}"
                              :class="{'bg-accent-100 dark:bg-accent-900': selectedLevel === {{ $level->id }}}">
                             <div class="flex justify-center grow">Level {{ $level->level }}</div>
 
@@ -377,10 +377,6 @@
 
             @foreach($contest->tasks as $task)
                 @foreach($task->levels as $level)
-                    @if($team->getLevelState($level) === \App\Models\LevelState::LOCKED)
-                        @continue
-                    @endif
-
                     <div x-cloak x-show="selectedLevel === {{ $level->id }}" class="w-full flex items-center justify-center p-4" id="{{ $level->id }}">
                         @php($levelSubmission = $level->levelSubmissions
                                             ->where('team_id', $team->id)
@@ -497,7 +493,7 @@
                                             </a>
                                         </div>
                                         <div class="flex justify-end gap-4 items-center">
-                                            @if(($levelFileSubmissions = $levelSubmission->getFileSubmission($levelFile)) !== null)
+                                            @if(($levelFileSubmissions = $levelSubmission?->getFileSubmission($levelFile)) !== null)
                                                 <div class="hidden md:block">
                                                     <a class="flex items-center gap-2 hover:text-accent-400 dark:hover:text-accent-600" href="{{ route('public.file', $levelFileSubmissions->uploaded_file_id) }}">
                                                         <svg class="h-4" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
