@@ -40,7 +40,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link @if(str(Route::currentRouteName())->startsWith('admin.user')) !text-accent-400 dark:!text-accent-600 @endif">
+                    <a href="{{ route('admin.users') }}" class="nav-link @if(str(Route::currentRouteName())->startsWith('admin.user')) !text-accent-400 dark:!text-accent-600 @endif">
                         Benutzer
                     </a>
                 </li>

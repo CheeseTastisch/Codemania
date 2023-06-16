@@ -5,6 +5,7 @@ use App\Models\ContestDay;
 use App\Models\Level;
 use App\Models\Task;
 use App\Models\Team;
+use App\Models\User;
 
 Route::view('/', 'site.admin.dashboard')->name('admin.dashboard');
 Route::view('/faq', 'site.admin.faq')->name('admin.faq');
@@ -42,6 +43,11 @@ Route::prefix('contest/')->group(function () {
         $level->task->contest->contestDay,
         'site.admin.contest.level.edit', compact('level'))
     )->name('admin.contest.level.edit');
+});
+
+Route::prefix('/users')->group(function () {
+    Route::view('/', 'site.admin.users')->name('admin.users');
+    Route::get('/{user}', fn(User $user) => view('site.admin.users.edit', compact('user')))->name('admin.users.edit');
 });
 
 Route::view('/memes', 'site.admin.memes')->name('admin.memes');
