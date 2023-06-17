@@ -4,7 +4,7 @@
             name="Benutzer"
             :current-field="$sortField"
             :current-direction="$sortDirection"
-            field="name" />
+            field="display_name" />
 
         <x-table.header.sr name="Aktionen" />
     </x-slot>
