@@ -13,15 +13,15 @@ trait WithPaginatedCollection
 
     protected function paginateCollection(Collection $collection, int $perPage, string $key = 'page'): LengthAwarePaginator
     {
-        $currentPage = request()->input($key, 1);
-        $currentPageItems = $collection->slice(($currentPage - 1) * $perPage, $perPage)->all();
+        $currentPage = LengthAwarePaginator::resolveCurrentPage($key);
+        $currentPageItems = $collection->forPage($currentPage, $perPage);
 
         return new LengthAwarePaginator(
             $currentPageItems,
             $collection->count(),
             $perPage,
             $currentPage,
-            ['path' => request()->url(), 'query' => request()->query()]
+            ['path' => request()->url(), 'query' => request()->query(), 'pageName' => $key]
         );
     }
 
