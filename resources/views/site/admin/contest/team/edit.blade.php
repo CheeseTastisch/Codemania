@@ -29,8 +29,6 @@
             </div>
         </div>
 
-        <x-card.x title="Abgaben" full-height>
-            @livewire('admin.contest.team.edit.submissions', ['team' => $team])
-        </x-card.x>
+        @livewire('admin.contest.team.edit.submissions', ['team' => $team])
     </div>
 @endpush
