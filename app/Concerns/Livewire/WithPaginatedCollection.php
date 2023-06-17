@@ -11,9 +11,9 @@ trait WithPaginatedCollection
 
     use WithPagination;
 
-    protected function paginateCollection(Collection $collection, int $perPage): LengthAwarePaginator
+    protected function paginateCollection(Collection $collection, int $perPage, string $key = 'page'): LengthAwarePaginator
     {
-        $currentPage = request()->input('page', 1);
+        $currentPage = request()->input($key, 1);
         $currentPageItems = $collection->slice(($currentPage - 1) * $perPage, $perPage)->all();
 
         return new LengthAwarePaginator(
