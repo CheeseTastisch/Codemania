@@ -29,8 +29,8 @@ class Submissions extends Component
     {
         $this->contest = $this->team->contest;
 
-        $this->selectedTask = $this->contest->tasks->sortBy('order')->first()?->id;
-        $this->selectedLevel = $this->contest->tasks->sortBy('order')->first()?->levels->sortBy('level')->first()?->id;
+        $this->selectedTask = $this->contest->tasks->sortBy('order')->first()?->id ?? -1;
+        $this->selectedLevel = $this->contest->tasks->sortBy('order')->first()?->levels->sortBy('level')->first()?->id ?? -1;
     }
 
 }

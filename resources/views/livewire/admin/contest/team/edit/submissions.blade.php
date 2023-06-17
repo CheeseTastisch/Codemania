@@ -3,11 +3,11 @@
         <div x-data="{selectedTask: @entangle('selectedTask').defer, selectedLevel: @entangle('selectedLevel').defer}"
              class="overflow-hidden rounded-lg border-2 shadow-lg border-accent-400 dark:border-accent-600 h-full grid grid-rows-[1fr,1fr,auto] w-full">
             <div class="grid lg:grid-cols-variable lg:grid-rows-1 grid-rows-variable"
-                 style="--rows: {{ $contest->tasks->count() }}; --columns: var(--rows)">
-                @foreach($contest->tasks->sortBy('order') as $task)
+                 style="--rows: {{ $contest->tasks->count() ?? 1 }}; --columns: var(--rows)">
+                @forelse($contest->tasks->sortBy('order') as $task)
                     <div
                         class="flex lg:flex-col justify-center items-center p-4 lg:border-b-0 border-b @if($loop->last) !border-b-0 @else lg:border-r @endif border-accent-200 dark:border-accent-800 hover:bg-accent-300 dark:hover:bg-accent-700 cursor-pointer"
-                        @click="selectedTask = {{ $task->id }}; selectedLevel = {{ $task->levels->sortBy('level')->first()->id }}"
+                        @click="selectedTask = {{ $task->id }}; selectedLevel = {{ $task->levels->sortBy('level')->first()->id ?? -1 }}"
                         :class="{'bg-accent-100 dark:bg-accent-900': selectedTask === {{ $task->id }}}">
                         <div>{{ $task->name }}</div>
                         <div>
@@ -15,15 +15,18 @@
                                 class="lg:hidden">)</span>
                         </div>
                     </div>
-                @endforeach
+                @empty
+                    <div class="flex text-red-400 dark:text-red-600 justify-center items-center p-2">
+                        Dieser Contest hat keine Aufgaben
+                    </div>
+                @endforelse
             </div>
-
 
             @foreach($contest->tasks as $task)
                 <div x-cloak x-show="selectedTask === {{ $task->id}}"
                      class="grid lg:grid-cols-variable lg:grid-rows-1 grid-rows-variable border-y-2 border-accent-400"
-                     style="--rows: {{ $task->levels->count() }}; --columns: var(--rows)">
-                    @foreach($task->levels->sortBy('level') as $level)
+                     style="--rows: {{ $task->levels->count() ?? 1 }}; --columns: var(--rows)">
+                    @forelse($task->levels->sortBy('level') as $level)
                         <div
                             class="flex items-center p-4 lg:border-b-0 border-b @if($loop->last) !border-b-0 @else lg:border-r @endif border-accent-200 dark:border-accent-800 cursor-pointer hover:bg-accent-300 dark:hover:bg-accent-700"
                             @click="selectedLevel = {{ $level->id }}"
@@ -84,7 +87,11 @@
                                 @endswitch
                             </div>
                         </div>
-                    @endforeach
+                    @empty
+                        <div class="flex text-red-400 dark:text-red-600 justify-center items-center p-2">
+                            Diese Aufgabe hat keine Levels.
+                        </div>
+                    @endforelse
                 </div>
             @endforeach
 
