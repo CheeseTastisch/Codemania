@@ -7,7 +7,6 @@ use App\Models\Task;
 use App\Models\Team;
 use App\Models\User;
 
-Route::view('/', 'site.admin.dashboard')->name('admin.dashboard');
 Route::view('/faq', 'site.admin.faq')->name('admin.faq');
 
 Route::prefix('contest/')->group(function () {
