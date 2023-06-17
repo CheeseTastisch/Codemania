@@ -32,7 +32,7 @@ class Users extends Component
                 ->whereHas('contests', fn ($query) => $query->where('contest_id', $this->contest->id))
                 ->get()
                 ->sortBy($this->sortField, SORT_REGULAR, $this->sortDirection == 'desc'),
-                20, 'user')
+                10, 'user')
         ]);
     }
 }
