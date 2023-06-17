@@ -45,9 +45,9 @@ Route::prefix('contest/')->group(function () {
     )->name('admin.contest.level.edit');
 });
 
-Route::prefix('/users')->group(function () {
-    Route::view('/', 'site.admin.users')->name('admin.users');
-    Route::get('/{user}', fn(User $user) => view('site.admin.users.edit', compact('user')))->name('admin.users.edit');
+Route::prefix('/user')->group(function () {
+    Route::view('/', 'site.admin.user.index')->name('admin.user');
+    Route::get('/{user}', fn(User $user) => view('site.admin.user.edit', compact('user')))->name('admin.user.edit');
 });
 
 Route::view('/memes', 'site.admin.memes')->name('admin.memes');
