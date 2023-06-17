@@ -32,10 +32,17 @@
             @livewire('admin.contest.contest.edit.tasks', ['contest' => $contest])
         </x-card.x>
 
-        <div class="mt-3">
-            <x-card.x title="Teams" full-height>
-                @livewire('admin.contest.contest.edit.teams', ['contest' => $contest])
-            </x-card.x>
+        <div class="grid grid-cols-1 xl:grid-cols-2 xl:gap-x-4">
+            <div class="col-span-1 mt-3">
+                <x-card.x title="Teams" full-height>
+                    @livewire('admin.contest.contest.edit.teams', ['contest' => $contest])
+                </x-card.x>
+            </div>
+            <div class="col-span-1 mt-3">
+                <x-card.x title="Teilnehmer" full-height>
+                    @livewire('admin.contest.contest.edit.users', ['contest' => $contest])
+                </x-card.x>
+            </div>
         </div>
     </div>
 @endpush
