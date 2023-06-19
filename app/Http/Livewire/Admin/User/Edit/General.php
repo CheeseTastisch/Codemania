@@ -6,6 +6,8 @@ use App\Models\User;
 use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Password;
+use StorageFile;
 
 class General extends Component
 {
@@ -51,6 +53,33 @@ class General extends Component
 
         $this->user->update(['theme' => $this->theme]);
         session()->flash('updated', 'theme');
+    }
+
+    public function verifyEmail(): void
+    {
+        $this->user->update([
+            'email_verified_at' => now()
+        ]);
+
+        $this->emit('showToast', 'Die E-Mail des Benutzers wurde bestätigt.');
+    }
+
+    public function sendPasswordResetLink(): void
+    {
+        Password::sendResetLink(['email' => $this->email]);
+
+        $this->emit('showToast', 'Der Benutzer hat eine E-Mail zum Zurücksetzen seines Passworts erhalten.');
+    }
+
+    public function reset2Fa(): void
+    {
+        $this->user->update([
+            'two_factor_secret' => null,
+            'two_factor_recovery_codes' => null,
+            'confirmed_two_factor_at' => null
+        ]);
+
+        $this->emit('showToast', 'Die 2FA des Benutzers wurde zurückgesetzt.');
     }
 
     public function updatedEmail(): void
@@ -131,7 +160,7 @@ class General extends Component
     {
         $this->validateOnly('profile_picture');
 
-        $this->user->update(['profile_picture_id' => StorageFile::uploadFile($this->profile_picture, $this->user)->id]);
+        $this->user->update(['profile_picture_id' => StorageFile::uploadFile($this->profile_picture)->id]);
 
         $this->profile_picture = null;
         session()->flash('updated', 'profile_picture');
