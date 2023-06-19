@@ -89,19 +89,6 @@ class Loader extends Component
             }
         }
 
-        if ($this->viewId <= 7) {
-            $ended = $this->getEnded(60);
-
-            if ($ended->isNotEmpty()) {
-                $this->setNextOrNull($ended);
-
-                if ($this->target !== null) {
-                    $this->setView(7);
-                    return;
-                }
-            }
-        }
-
         $this->setView(3);
         $this->target = null;
     }
@@ -117,7 +104,7 @@ class Loader extends Component
         $this->view = match ($this->viewId) {
             1, 4 => 'public.canvas.contest.time-till-start',
             2, 5 => 'public.canvas.contest.time-till-end',
-            6, 7 => 'public.canvas.contest.leaderboard',
+            6 => 'public.canvas.contest.leaderboard',
             default => 'public.canvas.sponsors'
         };
     }
