@@ -9,7 +9,9 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/b4630b9e20f019cf9bfc5ac8/script.js"></script>
+    @if($noCookie ?? false)
+        <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/b4630b9e20f019cf9bfc5ac8/script.js"></script>
+    @endif
     <script>
         if (document.documentElement.dataset.alwaysDark !== undefined) document.documentElement.classList.add('dark')
         else if (document.documentElement.dataset.alwaysLight !== undefined) document.documentElement.classList.remove('dark')
