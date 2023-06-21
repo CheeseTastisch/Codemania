@@ -1,4 +1,5 @@
 @php($alwaysDark = true)
+@php($noCookie = true)
 
 @extends('layouts.components.base')
 
