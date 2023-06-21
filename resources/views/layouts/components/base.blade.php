@@ -9,7 +9,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    @if(!$noCookie ?? true)
+    @if(!($noCookie ?? false))
         <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/b4630b9e20f019cf9bfc5ac8/script.js"></script>
     @endif
     <script>
