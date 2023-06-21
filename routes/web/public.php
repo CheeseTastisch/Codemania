@@ -11,5 +11,6 @@ Route::get('/canvas/{contestDay}', fn(ContestDay $contestDay) => setDayAndView(
     $contestDay,
     'site.public.canvas', compact('contestDay')
 ));
+Route::view('/discord', 'site.public.discord')->name('public.discord');
 
 Route::get('/file/{id}', [FileController::class, 'downloadFile'])->name('public.file');
